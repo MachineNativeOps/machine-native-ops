@@ -60,7 +60,7 @@ const ALLOWED_HEADERS = [
  * and redacting sensitive values.
  *
  * This function prevents sensitive information from appearing in logs by:
- * 1. Only including headers from the ALLOWED_HEADERS whitelist
+ * 1. Only including headers from the ALLOWED_HEADERS allowlist
  * 2. Redacting the authorization header value to prevent token leakage
  *
  * @param headers - Raw request headers object
