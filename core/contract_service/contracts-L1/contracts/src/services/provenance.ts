@@ -2,16 +2,7 @@ import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
-import { tmpdir } from 'os';
 
-// Define a safe root directory for allowed file operations
-const SAFE_ROOT = path.resolve(process.cwd(), 'safefiles');
-// Allowed absolute path prefixes based on environment
-// In test: allow tmpdir for test files
-// In production: allow project workspace and safefiles directory only
-const ALLOWED_ABSOLUTE_PREFIXES = process.env.NODE_ENV === 'test' 
-  ? [tmpdir(), process.cwd()] 
-  : [process.cwd(), SAFE_ROOT];
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 // Define a safe root directory for allowed file operations
@@ -20,6 +11,12 @@ const SAFE_ROOT =
   process.env.NODE_ENV === 'test'
     ? path.resolve(process.cwd()) // Allow access to cwd and subdirectories in test
     : path.resolve(process.cwd(), 'safefiles');
+
+// Allowed absolute path prefixes based on environment
+// In test: allow tmpdir for test files
+// In production: allow project workspace and safefiles directory only
+const ALLOWED_ABSOLUTE_PREFIXES =
+  process.env.NODE_ENV === 'test' ? [tmpdir(), process.cwd()] : [process.cwd(), SAFE_ROOT];
 
 /**
  * Validates and normalizes a file path to prevent path traversal attacks.
@@ -178,26 +175,40 @@ export class ProvenanceService {
     builder: BuilderInfo,
     metadata: Partial<MetadataInfo> = {}
   ): Promise<BuildAttestation> {
-    // Handle absolute vs relative paths
-    let resolvedPath: string;
-    if (path.isAbsolute(subjectPath)) {
-      // For absolute paths, validate against allowed prefixes (security check)
-      resolvedPath = path.normalize(subjectPath);
-      const isAllowed = ALLOWED_ABSOLUTE_PREFIXES.some(prefix => 
-        resolvedPath.startsWith(prefix + path.sep) || resolvedPath === prefix
-      );
-      if (!isAllowed) {
-        throw new Error('Invalid file path: Absolute paths must be within allowed directories.');
+    // Use secure path validation that resolves symlinks via realpath
+    let validatedPath: string;
+
+    // Handle absolute paths in test environment
+    if (path.isAbsolute(subjectPath) && process.env.NODE_ENV === 'test') {
+      // Allow tmpdir and process.cwd() in test mode
+      const normalizedPath = path.normalize(subjectPath);
+      // Use realpath to resolve symlinks for security
+      try {
+        validatedPath = await realpath(normalizedPath);
+        // Verify the canonical path is within allowed prefixes
+        const isAllowed = ALLOWED_ABSOLUTE_PREFIXES.some(
+          (prefix) => validatedPath.startsWith(prefix + path.sep) || validatedPath === prefix
+        );
+        if (!isAllowed) {
+          throw new Error('Invalid file path: Absolute paths must be within allowed directories.');
+        }
+      } catch (error) {
+        // If realpath fails, check if the normalized path would be allowed
+        const isAllowed = ALLOWED_ABSOLUTE_PREFIXES.some(
+          (prefix) => normalizedPath.startsWith(prefix + path.sep) || normalizedPath === prefix
+        );
+        if (!isAllowed) {
+          throw new Error('Invalid file path: Absolute paths must be within allowed directories.');
+        }
+        // Re-throw the original error (e.g., ENOENT)
+        throw error;
       }
     } else {
-      // For relative paths, resolve against SAFE_ROOT
-      resolvedPath = path.resolve(SAFE_ROOT, subjectPath);
-      // Ensure the resolved path is within SAFE_ROOT
-      if (!(resolvedPath === SAFE_ROOT || resolvedPath.startsWith(SAFE_ROOT + path.sep))) {
-        throw new Error('Invalid file path: Access outside of allowed directory is not permitted.');
-      }
+      // For relative paths or production absolute paths, use validateAndNormalizePath
+      validatedPath = await validateAndNormalizePath(subjectPath);
     }
-    const stats = await stat(resolvedPath);
+
+    const stats = await stat(validatedPath);
     if (!stats.isFile()) {
       throw new Error(`Subject path must be a file: ${subjectPath}`);
     }
