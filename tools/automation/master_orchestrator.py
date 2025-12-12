@@ -30,7 +30,7 @@ Project Structure Context / 專案結構定位
 │  🚁 Autonomous/Drone Stack  ⟵ 🎯 THIS MODULE               │
 │     (automation/)                 (tools/automation/)       │
 │     • Five-skeleton framework    • Engine discovery         │
-│     • Drone control                 & registration          │
+│     • Drone control              • & registration           │
 │     • Self-driving integration   • Lifecycle management     │
 │                                   • Task orchestration      │
 └─────────────────────────────────────────────────────────────┘
