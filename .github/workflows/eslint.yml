@@ -1,3 +1,11 @@
+# =============================================================================
+# ⚠️ DEPRECATION NOTICE
+# =============================================================================
+# This workflow is scheduled for removal as part of CI consolidation.
+# Replacement: 01-validate.yml (workspace lint)
+# See: governance/CI_REFACTORING_GUIDE.md
+# Migration deadline: 2026-03-31
+# =============================================================================
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support

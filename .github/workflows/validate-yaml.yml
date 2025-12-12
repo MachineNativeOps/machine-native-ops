@@ -1,3 +1,12 @@
+# =============================================================================
+# ⚠️ DEPRECATION NOTICE
+# =============================================================================
+# This workflow is scheduled for removal as part of CI consolidation.
+# Replacement: governance-closed-loop-ci.yml (DAG validation + compliance)
+# See: governance/CI_REFACTORING_GUIDE.md
+# Migration deadline: 2026-03-31
+# =============================================================================
+
 name: YAML & Schema Validation
 
 on:
