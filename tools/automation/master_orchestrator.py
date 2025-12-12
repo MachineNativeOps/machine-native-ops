@@ -424,7 +424,8 @@ class EngineRegistry:
         Behavior:
         ---------
         - **Non-blocking**: Discovery failures are logged at DEBUG level and
-          do not halt the overall discovery process
+          do not halt the overall discovery process.
+          Note: Because failures are logged at DEBUG level, they may not be visible in production environments unless debug logging is enabled. This can make troubleshooting discovery issues more difficult.
         - **Recursive**: Searches entire directory trees using rglob patterns
         - **Safe**: Catches and handles module loading exceptions gracefully
         - **Deduplication**: Caller is responsible for handling duplicate
