@@ -108,10 +108,11 @@ class ExtremeProblemIdentifier:
             if self.verbose:
                 print(f"{Colors.OKBLUE}ℹ️  INFO: {redacted_message}{Colors.ENDC}")
         elif level == "success":
-            # Only print success if message does not look like a security warning or secret
+            # Suppress all logs at success level containing secret-indicative words to prevent information disclosure
             lowered = redacted_message.lower()
-            if all(s not in lowered for s in ["password", "api key", "secret", "token"]):
-                print(f"{Colors.OKGREEN}✅ {redacted_message}{Colors.ENDC}")
+            if any(s in lowered for s in ["password", "api key", "secret", "token"]):
+                return  # Do not log if message contains secret-indicative keywords
+            print(f"{Colors.OKGREEN}✅ {redacted_message}{Colors.ENDC}")
     
     def add_problem(self, problem: Problem):
         """Add identified problem"""
