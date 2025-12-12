@@ -15,9 +15,14 @@ import asyncio
 import sys
 from pathlib import Path
 
+import yaml
+
 from governance_automation_launcher import GovernanceAutomationLauncher
 from coordinator import EngineCoordinator
 from integrated_launcher import IntegratedGovernanceAutomationLauncher
+
+
+DIMENSION_ID = "39-automation"
 
 
 async def test_dimension_artifacts():
@@ -27,8 +32,8 @@ async def test_dimension_artifacts():
     print("=" * 80)
 
     dimension_dir = Path(__file__).parent
-    schema_path = dimension_dir.parent / "dimensions" / "39-automation" / "schema.json"
-    policy_path = dimension_dir.parent / "dimensions" / "39-automation" / "policy.rego"
+    schema_path = dimension_dir.parent / "dimensions" / DIMENSION_ID / "schema.json"
+    policy_path = dimension_dir.parent / "dimensions" / DIMENSION_ID / "policy.rego"
     dimension_yaml = dimension_dir / "dimension.yaml"
 
     missing = [p for p in [schema_path, policy_path, dimension_yaml] if not p.exists()]
@@ -36,8 +41,17 @@ async def test_dimension_artifacts():
         print(f"❌ Missing artifacts: {', '.join(str(p) for p in missing)}")
         return False
 
-    content = dimension_yaml.read_text(encoding="utf-8")
-    if "../dimensions/39-automation/schema.json" not in content or "../dimensions/39-automation/policy.rego" not in content:
+    with dimension_yaml.open(encoding="utf-8") as f:
+        yaml_content = yaml.safe_load(f)
+
+    spec = yaml_content.get("spec", {})
+    schema_ref = spec.get("schema", {}).get("path")
+    policy_ref = spec.get("policy", {}).get("path")
+
+    expected_schema = f"../dimensions/{DIMENSION_ID}/schema.json"
+    expected_policy = f"../dimensions/{DIMENSION_ID}/policy.rego"
+
+    if schema_ref != expected_schema or policy_ref != expected_policy:
         print("❌ dimension.yaml does not reference shared schema/policy paths")
         return False
 
