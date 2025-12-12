@@ -115,7 +115,7 @@ function loadConfig(): Config {
  * const port = config.PORT;
  * const isDev = config.NODE_ENV === 'development';
  *
- * // This will throw in strict mode (object is frozen):
+ * // This will throw a TypeError in strict mode or silently fail in non-strict mode (object is frozen):
  * // config.PORT = 9000;
  */
 export const config: Readonly<Config> = Object.freeze(loadConfig());
