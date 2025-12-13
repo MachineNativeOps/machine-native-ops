@@ -30,8 +30,9 @@ import { randomUUID } from 'crypto';
 
 import { Router, Request, Response } from 'express';
 import type { Router as RouterType } from 'express';
-
 import rateLimit, { type RateLimitRequestHandler } from 'express-rate-limit';
+import { Redis } from 'ioredis';
+import rateLimitRedisStore from 'rate-limit-redis';
 
 import { AssignmentController } from './controllers/assignment';
 import { EscalationController } from './controllers/escalation';
@@ -39,34 +40,47 @@ import { ProvenanceController } from './controllers/provenance';
 import { SLSAController } from './controllers/slsa';
 import { ErrorCode } from './errors';
 
+/**
+ * Factory function to create a rate limiter middleware with isolated state.
+ * This allows tests to create independent rate limiter instances.
+ *
+ * Rate limiter configuration: limits each IP to 100 requests per 15-minute window.
+ *
+ * Rationale: These limits are intended to balance normal user activity with protection
+ * against abuse (e.g., brute-force or denial-of-service attacks). Adjust `max` and
+ * `windowMs` below as needed for your deployment or traffic patterns.
+ *
+ * @returns A configured rate limiter middleware instance
+ */
+export function createRateLimiter(): RateLimitRequestHandler {
+  return rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+    handler: (req: Request, res: Response /*, next: NextFunction*/) => {
+      const traceId = req.traceId || randomUUID();
+      res.status(429).json({
+        error: {
+          code: ErrorCode.RATE_LIMIT,
+          message: 'Too many requests, please try again later.',
+          status: 429,
+          traceId,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    },
+  });
+}
+
 /** Express router instance for all API routes */
 const router: RouterType = Router();
 
 /**
  * Rate limiter middleware: limits each IP to 100 requests per 15-minute window.
- *
- * Rationale: These limits are intended to balance normal user activity with protection
- * against abuse (e.g., brute-force or denial-of-service attacks). Adjust `max` and
- * `windowMs` below as needed for your deployment or traffic patterns.
+ * Uses the shared rate limiter instance for production.
  */
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-  handler: (req: Request, res: Response /*, next: NextFunction*/) => {
-    const traceId = req.traceId || randomUUID();
-    res.status(429).json({
-      error: {
-        code: ErrorCode.RATE_LIMIT,
-        message: 'Too many requests, please try again later.',
-        status: 429,
-        traceId,
-        timestamp: new Date().toISOString(),
-      },
-    });
-  },
-});
+const limiter = createRateLimiter();
 
 /** Controller instances */
 const provenanceController = new ProvenanceController();
