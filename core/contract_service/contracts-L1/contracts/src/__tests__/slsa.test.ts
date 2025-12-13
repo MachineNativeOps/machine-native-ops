@@ -1,11 +1,15 @@
 import request from 'supertest';
-import express from 'express';
-import routes from '../routes';
+import express, { Router } from 'express';
+import routes, { createRateLimiter } from '../routes';
 import { loggingMiddleware } from '../middleware/logging';
 import { errorMiddleware } from '../middleware/error';
 import { writeFile, unlink } from 'fs/promises';
 import { join } from 'path';
 import { tmpdir } from 'os';
+import { ProvenanceController } from '../controllers/provenance';
+import { SLSAController } from '../controllers/slsa';
+import { AssignmentController } from '../controllers/assignment';
+import { EscalationController } from '../controllers/escalation';
 
 // Create standalone test application
 const createTestApp = () => {
@@ -13,6 +17,35 @@ const createTestApp = () => {
   app.use(express.json());
   app.use(loggingMiddleware);
   app.use(routes);
+  app.use(errorMiddleware);
+  return app;
+};
+
+/**
+ * Creates a test app with an isolated rate limiter for rate limiting tests.
+ * This ensures that rate limit counters from other tests do not interfere.
+ */
+const createTestAppWithIsolatedRateLimiter = () => {
+  const app = express();
+  app.use(express.json());
+  app.use(loggingMiddleware);
+
+  // Create a router with an isolated rate limiter
+  const router = Router();
+  const limiter = createRateLimiter();
+
+  // Controller instances
+  const provenanceController = new ProvenanceController();
+  const slsaController = new SLSAController();
+  const assignmentController = new AssignmentController();
+  const escalationController = new EscalationController();
+
+  // Register routes with isolated rate limiter
+  // Only register the routes we need for rate limiting tests
+  router.post('/api/v1/slsa/attestations', limiter, slsaController.createAttestation);
+  router.post('/api/v1/slsa/summary', limiter, slsaController.getAttestationSummary);
+
+  app.use(router);
   app.use(errorMiddleware);
   return app;
 };
@@ -310,8 +343,9 @@ describe('SLSA API Endpoints', () => {
     let provenance: any;
 
     beforeAll(async () => {
-      // Create a fresh app instance for rate limiting tests to avoid interference
-      rateLimitApp = createTestApp();
+      // Create a fresh app instance with isolated rate limiter for these tests
+      // This ensures rate limit counters from other tests don't interfere
+      rateLimitApp = createTestAppWithIsolatedRateLimiter();
 
       // Create a provenance for rate limiting tests
       const testFile = join(tmpdir(), `test-slsa-ratelimit-${Date.now()}.txt`);
@@ -415,10 +449,13 @@ describe('SLSA API Endpoints', () => {
       // Verify the rate limit error response format
       const rateLimitedResponse = rateLimitedRequests[0];
       expect(rateLimitedResponse.body).toMatchObject({
-        status: 'error',
-        error: 'rate_limit_exceeded',
-        message: 'Too many requests, please try again later.',
-        timestamp: expect.any(String)
+        error: {
+          code: 'RATE_LIMIT',
+          message: 'Too many requests, please try again later.',
+          status: 429,
+          timestamp: expect.any(String),
+          traceId: expect.any(String)
+        }
       });
 
       // Verify rate limit headers are still present in error response
