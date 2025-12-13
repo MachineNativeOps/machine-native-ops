@@ -94,7 +94,7 @@ jobs:
         if: steps.validate.outputs.path_valid == 'true'
         run: |
           npm install -g typescript@5 ts-node@10
-          npm install minimist@1.2.8 @types/node@20
+          npm install minimist@1.2.8 @types/node@20.10.6
 
       - name: 🔧 Run governance comment generator
         id: generate
