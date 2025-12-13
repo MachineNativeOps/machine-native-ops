@@ -40,10 +40,9 @@ jobs:
         working-directory: ${{ env.SCRIPT_DIR }}
         run: |
           PR_NUMBER="${{ github.event.pull_request.number || '' }}"
+          PR_ARGS=()
           if [ "$PR_NUMBER" != "" ]; then
-            PR_ARG="--pr-number \"$PR_NUMBER\""
-          else
-            PR_ARG=""
+            PR_ARGS+=(--pr-number "$PR_NUMBER")
           fi
 
           npx ts-node --transpile-only generate-comment.ts \
@@ -51,14 +50,14 @@ jobs:
             --run-id "${{ github.run_id }}" \
             --commit "${{ github.sha }}" \
             --branch "${{ github.ref_name }}" \
-            "$PR_ARG"
+            "${PR_ARGS[@]}"
           node update-registry.js \
             --event-id "auto-comment-${{ github.run_id }}" \
             --status "triggered" \
             --workflow "GitHub CI Trigger" \
             --commit "${{ github.sha }}" \
             --branch "${{ github.ref_name }}" \
-            "$PR_ARG"
+            "${PR_ARGS[@]}"
 
       - name: Governance tool failed (non-blocking notice)
         if: failure()
