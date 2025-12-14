@@ -592,9 +592,9 @@ pip install vllm
 pip install transformers==4.36.0
 pip install vllm==0.6.3
 
-# ✅ 更安全：使用哈希验证
+# ✅ 更安全：使用哈希验证（示例）
 pip install transformers==4.36.0 \
-  --hash sha256:abc123...
+  --hash sha256:1234567890abcdef...  # 替换为实际包的 SHA256 哈希
 ```
 
 **生产环境建议**:
