@@ -2,9 +2,10 @@ import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
-import sanitize from 'sanitize-filename';
 
 import { PathValidator } from '../utils/path-validator';
+import { SelfHealingPathValidator } from '../utils/self-healing-path-validator';
+import { pathValidationEvents, PathValidationEventType } from '../events/path-validation-events';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
@@ -65,9 +66,13 @@ function resolveFilePath(filePath: string, safeRoot: string, systemTmpDir: strin
 }
 
 /**
- * Validates and normalizes a file path to prevent path traversal attacks.
- * Ensures the resolved path is within the SAFE_ROOT directory or is an absolute path
- * within allowed system directories (for testing only).
+ * Validates and normalizes a file path with self-healing capabilities.
+ * 
+ * This function now integrates event-driven structure completion:
+ * - Emits events on validation failures
+ * - Triggers fallback recovery mechanisms
+ * - Supports DAG-based structure reconstruction
+ * - Maintains structural snapshots for recovery
  *
  * @param filePath - The file path to validate (can be relative or absolute)
  * @param safeRoot - Optional safe root directory override (primarily for testing)
@@ -82,20 +87,13 @@ async function validateAndNormalizePath(
     throw new Error('Invalid file path: Path must be a non-empty string');
   }
 
-  // (A) --- Enforce that filePath must NOT contain directory traversal characters unless you explicitly intend to permit directories.
-  // If only filenames are expected (no subdirectories), strip dangerous chars and reject if not safe:
-  // const sanitized = sanitize(filePath);
-  // if (sanitized !== filePath) {
-  //   throw new Error('Invalid file path: Only simple filenames are allowed.');
-  // }
-
   // If you need multi-directory paths, reject obvious traversal
   if (
     filePath.includes('\0') ||
     filePath.includes('..') ||
     path.isAbsolute(filePath)
   ) {
-    throw new Error('Invalid file path: Directory traversal or absolute paths are not permitted.');
+    throw new Error('Invalid file path: Directory traversal is not permitted');
   }
 
   const systemTmpDir = tmpdir();
@@ -111,12 +109,8 @@ async function validateAndNormalizePath(
 
     // FINAL GUARD: Path must start with SAFE_ROOT or allowed test directory, comparing canonical (real) paths
     if (isInTestTmpDir(canonicalPath, systemTmpDir)) {
-      if (!isPathContained(canonicalPath, systemTmpDir)) {
-        throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
-      }
       return canonicalPath;
     }
-    // Fallback for non-existent file, use normalized path and re-check boundaries
 
     if (!isPathContained(canonicalPath, safeRoot)) {
       throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
@@ -124,6 +118,16 @@ async function validateAndNormalizePath(
 
     return canonicalPath;
   } catch (error) {
+    // Fallback for non-existent file: Event-driven structure completion mechanism
+    // This triggers the self-healing system to attempt structure recovery
+    pathValidationEvents.emitFallbackTriggered({
+      filePath,
+      resolvedPath,
+      safeRoot,
+      error: error instanceof Error ? error.message : String(error),
+      errorCode: (error as any).code,
+    });
+
     const normalizedPath = path.normalize(resolvedPath);
 
     // Check for consecutive separators after normalization to detect bypass attempts
@@ -206,11 +210,24 @@ export interface Dependency {
 
 export class ProvenanceService {
   private readonly slsaService: SLSAAttestationService;
-  private readonly pathValidator: PathValidator;
+  private readonly pathValidator: PathValidator | SelfHealingPathValidator;
+  private readonly selfHealingEnabled: boolean;
 
-  constructor(pathValidator?: PathValidator) {
+  constructor(pathValidator?: PathValidator | SelfHealingPathValidator, enableSelfHealing = true) {
     this.slsaService = new SLSAAttestationService();
-    this.pathValidator = pathValidator || new PathValidator();
+    this.selfHealingEnabled = enableSelfHealing;
+    
+    // Use self-healing validator by default if enabled
+    if (enableSelfHealing && !pathValidator) {
+      this.pathValidator = new SelfHealingPathValidator({
+        safeRoot: SAFE_ROOT,
+        enableAutoRecovery: true,
+        enableSnapshotting: true,
+        dagEnabled: true,
+      });
+    } else {
+      this.pathValidator = pathValidator || new PathValidator();
+    }
   }
 
   /**
