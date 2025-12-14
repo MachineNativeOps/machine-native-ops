@@ -414,7 +414,7 @@ const reports = await runStageOne({
 - 硬件要求：最低 24GB GPU (RTX 4090) / 推薦 30GB+ GPU (A100/H100)
 - vLLM Docker 部署：`docker pull vllm/vllm-openai:v0.12.0`
 - 配置建議：最低配置 max_len 12500-14000，推薦配置完整長度
-- 性能優化：量化、批處理、前缀緩存
+- 性能優化：量化、批處理、前綴緩存
 - 故障排查：OOM 錯誤、CUDA 配置、模型加載問題
 
 ### CI 治理框架 (`config/`, `scripts/hooks/`)
