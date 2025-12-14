@@ -2,7 +2,6 @@ import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
-import sanitize from 'sanitize-filename';
 
 import { PathValidator } from '../utils/path-validator';
 
@@ -66,59 +65,60 @@ async function validateAndNormalizePath(
     throw new Error('Invalid file path: Path must be a non-empty string');
   }
 
-  // (A) --- Enforce that filePath must NOT contain directory traversal characters unless you explicitly intend to permit directories.
-  // If only filenames are expected (no subdirectories), strip dangerous chars and reject if not safe:
-  // const sanitized = sanitize(filePath);
-  // if (sanitized !== filePath) {
-  //   throw new Error('Invalid file path: Only simple filenames are allowed.');
-  // }
+  const systemTmpDir = tmpdir();
 
-  // If you need multi-directory paths, reject obvious traversal
-  if (
-    filePath.includes('\0') ||
-    filePath.includes('..') ||
-    filePath.includes('//') ||
-    path.isAbsolute(filePath)
-  ) {
-    throw new Error('Invalid file path: Directory traversal or absolute paths are not permitted.');
+  // Reject obvious traversal patterns and null bytes
+  if (filePath.includes('\0') || filePath.includes('..')) {
+    throw new Error('Invalid file path: Directory traversal patterns are not permitted.');
   }
 
-  const systemTmpDir = tmpdir();
+  // For relative paths, resolve against safe root
+  // For absolute paths in test mode within tmpdir, allow them to be resolved
+  // Otherwise, reject absolute paths
+  if (path.isAbsolute(filePath)) {
+    const isTestMode = process.env.NODE_ENV === 'test';
+    const isInTmpDir = filePath === systemTmpDir || filePath.startsWith(systemTmpDir + path.sep);
+
+    if (!isTestMode || !isInTmpDir) {
+      throw new Error('Invalid file path: Absolute paths outside test tmpdir are not permitted.');
+    }
+  }
+
   const resolvedPath = resolveFilePath(filePath, safeRoot, systemTmpDir);
 
+  // Determine the path to validate and the appropriate root directory
+  let pathToValidate: string;
+  let allowedRoot: string;
+
   try {
-    const canonicalPath = await realpath(resolvedPath);
-
-    // FINAL GUARD: Path must start with SAFE_ROOT or allowed test directory, comparing canonical (real) paths
-    if (isInTestTmpDir(canonicalPath, systemTmpDir)) {
-      if (!isPathContained(canonicalPath, systemTmpDir)) {
-        throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
-      }
-      return canonicalPath;
-    }
-    // Fallback for non-existent file, use normalized path and re-check boundaries
-
-    if (!isPathContained(canonicalPath, safeRoot)) {
-      throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
-    }
-
-    return canonicalPath;
+    // Try to resolve to canonical path (follows symlinks)
+    pathToValidate = await realpath(resolvedPath);
   } catch (error) {
-    const normalizedPath = path.normalize(resolvedPath);
+    // If file doesn't exist or can't be resolved, use normalized path
+    pathToValidate = path.normalize(resolvedPath);
 
-    if (isInTestTmpDir(normalizedPath, systemTmpDir)) {
-      if (!isPathContained(normalizedPath, systemTmpDir)) {
-        throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
-      }
-      throw error;
-    }
+    // Determine the appropriate root for validation
+    allowedRoot = isInTestTmpDir(pathToValidate, systemTmpDir) ? systemTmpDir : safeRoot;
 
-    if (!isPathContained(normalizedPath, safeRoot)) {
+    // Validate path containment before re-throwing error
+    if (!isPathContained(pathToValidate, allowedRoot)) {
       throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
     }
 
+    // Path is valid but file doesn't exist - re-throw original error
     throw error;
   }
+
+  // Determine the appropriate root for validation
+  allowedRoot = isInTestTmpDir(pathToValidate, systemTmpDir) ? systemTmpDir : safeRoot;
+
+  // FINAL GUARD: Validate that the resolved path is contained within the allowed root
+  // This applies to both test (tmpdir) and non-test (safeRoot) scenarios
+  if (!isPathContained(pathToValidate, allowedRoot)) {
+    throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
+  }
+
+  return pathToValidate;
 }
 
 export interface BuildAttestation {
