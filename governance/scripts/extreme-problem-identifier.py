@@ -104,7 +104,10 @@ class ExtremeProblemIdentifier:
         
         # Log based on severity
         if problem.severity == ProblemSeverity.CRITICAL:
-            self.log(f"[{problem.category}] {problem.title} @ {problem.location}", "critical")
+            if problem.category == ProblemCategory.SECURITY:
+                self.log("Security issue detected (details suppressed in logs)", "critical")
+            else:
+                self.log(f"[{problem.category}] {problem.title} @ {problem.location}", "critical")
         elif problem.severity == ProblemSeverity.HIGH:
             self.log(f"[{problem.category}] {problem.title} @ {problem.location}", "error")
         elif problem.severity == ProblemSeverity.MEDIUM:
