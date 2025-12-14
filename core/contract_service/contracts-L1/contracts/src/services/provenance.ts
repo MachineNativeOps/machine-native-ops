@@ -68,10 +68,6 @@ async function validateAndNormalizePath(
 
   // (A) --- Enforce that filePath must NOT contain directory traversal characters unless you explicitly intend to permit directories.
   // If only filenames are expected (no subdirectories), strip dangerous chars and reject if not safe:
-  // const sanitized = sanitize(filePath);
-  // if (sanitized !== filePath) {
-  //   throw new Error('Invalid file path: Only simple filenames are allowed.');
-  // }
 
   // If you need multi-directory paths, reject obvious traversal
   if (
