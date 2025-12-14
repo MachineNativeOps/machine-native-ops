@@ -2,7 +2,6 @@ import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
-import sanitize from 'sanitize-filename';
 
 import { PathValidator } from '../utils/path-validator';
 
