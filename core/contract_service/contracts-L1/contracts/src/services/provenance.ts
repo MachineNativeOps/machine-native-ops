@@ -68,11 +68,14 @@ export interface Dependency {
 
 export class ProvenanceService {
   private slsaService: SLSAAttestationService;
+  
   // Define the root directory for allowed files. Change as needed for your project needs
   // Use a fixed absolute path or environment variable for SAFE_ROOT
-  private static readonly SAFE_ROOT = process.env.SAFE_ROOT_PATH
-    ? resolve(process.env.SAFE_ROOT_PATH)
-    : resolve(__dirname, '../../safefiles');
+  private static getSafeRoot(): string {
+    return process.env.SAFE_ROOT_PATH
+      ? resolve(process.env.SAFE_ROOT_PATH)
+      : resolve(__dirname, '../../safefiles');
+  }
 
   constructor() {
     this.slsaService = new SLSAAttestationService();
@@ -82,28 +85,19 @@ export class ProvenanceService {
    * Validate that a file path is safe to access
    * to prevent directory traversal attacks
    */
-  private validatePath(filePath: string): string {
-    const resolvedPath = resolve(filePath);
-
-    // Normalize paths for case-insensitive comparison on Windows
-    const normalizedResolved = resolvedPath.toLowerCase();
-    const normalizedSafeRoot = SAFE_ROOT.toLowerCase();
-    const normalizedTempRoot = TEMP_ROOT.toLowerCase();
-    const normalizedSep = sep.toLowerCase();
-
-    // Check if the resolved path is within allowed directories
-    // This prevents both relative path traversal (../) and absolute path attacks
-    const isWithinSafeRoot =
-      normalizedResolved.startsWith(normalizedSafeRoot + normalizedSep) ||
-      normalizedResolved === normalizedSafeRoot;
-    const isWithinTempRoot =
-      normalizedResolved.startsWith(normalizedTempRoot + normalizedSep) ||
-      normalizedResolved === normalizedTempRoot;
-
-    if (!isWithinSafeRoot && !isWithinTempRoot) {
-      throw new Error(
-        `Path traversal detected: ${filePath} attempts to access files outside the safe directory`
-      );
+  private async resolveSafePath(userInputPath: string): Promise<string> {
+    const safeRoot = ProvenanceService.getSafeRoot();
+    // Canonicalize SAFE_ROOT and the resolved path, and check that the path stays strictly within SAFE_ROOT.
+    const canonicalRoot = await realpath(safeRoot);
+    const absPath = resolve(canonicalRoot, userInputPath);
+    const realAbsPath = await realpath(absPath);
+    // Ensure the realAbsPath is strictly under canonicalRoot (not equal nor outside)
+    if (
+      realAbsPath.length <= canonicalRoot.length ||    // Must not be root itself
+      realAbsPath.slice(0, canonicalRoot.length) !== canonicalRoot ||
+      (realAbsPath.length > canonicalRoot.length && realAbsPath[canonicalRoot.length] !== sep)
+    ) {
+      throw new Error(`Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be strictly within ${canonicalRoot}`);
     }
 
     return resolvedPath;
