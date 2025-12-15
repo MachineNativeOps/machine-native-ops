@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
-import { relative, resolve, sep } from 'path';
 import { tmpdir } from 'os';
+import { relative, resolve, sep } from 'path';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
@@ -69,7 +69,7 @@ export interface Dependency {
 
 export class ProvenanceService {
   private slsaService: SLSAAttestationService;
-  
+
   // Define the root directory for allowed files. Change as needed for your project needs
   // Use a fixed absolute path or environment variable for SAFE_ROOT
   private static getSafeRoot(): string {
