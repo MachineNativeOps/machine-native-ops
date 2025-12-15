@@ -131,12 +131,6 @@ python governance/35-scripts/scan-governance-directory.py \
 python governance/35-scripts/scan-governance-directory.py \
   --quiet \
   --report-output report.yaml
-
-# Deep recursive scan with file-type statistics
-python governance/35-scripts/scan-governance-directory.py \
-  --deep \
-  --report-format json \
-  --report-output deep-scan-report.json
 ```
 
 ---
