@@ -146,12 +146,17 @@ importers:
         version: 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
 <<<<<<< HEAD
+<<<<<<< HEAD
         specifier: ^0.561.0
         version: 0.561.0(react@18.3.1)
 =======
         specifier: ^0.557.0
         version: 0.557.0(react@18.3.1)
 >>>>>>> origin/alert-autofix-37
+=======
+        specifier: ^0.557.0
+        version: 0.557.0(react@18.3.1)
+>>>>>>> origin/copilot/sub-pr-402
       mermaid:
         specifier: ^11.12.2
         version: 11.12.2
@@ -297,6 +302,7 @@ importers:
         specifier: ^8.54.0
         version: 8.57.1
 <<<<<<< HEAD
+<<<<<<< HEAD
       eslint-config-prettier:
         specifier: ^9.1.2
         version: 9.1.2(eslint@8.57.1)
@@ -332,6 +338,11 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.19.26)
 >>>>>>> origin/alert-autofix-37
+=======
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@20.19.26)
+>>>>>>> origin/copilot/sub-pr-402
 
   island-ai:
     devDependencies:
@@ -3884,12 +3895,17 @@ packages:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   lucide-react@0.561.0:
     resolution: {integrity: sha512-Y59gMY38tl4/i0qewcqohPdEbieBy7SovpBL9IFebhc2mDd8x4PZSOsiFRkpPcOq6bj1r/mjH/Rk73gSlIJP2A==}
 =======
   lucide-react@0.557.0:
     resolution: {integrity: sha512-x6LrJAuYGywdjH4rBgI8ygWnCsn8GTvS9/BhSORNWsuv3LNLV39ZOUg6UTJa9nFUl0fHY8bytDSThH12pNHyLQ==}
 >>>>>>> origin/alert-autofix-37
+=======
+  lucide-react@0.557.0:
+    resolution: {integrity: sha512-x6LrJAuYGywdjH4rBgI8ygWnCsn8GTvS9/BhSORNWsuv3LNLV39ZOUg6UTJa9nFUl0fHY8bytDSThH12pNHyLQ==}
+>>>>>>> origin/copilot/sub-pr-402
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -8128,10 +8144,6 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-prettier@9.1.2(eslint@8.57.1):
-    dependencies:
-      eslint: 8.57.1
-
   eslint-config-prettier@9.1.2(eslint@9.39.1(jiti@1.21.7)):
     dependencies:
       eslint: 9.39.1(jiti@1.21.7)
@@ -8195,15 +8207,6 @@ snapshots:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
-
-  eslint-plugin-prettier@5.5.4(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.7.4):
-    dependencies:
-      eslint: 8.57.1
-      prettier: 3.7.4
-      prettier-linter-helpers: 1.0.0
-      synckit: 0.11.11
-    optionalDependencies:
-      eslint-config-prettier: 9.1.2(eslint@8.57.1)
 
   eslint-plugin-prettier@5.5.4(eslint-config-prettier@9.1.2(eslint@9.39.1(jiti@1.21.7)))(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.4):
     dependencies:
@@ -9501,10 +9504,14 @@ snapshots:
       yallist: 3.1.1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   lucide-react@0.561.0(react@18.3.1):
 =======
   lucide-react@0.557.0(react@18.3.1):
 >>>>>>> origin/alert-autofix-37
+=======
+  lucide-react@0.557.0(react@18.3.1):
+>>>>>>> origin/copilot/sub-pr-402
     dependencies:
       react: 18.3.1
 

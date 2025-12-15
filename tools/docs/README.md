@@ -1,7 +1,6 @@
 # Documentation Tools
 
-This directory contains automated tools for generating and analyzing
-documentation in the SynergyMesh repository.
+This directory contains automated tools for generating and analyzing documentation in the SynergyMesh repository.
 
 ## Available Tools
 
@@ -9,11 +8,10 @@ documentation in the SynergyMesh repository.
 
 Analyze root-level reports to generate consolidated analysis and health metrics.
 
-**Purpose**: Scans all report files in `/reports/` and `/docs/reports/`,
-extracts key metrics, findings, and recommendations, then generates consolidated
-analysis in multiple formats.
+**Purpose**: Scans all report files in `/reports/` and `/docs/reports/`, extracts key metrics, findings, and recommendations, then generates consolidated analysis in multiple formats.
 
 **Usage**:
+
 ```bash
 # Via Makefile (recommended)
 make analyze-reports
@@ -36,16 +34,22 @@ python tools/docs/analyze_root_reports.py \
 
 **Outputs**:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 - **Markdown**: Human-readable analysis report with executive summary,
   inventory, findings, and action items
 =======
 - **Markdown**: Human-readable analysis report with executive summary, inventory, findings, and action items
 >>>>>>> origin/alert-autofix-37
+=======
+
+- **Markdown**: Human-readable analysis report with executive summary, inventory, findings, and action items
+>>>>>>> origin/copilot/sub-pr-402
 - **JSON**: Structured data for programmatic access and integration
 - **YAML**: Alternative structured format (requires PyYAML)
 
 **Features**:
+
 - Automatic categorization of reports
 - Status extraction (errors, warnings, successes)
 - Key findings and recommendations extraction
@@ -60,6 +64,7 @@ python tools/docs/analyze_root_reports.py \
 Generate a Knowledge Graph from the repository structure and MN-DOC entities.
 
 **Usage**:
+
 ```bash
 make kg
 # or
@@ -73,6 +78,7 @@ python tools/docs/generate_knowledge_graph.py --repo-root . --output docs/knowle
 Generate MN-DOC (Multi-Node Documentation) from README.md.
 
 **Usage**:
+
 ```bash
 make mndoc
 # or
@@ -86,6 +92,7 @@ python tools/docs/generate_mndoc_from_readme.py --readme README.md --output docs
 Project Knowledge Graph entities to SuperRoot format.
 
 **Usage**:
+
 ```bash
 make superroot
 # or
@@ -99,6 +106,7 @@ python tools/docs/project_to_superroot.py --kg docs/knowledge-graph.yaml --outpu
 Scan repository and generate documentation index.
 
 **Usage**:
+
 ```bash
 python tools/docs/scan_repo_generate_index.py
 ```
@@ -110,6 +118,7 @@ python tools/docs/scan_repo_generate_index.py
 Validate documentation index and structure.
 
 **Usage**:
+
 ```bash
 python tools/docs/validate_index.py --verbose
 ```
@@ -121,6 +130,7 @@ python tools/docs/validate_index.py --verbose
 Inject SLSA provenance metadata into build artifacts.
 
 **Usage**:
+
 ```bash
 python tools/docs/provenance_injector.py
 ```
@@ -132,6 +142,7 @@ python tools/docs/provenance_injector.py
 Generate summary comments for pull requests.
 
 **Usage**:
+
 ```bash
 python tools/docs/pr_comment_summary.py
 ```
@@ -141,21 +152,25 @@ python tools/docs/pr_comment_summary.py
 ## Common Workflows
 
 ### Generate All Documentation Artifacts
+
 ```bash
 make all-kg
 ```
 
 This runs:
+
 1. MN-DOC generation
 2. Knowledge Graph generation
 3. SuperRoot entity projection
 
 ### Analyze Reports After Updates
+
 ```bash
 make analyze-reports
 ```
 
 ### Check for Documentation Drift
+
 ```bash
 make check-drift
 ```
@@ -165,10 +180,12 @@ make check-drift
 ## Dependencies
 
 Most tools require:
+
 - Python 3.9+
 - Standard library modules
 
 Optional dependencies:
+
 - **PyYAML**: For YAML output support (`pip install pyyaml`)
 
 ---
@@ -177,12 +194,17 @@ Optional dependencies:
 
 These tools are integrated into GitHub Actions workflows:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 - `.github/workflows/knowledge-graph-drift.yml`: Checks for drift in generated
   docs
 =======
 - `.github/workflows/knowledge-graph-drift.yml`: Checks for drift in generated docs
 >>>>>>> origin/alert-autofix-37
+=======
+
+- `.github/workflows/knowledge-graph-drift.yml`: Checks for drift in generated docs
+>>>>>>> origin/copilot/sub-pr-402
 - `.github/workflows/project-self-awareness.yml`: Runs self-awareness reports
 
 ---
@@ -204,6 +226,7 @@ When adding new tools to this directory:
 ## Questions or Issues?
 
 For questions about these tools, see:
+
 - Main documentation: `/docs/`
 - Project manifest: `/docs/project-manifest.md`
 - Governance index: `/governance/README.md`

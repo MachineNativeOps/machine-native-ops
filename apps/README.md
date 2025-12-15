@@ -4,8 +4,7 @@
 
 `apps/` 目錄包含所有面向用戶的應用程式，包括 Web 前端、移動應用和各種客戶端。
 
-The `apps/` directory contains all user-facing applications, including web
-frontend, mobile applications, and various client applications.
+The `apps/` directory contains all user-facing applications, including web frontend, mobile applications, and various client applications.
 
 ---
 
@@ -255,11 +254,13 @@ GET    /api/v1/user/profile    用戶資料
 ## 🐳 Docker 部署 / Docker Deployment
 
 ### 開發環境
+
 ```bash
 docker-compose -f docker-compose.dev.yml up -d
 ```
 
 ### 生產環境
+
 ```bash
 docker-compose up -d
 
@@ -272,6 +273,7 @@ docker-compose logs -f web
 ## ☸️ Kubernetes 部署 / Kubernetes Deployment
 
 ### 部署應用
+
 ```bash
 kubectl apply -f apps/web/k8s/
 
@@ -281,6 +283,7 @@ kubectl get svc
 ```
 
 ### 檢查狀態
+
 ```bash
 kubectl describe pod <pod-name>
 kubectl logs <pod-name>
@@ -324,12 +327,14 @@ pytest --cov=services tests/
 ## 📊 效能優化 / Performance Optimization
 
 ### 前端優化
+
 - 代碼分割 (Code Splitting)
 - 懶加載 (Lazy Loading)
 - 圖像優化 (Image Optimization)
 - 緩存策略 (Caching Strategy)
 
 ### 後端優化
+
 - 資料庫查詢優化
 - 快取策略 (Redis)
 - API 限速 (Rate Limiting)
@@ -340,12 +345,14 @@ pytest --cov=services tests/
 ## 🔐 安全 / Security
 
 ### 前端安全
+
 - XSS 防護 (XSS Protection)
 - CSRF 防護 (CSRF Protection)
 - CSP 策略 (Content Security Policy)
 - HTTPS 強制 (Enforce HTTPS)
 
 ### 後端安全
+
 - 輸入驗證 (Input Validation)
 - SQL 注入防護 (SQL Injection Protection)
 - 認證授權 (Authentication & Authorization)
@@ -356,6 +363,7 @@ pytest --cov=services tests/
 ## 📈 監控與告警 / Monitoring & Alerting
 
 ### 應用監控
+
 ```bash
 # 查看 Grafana 儀表板
 kubectl port-forward svc/grafana 3000:3000 -n synergymesh
@@ -363,6 +371,7 @@ kubectl port-forward svc/grafana 3000:3000 -n synergymesh
 ```
 
 ### 日誌查看
+
 ```bash
 # Docker
 docker logs -f <container-id>
@@ -404,4 +413,3 @@ npm run build
 - 📖 [應用文檔](./README.md)
 - 🐛 [報告問題](https://github.com/SynergyMesh-admin/Unmanned-Island/issues)
 - 💬 [討論](https://github.com/SynergyMesh-admin/Unmanned-Island/discussions)
-

@@ -4,10 +4,14 @@ id: unmanned-island-knowledge-graph
 title: Unmanned Island System Knowledge Graph
 description: Knowledge graph representation of the repository structure and entities
 <<<<<<< HEAD
+<<<<<<< HEAD
 generated_at: '2025-12-12T07:44:12.987782Z'
 =======
 generated_at: '2025-12-15T00:28:44.853161Z'
 >>>>>>> origin/alert-autofix-37
+=======
+generated_at: '2025-12-11T02:15:55.330520Z'
+>>>>>>> origin/copilot/sub-pr-402
 source_repo: .
 nodes:
 - id: system:unmanned-island
@@ -32,12 +36,6 @@ nodes:
   path: v2-multi-islands
   properties:
     label_zh: 目錄
-- id: file:v2-multi-islands:governance-config.yaml
-  type: config
-  label: governance-config.yaml
-  path: v2-multi-islands/governance-config.yaml
-  properties:
-    label_zh: 設定
 - id: dir:v2-multi-islands:utils
   type: directory
   label: utils
@@ -54,12 +52,6 @@ nodes:
   type: module
   label: __init__.py
   path: v2-multi-islands/utils/__init__.py
-  properties:
-    label_zh: 模組
-- id: file:v2-multi-islands:validate_governance.py
-  type: module
-  label: validate_governance.py
-  path: v2-multi-islands/validate_governance.py
   properties:
     label_zh: 模組
 - id: dir:v2-multi-islands:orchestrator
@@ -126,12 +118,6 @@ nodes:
   type: module
   label: __init__.py
   path: v2-multi-islands/islands/__init__.py
-  properties:
-    label_zh: 模組
-- id: file:v2-multi-islands:governance_integration.py
-  type: module
-  label: governance_integration.py
-  path: v2-multi-islands/governance_integration.py
   properties:
     label_zh: 模組
 - id: file:v2-multi-islands:main.py
@@ -434,24 +420,12 @@ nodes:
   path: _codeql_detected_source_root/v2-multi-islands
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:v2-multi-islands:governance-config.yaml
-  type: config
-  label: governance-config.yaml
-  path: _codeql_detected_source_root/v2-multi-islands/governance-config.yaml
-  properties:
-    label_zh: 設定
 - id: dir:_codeql_detected_source_root:v2-multi-islands:utils
   type: directory
   label: utils
   path: _codeql_detected_source_root/v2-multi-islands/utils
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:v2-multi-islands:validate_governance.py
-  type: module
-  label: validate_governance.py
-  path: _codeql_detected_source_root/v2-multi-islands/validate_governance.py
-  properties:
-    label_zh: 模組
 - id: dir:_codeql_detected_source_root:v2-multi-islands:orchestrator
   type: directory
   label: orchestrator
@@ -464,12 +438,6 @@ nodes:
   path: _codeql_detected_source_root/v2-multi-islands/islands
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:v2-multi-islands:governance_integration.py
-  type: module
-  label: governance_integration.py
-  path: _codeql_detected_source_root/v2-multi-islands/governance_integration.py
-  properties:
-    label_zh: 模組
 - id: file:_codeql_detected_source_root:v2-multi-islands:main.py
   type: module
   label: main.py
@@ -1214,12 +1182,6 @@ nodes:
   path: _codeql_detected_source_root/tools/generate-sankey-data.py
   properties:
     label_zh: 模組
-- id: dir:_codeql_detected_source_root:tools:governance
-  type: subsystem
-  label: governance
-  path: _codeql_detected_source_root/tools/governance
-  properties:
-    label_zh: 子系統
 - id: file:_codeql_detected_source_root:tools:ai-auto-fix.py
   type: module
   label: ai-auto-fix.py
@@ -1538,6 +1500,7 @@ nodes:
   path: _codeql_detected_source_root/core/slsa_provenance
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: dir:_codeql_detected_source_root:core:project_factory
 <<<<<<< HEAD
   type: directory
@@ -1545,6 +1508,8 @@ nodes:
   path: _codeql_detected_source_root/core/project_factory
   properties:
     label_zh: 目錄
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:_codeql_detected_source_root:core:training_system
 =======
 >>>>>>> origin/alert-autofix-37
@@ -1697,6 +1662,7 @@ nodes:
   path: _codeql_detected_source_root/governance/05-compliance
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: file:_codeql_detected_source_root:governance:PHASE5_STATE.yaml
   type: config
   label: PHASE5_STATE.yaml
@@ -1715,6 +1681,8 @@ nodes:
   path: _codeql_detected_source_root/governance/10-policy
   properties:
     label_zh: 目錄
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:_codeql_detected_source_root:governance:23-policies
   type: directory
   label: 23-policies
@@ -1733,16 +1701,16 @@ nodes:
   path: _codeql_detected_source_root/governance/14-improvement
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:governance:debt_auto_fix.py
-  type: module
-  label: debt_auto_fix.py
-  path: _codeql_detected_source_root/governance/debt_auto_fix.py
-  properties:
-    label_zh: 模組
-- id: dir:_codeql_detected_source_root:governance:examples
+- id: dir:_codeql_detected_source_root:governance:20-information
   type: directory
-  label: examples
-  path: _codeql_detected_source_root/governance/examples
+  label: 20-information
+  path: _codeql_detected_source_root/governance/20-information
+  properties:
+    label_zh: 目錄
+- id: dir:_codeql_detected_source_root:governance:30-integration
+  type: directory
+  label: 30-integration
+  path: _codeql_detected_source_root/governance/30-integration
   properties:
     label_zh: 目錄
 - id: file:_codeql_detected_source_root:governance:setup.py
@@ -1805,12 +1773,6 @@ nodes:
   path: _codeql_detected_source_root/governance/12-culture-capability
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:governance:PHASE4_STATE.yaml
-  type: config
-  label: PHASE4_STATE.yaml
-  path: _codeql_detected_source_root/governance/PHASE4_STATE.yaml
-  properties:
-    label_zh: 設定
 - id: dir:_codeql_detected_source_root:governance:00-vision-strategy
   type: directory
   label: 00-vision-strategy
@@ -1835,12 +1797,6 @@ nodes:
   path: _codeql_detected_source_root/governance/07-audit
   properties:
     label_zh: 目錄
-- id: dir:_codeql_detected_source_root:governance:60-contracts
-  type: directory
-  label: 60-contracts
-  path: _codeql_detected_source_root/governance/60-contracts
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root:governance:27-templates
   type: directory
   label: 27-templates
@@ -1859,22 +1815,10 @@ nodes:
   path: _codeql_detected_source_root/governance/33-common
   properties:
     label_zh: 目錄
-- id: dir:_codeql_detected_source_root:governance:20-intent
-  type: directory
-  label: 20-intent
-  path: _codeql_detected_source_root/governance/20-intent
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root:governance:24-registry
   type: directory
   label: 24-registry
   path: _codeql_detected_source_root/governance/24-registry
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:governance:index
-  type: directory
-  label: index
-  path: _codeql_detected_source_root/governance/index
   properties:
     label_zh: 目錄
 - id: dir:_codeql_detected_source_root:governance:17-sociological
@@ -1895,30 +1839,12 @@ nodes:
   path: _codeql_detected_source_root/governance/06-security
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:governance:governance-map.yaml
-  type: config
-  label: governance-map.yaml
-  path: _codeql_detected_source_root/governance/governance-map.yaml
-  properties:
-    label_zh: 設定
 - id: dir:_codeql_detected_source_root:governance:29-docs
   type: directory
   label: 29-docs
   path: _codeql_detected_source_root/governance/29-docs
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:governance:technical_debt_manager.py
-  type: module
-  label: technical_debt_manager.py
-  path: _codeql_detected_source_root/governance/technical_debt_manager.py
-  properties:
-    label_zh: 模組
-- id: file:_codeql_detected_source_root:governance:instant_debt_resolution.py
-  type: module
-  label: instant_debt_resolution.py
-  path: _codeql_detected_source_root/governance/instant_debt_resolution.py
-  properties:
-    label_zh: 模組
 - id: dir:_codeql_detected_source_root:governance:38-sbom
   type: directory
   label: 38-sbom
@@ -1943,6 +1869,7 @@ nodes:
   path: _codeql_detected_source_root/governance/32-rules
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: dir:_codeql_detected_source_root:governance:schemas
   type: directory
   label: schemas
@@ -1961,12 +1888,15 @@ nodes:
   path: _codeql_detected_source_root/governance/30-agents
   properties:
     label_zh: 目錄
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:_codeql_detected_source_root:governance:35-scripts
   type: directory
   label: 35-scripts
   path: _codeql_detected_source_root/governance/35-scripts
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: dir:_codeql_detected_source_root:governance:dimensions
   type: directory
   label: dimensions
@@ -1991,18 +1921,23 @@ nodes:
   path: _codeql_detected_source_root/governance/70-audit
   properties:
     label_zh: 目錄
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:_codeql_detected_source_root:governance:34-config
   type: directory
   label: 34-config
   path: _codeql_detected_source_root/governance/34-config
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: dir:_codeql_detected_source_root:governance:80-feedback
   type: directory
   label: 80-feedback
   path: _codeql_detected_source_root/governance/80-feedback
   properties:
     label_zh: 目錄
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:_codeql_detected_source_root:governance:01-architecture
   type: directory
   label: 01-architecture
@@ -2021,18 +1956,21 @@ nodes:
   path: _codeql_detected_source_root/governance/11-tools-systems
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:governance:governance.yaml
-  type: config
-  label: governance.yaml
-  path: _codeql_detected_source_root/governance/governance.yaml
+- id: dir:_codeql_detected_source_root:governance:10-stakeholder
+  type: directory
+  label: 10-stakeholder
+  path: _codeql_detected_source_root/governance/10-stakeholder
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: file:_codeql_detected_source_root:governance:governance.yaml
   type: config
   label: governance.yaml
   path: _codeql_detected_source_root/governance/governance.yaml
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:_codeql_detected_source_root:governance:16-psychological
   type: directory
   label: 16-psychological
@@ -2043,12 +1981,6 @@ nodes:
   type: directory
   label: 18-complex-system
   path: _codeql_detected_source_root/governance/18-complex-system
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:governance:_legacy
-  type: directory
-  label: _legacy
-  path: _codeql_detected_source_root/governance/_legacy
   properties:
     label_zh: 目錄
 - id: dir:_codeql_detected_source_root:governance:39-automation
@@ -2111,12 +2043,6 @@ nodes:
   path: _codeql_detected_source_root/tests/vectors
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:tests:test_path_validation.py
-  type: module
-  label: test_path_validation.py
-  path: _codeql_detected_source_root/tests/test_path_validation.py
-  properties:
-    label_zh: 模組
 - id: dir:_codeql_detected_source_root:tests:automation
   type: subsystem
   label: automation
@@ -2927,22 +2853,10 @@ nodes:
   path: .github/workflows/validate-copilot-instructions.yml
   properties:
     label_zh: 設定
-- id: file:.github:workflows:governance-validation.yml
-  type: config
-  label: governance-validation.yml
-  path: .github/workflows/governance-validation.yml
-  properties:
-    label_zh: 設定
 - id: file:.github:workflows:dynamic-ci-assistant.yml
   type: config
   label: dynamic-ci-assistant.yml
   path: .github/workflows/dynamic-ci-assistant.yml
-  properties:
-    label_zh: 設定
-- id: file:.github:workflows:gac-validation.yml
-  type: config
-  label: gac-validation.yml
-  path: .github/workflows/gac-validation.yml
   properties:
     label_zh: 設定
 - id: file:.github:workflows:copilot-setup-steps.yml
@@ -3083,12 +2997,6 @@ nodes:
   path: .github/workflows/system-evolution.yml
   properties:
     label_zh: 設定
-- id: file:.github:workflows:extreme-problem-identification.yml
-  type: config
-  label: extreme-problem-identification.yml
-  path: .github/workflows/extreme-problem-identification.yml
-  properties:
-    label_zh: 設定
 - id: file:.github:workflows:ci-auto-comment.yml
   type: config
   label: ci-auto-comment.yml
@@ -3221,12 +3129,6 @@ nodes:
   path: .github/workflows/pr-security-gate.yml
   properties:
     label_zh: 設定
-- id: file:.github:workflows:gac-auto-sync.yml
-  type: config
-  label: gac-auto-sync.yml
-  path: .github/workflows/gac-auto-sync.yml
-  properties:
-    label_zh: 設定
 - id: file:.github:workflows:label.yml
   type: config
   label: label.yml
@@ -3255,12 +3157,6 @@ nodes:
   type: config
   label: validate-island-ai-instructions.yml
   path: .github/workflows/validate-island-ai-instructions.yml
-  properties:
-    label_zh: 設定
-- id: file:.github:workflows:python-validation.yml
-  type: config
-  label: python-validation.yml
-  path: .github/workflows/python-validation.yml
   properties:
     label_zh: 設定
 - id: file:.github:workflows:conftest-validation.yml
@@ -3923,30 +3819,6 @@ nodes:
   path: tools/generate-sankey-data.py
   properties:
     label_zh: 模組
-- id: dir:tools:governance
-  type: subsystem
-  label: governance
-  path: tools/governance
-  properties:
-    label_zh: 子系統
-- id: file:tools:governance:generate-consolidated-report.py
-  type: module
-  label: generate-consolidated-report.py
-  path: tools/governance/generate-consolidated-report.py
-  properties:
-    label_zh: 模組
-- id: file:tools:governance:validate-governance-matrix.py
-  type: module
-  label: validate-governance-matrix.py
-  path: tools/governance/validate-governance-matrix.py
-  properties:
-    label_zh: 模組
-- id: file:tools:governance:language-governance-analyzer.py
-  type: module
-  label: language-governance-analyzer.py
-  path: tools/governance/language-governance-analyzer.py
-  properties:
-    label_zh: 模組
 - id: file:tools:ai-auto-fix.py
   type: module
   label: ai-auto-fix.py
@@ -4493,12 +4365,6 @@ nodes:
   path: docs/examples/configuration
   properties:
     label_zh: 目錄
-- id: dir:docs:examples:project-generation
-  type: directory
-  label: project-generation
-  path: docs/examples/project-generation
-  properties:
-    label_zh: 目錄
 - id: file:docs:unmanned-island.mndoc.yaml
   type: config
   label: unmanned-island.mndoc.yaml
@@ -4727,6 +4593,7 @@ nodes:
   path: core/slsa_provenance/attestation_manager.py
   properties:
     label_zh: 模組
+<<<<<<< HEAD
 - id: dir:core:project_factory
 <<<<<<< HEAD
   type: directory
@@ -4776,6 +4643,8 @@ nodes:
   path: core/project_factory/__init__.py
   properties:
     label_zh: 模組
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:core:training_system
 =======
 >>>>>>> origin/alert-autofix-37
@@ -5312,12 +5181,6 @@ nodes:
   path: governance/03-change/change-processes.yaml
   properties:
     label_zh: 設定
-- id: file:governance:03-change:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/03-change/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:03-change:change-rollback-procedures.yaml
   type: config
   label: change-rollback-procedures.yaml
@@ -5360,12 +5223,6 @@ nodes:
   path: governance/21-ecological
   properties:
     label_zh: 目錄
-- id: file:governance:21-ecological:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/21-ecological/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:05-compliance
   type: directory
   label: 05-compliance
@@ -5388,12 +5245,6 @@ nodes:
   type: config
   label: compliance-check-rules.yaml
   path: governance/05-compliance/compliance-check-rules.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:05-compliance:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/05-compliance/dimension.yaml
   properties:
     label_zh: 設定
 - id: file:governance:05-compliance:compliance-standards.yaml
@@ -5444,6 +5295,7 @@ nodes:
   path: governance/05-compliance/__init__.py
   properties:
     label_zh: 模組
+<<<<<<< HEAD
 - id: file:governance:PHASE5_STATE.yaml
   type: config
   label: PHASE5_STATE.yaml
@@ -5480,6 +5332,8 @@ nodes:
   path: governance/10-policy/framework.yaml
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:governance:23-policies
   type: directory
   label: 23-policies
@@ -5520,12 +5374,6 @@ nodes:
   type: config
   label: data-privacy-policy.yaml
   path: governance/23-policies/data-privacy-policy.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:23-policies:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/23-policies/dimension.yaml
   properties:
     label_zh: 設定
 - id: dir:governance:23-policies:compliance
@@ -5576,12 +5424,6 @@ nodes:
   path: governance/31-schemas/mndoc
   properties:
     label_zh: 目錄
-- id: file:governance:31-schemas:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/31-schemas/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:14-improvement
   type: directory
   label: 14-improvement
@@ -5618,18 +5460,6 @@ nodes:
   path: governance/14-improvement/knowledge-management.yaml
   properties:
     label_zh: 設定
-- id: file:governance:14-improvement:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/14-improvement/dimension.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:14-improvement:self-healing-improvement.yaml
-  type: config
-  label: self-healing-improvement.yaml
-  path: governance/14-improvement/self-healing-improvement.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:14-improvement:improvement-implementation.yaml
   type: config
   label: improvement-implementation.yaml
@@ -5655,6 +5485,7 @@ nodes:
   properties:
     label_zh: 模組
 - id: dir:governance:20-information
+<<<<<<< HEAD
   type: directory
   label: 20-information
   path: governance/20-information
@@ -5679,10 +5510,13 @@ nodes:
   properties:
     label_zh: 模組
 - id: dir:governance:examples
+=======
+>>>>>>> origin/copilot/sub-pr-402
   type: directory
-  label: examples
-  path: governance/examples
+  label: 20-information
+  path: governance/20-information
   properties:
+<<<<<<< HEAD
     label_zh: 設定
 - id: file:governance:30-integration:dimension.yaml
   type: config
@@ -5694,6 +5528,25 @@ nodes:
   type: config
   label: dimension.yaml
   path: governance/30-integration/dimension.yaml
+=======
+    label_zh: 目錄
+- id: dir:governance:30-integration
+  type: directory
+  label: 30-integration
+  path: governance/30-integration
+  properties:
+    label_zh: 目錄
+- id: file:governance:30-integration:integration-coordinator.py
+  type: module
+  label: integration-coordinator.py
+  path: governance/30-integration/integration-coordinator.py
+  properties:
+    label_zh: 模組
+- id: file:governance:30-integration:GOVERNANCE_DEPENDENCY_MAP.yaml
+  type: config
+  label: GOVERNANCE_DEPENDENCY_MAP.yaml
+  path: governance/30-integration/GOVERNANCE_DEPENDENCY_MAP.yaml
+>>>>>>> origin/copilot/sub-pr-402
   properties:
     label_zh: 設定
 - id: file:governance:setup.py
@@ -5718,12 +5571,6 @@ nodes:
   type: config
   label: performance-assessment.yaml
   path: governance/09-performance/performance-assessment.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:09-performance:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/09-performance/dimension.yaml
   properties:
     label_zh: 設定
 - id: file:governance:09-performance:performance-targets.yaml
@@ -5822,12 +5669,6 @@ nodes:
   path: governance/08-process/process-improvement-procedures.yaml
   properties:
     label_zh: 設定
-- id: file:governance:08-process:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/08-process/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:08-process:process-policy.yaml
   type: config
   label: process-policy.yaml
@@ -5852,12 +5693,6 @@ nodes:
   path: governance/15-economic
   properties:
     label_zh: 目錄
-- id: file:governance:15-economic:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/15-economic/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:15-economic:schemas
   type: directory
   label: schemas
@@ -5886,12 +5721,6 @@ nodes:
   type: config
   label: core.contract_service.L1.yaml
   path: governance/37-behavior-contracts/core.contract_service.L1.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:37-behavior-contracts:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/37-behavior-contracts/dimension.yaml
   properties:
     label_zh: 設定
 - id: file:governance:37-behavior-contracts:automation.architect.yaml
@@ -5978,12 +5807,6 @@ nodes:
   path: governance/04-risk/risk-assessment-framework.yaml
   properties:
     label_zh: 設定
-- id: file:governance:04-risk:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/04-risk/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:04-risk:risk-response-strategies.yaml
   type: config
   label: risk-response-strategies.yaml
@@ -6026,12 +5849,6 @@ nodes:
   path: governance/36-modules
   properties:
     label_zh: 目錄
-- id: file:governance:36-modules:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/36-modules/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:36-modules:core.unified_integration.yaml
   type: config
   label: core.unified_integration.yaml
@@ -6068,12 +5885,6 @@ nodes:
   path: governance/28-tests/skeleton-testing-runtime-mapping.yaml
   properties:
     label_zh: 設定
-- id: file:governance:28-tests:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/28-tests/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:28-tests:reports
   type: directory
   label: reports
@@ -6102,12 +5913,6 @@ nodes:
   type: module
   label: validate-governance-matrix.py
   path: governance/28-tests/validate-governance-matrix.py
-  properties:
-    label_zh: 模組
-- id: file:governance:28-tests:self-healing-validation.py
-  type: module
-  label: self-healing-validation.py
-  path: governance/28-tests/self-healing-validation.py
   properties:
     label_zh: 模組
 - id: file:governance:28-tests:conftest.py
@@ -6188,12 +5993,6 @@ nodes:
   path: governance/12-culture-capability/culture-strategy.yaml
   properties:
     label_zh: 設定
-- id: file:governance:12-culture-capability:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/12-culture-capability/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:12-culture-capability:competency-framework.yaml
   type: config
   label: competency-framework.yaml
@@ -6230,28 +6029,10 @@ nodes:
   path: governance/12-culture-capability/maturity-assessment.yaml
   properties:
     label_zh: 設定
-- id: file:governance:PHASE4_STATE.yaml
-  type: config
-  label: PHASE4_STATE.yaml
-  path: governance/PHASE4_STATE.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:00-vision-strategy
   type: directory
   label: 00-vision-strategy
   path: governance/00-vision-strategy
-  properties:
-    label_zh: 目錄
-- id: dir:governance:00-vision-strategy:gitops
-  type: directory
-  label: gitops
-  path: governance/00-vision-strategy/gitops
-  properties:
-    label_zh: 目錄
-- id: dir:governance:00-vision-strategy:crd
-  type: directory
-  label: crd
-  path: governance/00-vision-strategy/crd
   properties:
     label_zh: 目錄
 - id: file:governance:00-vision-strategy:strategic-objectives.yaml
@@ -6260,12 +6041,6 @@ nodes:
   path: governance/00-vision-strategy/strategic-objectives.yaml
   properties:
     label_zh: 設定
-- id: dir:governance:00-vision-strategy:monitoring
-  type: directory
-  label: monitoring
-  path: governance/00-vision-strategy/monitoring
-  properties:
-    label_zh: 目錄
 - id: file:governance:00-vision-strategy:alignment-framework.yaml
   type: config
   label: alignment-framework.yaml
@@ -6278,30 +6053,12 @@ nodes:
   path: governance/00-vision-strategy/governance-charter.yaml
   properties:
     label_zh: 設定
-- id: file:governance:00-vision-strategy:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/00-vision-strategy/dimension.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:00-vision-strategy:INSTANT-EXECUTION-MANIFEST.yaml
-  type: config
-  label: INSTANT-EXECUTION-MANIFEST.yaml
-  path: governance/00-vision-strategy/INSTANT-EXECUTION-MANIFEST.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:00-vision-strategy:vision-statement.yaml
   type: config
   label: vision-statement.yaml
   path: governance/00-vision-strategy/vision-statement.yaml
   properties:
     label_zh: 設定
-- id: dir:governance:00-vision-strategy:gatekeeper
-  type: directory
-  label: gatekeeper
-  path: governance/00-vision-strategy/gatekeeper
-  properties:
-    label_zh: 目錄
 - id: dir:governance:00-vision-strategy:gac-templates
   type: directory
   label: gac-templates
@@ -6320,30 +6077,12 @@ nodes:
   path: governance/00-vision-strategy/communication-plan.yaml
   properties:
     label_zh: 設定
-- id: dir:governance:00-vision-strategy:k8s
-  type: directory
-  label: k8s
-  path: governance/00-vision-strategy/k8s
-  properties:
-    label_zh: 目錄
-- id: dir:governance:00-vision-strategy:tests
-  type: module
-  label: tests
-  path: governance/00-vision-strategy/tests
-  properties:
-    label_zh: 模組
 - id: file:governance:00-vision-strategy:gac-architecture.yaml
   type: config
   label: gac-architecture.yaml
   path: governance/00-vision-strategy/gac-architecture.yaml
   properties:
     label_zh: 設定
-- id: dir:governance:00-vision-strategy:policy
-  type: directory
-  label: policy
-  path: governance/00-vision-strategy/policy
-  properties:
-    label_zh: 目錄
 - id: file:governance:00-vision-strategy:risk-register.yaml
   type: config
   label: risk-register.yaml
@@ -6386,12 +6125,6 @@ nodes:
   path: governance/13-metrics-reporting/generate-consolidated-report.py
   properties:
     label_zh: 模組
-- id: file:governance:13-metrics-reporting:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/13-metrics-reporting/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:13-metrics-reporting:report-templates.yaml
   type: config
   label: report-templates.yaml
@@ -6470,12 +6203,6 @@ nodes:
   path: governance/07-audit/audit-framework.yaml
   properties:
     label_zh: 設定
-- id: file:governance:07-audit:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/07-audit/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:07-audit:audit-procedures.yaml
   type: config
   label: audit-procedures.yaml
@@ -6512,42 +6239,12 @@ nodes:
   path: governance/07-audit/__init__.py
   properties:
     label_zh: 模組
-- id: dir:governance:60-contracts
-  type: directory
-  label: 60-contracts
-  path: governance/60-contracts
-  properties:
-    label_zh: 目錄
-- id: file:governance:60-contracts:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/60-contracts/dimension.yaml
-  properties:
-    label_zh: 設定
-- id: dir:governance:60-contracts:registry
-  type: directory
-  label: registry
-  path: governance/60-contracts/registry
-  properties:
-    label_zh: 目錄
-- id: file:governance:60-contracts:framework.yaml
-  type: config
-  label: framework.yaml
-  path: governance/60-contracts/framework.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:27-templates
   type: directory
   label: 27-templates
   path: governance/27-templates
   properties:
     label_zh: 目錄
-- id: file:governance:27-templates:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/27-templates/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:26-tools
   type: directory
   label: 26-tools
@@ -6596,12 +6293,6 @@ nodes:
   path: governance/26-tools/legacy-governance-governance-dashboard.py
   properties:
     label_zh: 模組
-- id: file:governance:26-tools:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/26-tools/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:26-tools:governance-cli.py
   type: module
   label: governance-cli.py
@@ -6650,12 +6341,6 @@ nodes:
   path: governance/33-common
   properties:
     label_zh: 目錄
-- id: file:governance:33-common:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/33-common/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:33-common:tools
   type: module
   label: tools
@@ -6668,36 +6353,12 @@ nodes:
   path: governance/33-common/schemas
   properties:
     label_zh: 目錄
-- id: dir:governance:20-intent
-  type: directory
-  label: 20-intent
-  path: governance/20-intent
-  properties:
-    label_zh: 目錄
-- id: file:governance:20-intent:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/20-intent/dimension.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:20-intent:framework.yaml
-  type: config
-  label: framework.yaml
-  path: governance/20-intent/framework.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:24-registry
   type: directory
   label: 24-registry
   path: governance/24-registry
   properties:
     label_zh: 目錄
-- id: file:governance:24-registry:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/24-registry/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:24-registry:module-contracts-l1.yaml
   type: config
   label: module-contracts-l1.yaml
@@ -6722,30 +6383,13 @@ nodes:
   path: governance/24-registry/module-A.yaml
   properties:
     label_zh: 設定
-- id: dir:governance:index
-  type: directory
-  label: index
-  path: governance/index
-  properties:
-    label_zh: 目錄
-- id: dir:governance:index:events
-  type: directory
-  label: events
-  path: governance/index/events
-  properties:
-    label_zh: 目錄
-- id: dir:governance:index:scripts
-  type: directory
-  label: scripts
-  path: governance/index/scripts
-  properties:
-    label_zh: 目錄
 - id: dir:governance:17-sociological
   type: directory
   label: 17-sociological
   path: governance/17-sociological
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: file:governance:17-sociological:dimension.yaml
   type: config
   label: dimension.yaml
@@ -6753,6 +6397,8 @@ nodes:
 <<<<<<< HEAD
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:governance:_scratch
   type: directory
   label: _scratch
@@ -6767,12 +6413,6 @@ nodes:
   path: governance/22-aesthetic
   properties:
     label_zh: 目錄
-- id: file:governance:22-aesthetic:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/22-aesthetic/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:06-security
   type: directory
   label: 06-security
@@ -6815,12 +6455,6 @@ nodes:
   path: governance/06-security/incident-response-plan.yaml
   properties:
     label_zh: 設定
-- id: file:governance:06-security:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/06-security/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:06-security:vulnerability-management.yaml
   type: config
   label: vulnerability-management.yaml
@@ -6851,12 +6485,6 @@ nodes:
   path: governance/06-security/__init__.py
   properties:
     label_zh: 模組
-- id: file:governance:governance-map.yaml
-  type: config
-  label: governance-map.yaml
-  path: governance/governance-map.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:29-docs
   type: directory
   label: 29-docs
@@ -6905,12 +6533,6 @@ nodes:
   path: governance/29-docs/architecture
   properties:
     label_zh: 目錄
-- id: file:governance:29-docs:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/29-docs/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:29-docs:skeleton-docs-io-contract.yaml
   type: config
   label: skeleton-docs-io-contract.yaml
@@ -6977,18 +6599,6 @@ nodes:
   path: governance/29-docs/v2-skeleton-api-io-contract.yaml
   properties:
     label_zh: 設定
-- id: file:governance:technical_debt_manager.py
-  type: module
-  label: technical_debt_manager.py
-  path: governance/technical_debt_manager.py
-  properties:
-    label_zh: 模組
-- id: file:governance:instant_debt_resolution.py
-  type: module
-  label: instant_debt_resolution.py
-  path: governance/instant_debt_resolution.py
-  properties:
-    label_zh: 模組
 - id: dir:governance:38-sbom
   type: directory
   label: 38-sbom
@@ -6999,12 +6609,6 @@ nodes:
   type: config
   label: signing-policy.yml
   path: governance/38-sbom/signing-policy.yml
-  properties:
-    label_zh: 設定
-- id: file:governance:38-sbom:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/38-sbom/dimension.yaml
   properties:
     label_zh: 設定
 - id: file:governance:docker-compose.yml
@@ -7049,12 +6653,6 @@ nodes:
   path: governance/02-decision/decision-templates.yaml
   properties:
     label_zh: 設定
-- id: file:governance:02-decision:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/02-decision/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:02-decision:decision-audit.yaml
   type: config
   label: decision-audit.yaml
@@ -7091,12 +6689,6 @@ nodes:
   path: governance/32-rules/language-naming-rules.yaml
   properties:
     label_zh: 設定
-- id: file:governance:32-rules:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/32-rules/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:32-rules:mapping-rules.yaml
   type: config
   label: mapping-rules.yaml
@@ -7109,6 +6701,7 @@ nodes:
   path: governance/32-rules/language-policy.yml
   properties:
     label_zh: 設定
+<<<<<<< HEAD
 - id: dir:governance:schemas
   type: directory
   label: schemas
@@ -7211,12 +6804,15 @@ nodes:
   path: governance/30-agents/framework.yaml
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:governance:35-scripts
   type: directory
   label: 35-scripts
   path: governance/35-scripts
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: file:governance:35-scripts:dimension.yaml
   type: config
   label: dimension.yaml
@@ -7805,6 +7401,8 @@ nodes:
   path: governance/70-audit/framework.yaml
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:governance:34-config
   type: directory
   label: 34-config
@@ -7827,12 +7425,6 @@ nodes:
   type: config
   label: ownership-map.yaml
   path: governance/34-config/ownership-map.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:34-config:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/34-config/dimension.yaml
   properties:
     label_zh: 設定
 - id: dir:governance:34-config:deployment
@@ -7877,6 +7469,7 @@ nodes:
   path: governance/34-config/logging-config.yaml
   properties:
     label_zh: 設定
+<<<<<<< HEAD
 - id: dir:governance:80-feedback
   type: directory
   label: 80-feedback
@@ -7895,6 +7488,8 @@ nodes:
   path: governance/80-feedback/framework.yaml
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:governance:01-architecture
   type: directory
   label: 01-architecture
@@ -7917,12 +7512,6 @@ nodes:
   type: config
   label: organizational-structure.yaml
   path: governance/01-architecture/organizational-structure.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:01-architecture:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/01-architecture/dimension.yaml
   properties:
     label_zh: 設定
 - id: file:governance:01-architecture:governance-model.yaml
@@ -7973,12 +7562,6 @@ nodes:
   path: governance/25-principles
   properties:
     label_zh: 目錄
-- id: file:governance:25-principles:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/25-principles/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:11-tools-systems
   type: directory
   label: 11-tools-systems
@@ -8007,12 +7590,6 @@ nodes:
   type: config
   label: decision-support-system.yaml
   path: governance/11-tools-systems/decision-support-system.yaml
-  properties:
-    label_zh: 設定
-- id: file:governance:11-tools-systems:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/11-tools-systems/dimension.yaml
   properties:
     label_zh: 設定
 - id: file:governance:11-tools-systems:audit-management-system.yaml
@@ -8051,7 +7628,19 @@ nodes:
   path: governance/11-tools-systems/process-management-system.yaml
   properties:
     label_zh: 設定
-- id: file:governance:governance.yaml
+- id: dir:governance:10-stakeholder
+  type: directory
+  label: 10-stakeholder
+  path: governance/10-stakeholder
+  properties:
+    label_zh: 目錄
+- id: file:governance:10-stakeholder:automation_engine.py
+  type: module
+  label: automation_engine.py
+  path: governance/10-stakeholder/automation_engine.py
+  properties:
+    label_zh: 模組
+- id: file:governance:10-stakeholder:stakeholder-satisfaction-survey.yaml
   type: config
   label: stakeholder-satisfaction-survey.yaml
   path: governance/10-stakeholder/stakeholder-satisfaction-survey.yaml
@@ -8069,12 +7658,15 @@ nodes:
   path: governance/10-stakeholder/conflict-resolution-procedures.yaml
   properties:
     label_zh: 設定
+<<<<<<< HEAD
 - id: file:governance:10-stakeholder:dimension.yaml
   type: config
   label: dimension.yaml
   path: governance/10-stakeholder/dimension.yaml
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: file:governance:10-stakeholder:stakeholder-analysis.yaml
   type: config
   label: stakeholder-analysis.yaml
@@ -8103,12 +7695,15 @@ nodes:
   type: config
   label: stakeholder-communication-plan.yaml
   path: governance/10-stakeholder/stakeholder-communication-plan.yaml
+<<<<<<< HEAD
   properties:
     label_zh: 設定
 - id: file:governance:governance.yaml
   type: config
   label: governance.yaml
   path: governance/governance.yaml
+=======
+>>>>>>> origin/copilot/sub-pr-402
   properties:
     label_zh: 設定
 - id: dir:governance:16-psychological
@@ -8117,36 +7712,27 @@ nodes:
   path: governance/16-psychological
   properties:
     label_zh: 目錄
-- id: file:governance:16-psychological:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/16-psychological/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:governance:18-complex-system
   type: directory
   label: 18-complex-system
   path: governance/18-complex-system
   properties:
     label_zh: 目錄
+<<<<<<< HEAD
 - id: file:governance:18-complex-system:dimension.yaml
   type: config
   label: dimension.yaml
   path: governance/18-complex-system/dimension.yaml
   properties:
     label_zh: 設定
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - id: dir:governance:39-automation
   type: directory
   label: 39-automation
   path: governance/39-automation
   properties:
     label_zh: 目錄
-- id: file:governance:39-automation:self-healing-engine.py
-  type: module
-  label: self-healing-engine.py
-  path: governance/39-automation/self-healing-engine.py
-  properties:
-    label_zh: 模組
 - id: dir:governance:39-automation:engines
   type: directory
   label: engines
@@ -8165,12 +7751,6 @@ nodes:
   path: governance/39-automation/test_automation_system.py
   properties:
     label_zh: 模組
-- id: file:governance:39-automation:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/39-automation/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: file:governance:39-automation:integrated_launcher.py
   type: module
   label: integrated_launcher.py
@@ -8201,12 +7781,6 @@ nodes:
   path: governance/19-evolutionary
   properties:
     label_zh: 目錄
-- id: file:governance:19-evolutionary:dimension.yaml
-  type: config
-  label: dimension.yaml
-  path: governance/19-evolutionary/dimension.yaml
-  properties:
-    label_zh: 設定
 - id: dir:knowledge
   type: directory
   label: knowledge
@@ -8303,30 +7877,12 @@ nodes:
   path: tests/vectors/cloud-agent-delegation
   properties:
     label_zh: 目錄
-- id: file:tests:test_path_validation.py
-  type: module
-  label: test_path_validation.py
-  path: tests/test_path_validation.py
-  properties:
-    label_zh: 模組
 - id: dir:tests:automation
   type: subsystem
   label: automation
   path: tests/automation
   properties:
     label_zh: 子系統
-- id: file:tests:automation:test_self_awareness_security.py
-  type: module
-  label: test_self_awareness_security.py
-  path: tests/automation/test_self_awareness_security.py
-  properties:
-    label_zh: 模組
-- id: file:tests:automation:test_baseline_validation_engine.py
-  type: module
-  label: test_baseline_validation_engine.py
-  path: tests/automation/test_baseline_validation_engine.py
-  properties:
-    label_zh: 模組
 - id: file:tests:automation:test_framework_patterns.py
   type: module
   label: test_framework_patterns.py
@@ -10002,9 +9558,6 @@ edges:
   target: dir:v2-multi-islands
   type: contains
 - source: dir:v2-multi-islands
-  target: file:v2-multi-islands:governance-config.yaml
-  type: contains
-- source: dir:v2-multi-islands
   target: dir:v2-multi-islands:utils
   type: contains
 - source: dir:v2-multi-islands:utils
@@ -10012,9 +9565,6 @@ edges:
   type: contains
 - source: dir:v2-multi-islands:utils
   target: file:v2-multi-islands:utils:__init__.py
-  type: contains
-- source: dir:v2-multi-islands
-  target: file:v2-multi-islands:validate_governance.py
   type: contains
 - source: dir:v2-multi-islands
   target: dir:v2-multi-islands:orchestrator
@@ -10048,9 +9598,6 @@ edges:
   type: contains
 - source: dir:v2-multi-islands:islands
   target: file:v2-multi-islands:islands:__init__.py
-  type: contains
-- source: dir:v2-multi-islands
-  target: file:v2-multi-islands:governance_integration.py
   type: contains
 - source: dir:v2-multi-islands
   target: file:v2-multi-islands:main.py
@@ -10203,22 +9750,13 @@ edges:
   target: dir:_codeql_detected_source_root:v2-multi-islands
   type: contains
 - source: dir:_codeql_detected_source_root:v2-multi-islands
-  target: file:_codeql_detected_source_root:v2-multi-islands:governance-config.yaml
-  type: contains
-- source: dir:_codeql_detected_source_root:v2-multi-islands
   target: dir:_codeql_detected_source_root:v2-multi-islands:utils
-  type: contains
-- source: dir:_codeql_detected_source_root:v2-multi-islands
-  target: file:_codeql_detected_source_root:v2-multi-islands:validate_governance.py
   type: contains
 - source: dir:_codeql_detected_source_root:v2-multi-islands
   target: dir:_codeql_detected_source_root:v2-multi-islands:orchestrator
   type: contains
 - source: dir:_codeql_detected_source_root:v2-multi-islands
   target: dir:_codeql_detected_source_root:v2-multi-islands:islands
-  type: contains
-- source: dir:_codeql_detected_source_root:v2-multi-islands
-  target: file:_codeql_detected_source_root:v2-multi-islands:governance_integration.py
   type: contains
 - source: dir:_codeql_detected_source_root:v2-multi-islands
   target: file:_codeql_detected_source_root:v2-multi-islands:main.py
@@ -10593,9 +10131,6 @@ edges:
   target: file:_codeql_detected_source_root:tools:generate-sankey-data.py
   type: contains
 - source: dir:_codeql_detected_source_root:tools
-  target: dir:_codeql_detected_source_root:tools:governance
-  type: contains
-- source: dir:_codeql_detected_source_root:tools
   target: file:_codeql_detected_source_root:tools:ai-auto-fix.py
   type: contains
 - source: dir:_codeql_detected_source_root:tools
@@ -10755,10 +10290,13 @@ edges:
   target: dir:_codeql_detected_source_root:core:slsa_provenance
   type: contains
 - source: dir:_codeql_detected_source_root:core
+<<<<<<< HEAD
   target: dir:_codeql_detected_source_root:core:project_factory
 <<<<<<< HEAD
   type: contains
 - source: dir:_codeql_detected_source_root:core
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:_codeql_detected_source_root:core:training_system
   type: contains
 - source: dir:_codeql_detected_source_root:core
@@ -10842,6 +10380,7 @@ edges:
   target: dir:_codeql_detected_source_root:governance:05-compliance
   type: contains
 - source: dir:_codeql_detected_source_root:governance
+<<<<<<< HEAD
   target: file:_codeql_detected_source_root:governance:PHASE5_STATE.yaml
   type: contains
 - source: dir:_codeql_detected_source_root:governance
@@ -10851,6 +10390,8 @@ edges:
   target: dir:_codeql_detected_source_root:governance:10-policy
   type: contains
 - source: dir:_codeql_detected_source_root:governance
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:_codeql_detected_source_root:governance:23-policies
   type: contains
 - source: dir:_codeql_detected_source_root:governance
@@ -10860,10 +10401,10 @@ edges:
   target: dir:_codeql_detected_source_root:governance:14-improvement
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: file:_codeql_detected_source_root:governance:debt_auto_fix.py
+  target: dir:_codeql_detected_source_root:governance:20-information
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: dir:_codeql_detected_source_root:governance:examples
+  target: dir:_codeql_detected_source_root:governance:30-integration
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: file:_codeql_detected_source_root:governance:setup.py
@@ -10896,9 +10437,6 @@ edges:
   target: dir:_codeql_detected_source_root:governance:12-culture-capability
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: file:_codeql_detected_source_root:governance:PHASE4_STATE.yaml
-  type: contains
-- source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:00-vision-strategy
   type: contains
 - source: dir:_codeql_detected_source_root:governance
@@ -10911,9 +10449,6 @@ edges:
   target: dir:_codeql_detected_source_root:governance:07-audit
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: dir:_codeql_detected_source_root:governance:60-contracts
-  type: contains
-- source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:27-templates
   type: contains
 - source: dir:_codeql_detected_source_root:governance
@@ -10923,16 +10458,16 @@ edges:
   target: dir:_codeql_detected_source_root:governance:33-common
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: dir:_codeql_detected_source_root:governance:20-intent
-  type: contains
-- source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:24-registry
   type: contains
 - source: dir:_codeql_detected_source_root:governance
+<<<<<<< HEAD
   target: dir:_codeql_detected_source_root:governance:index
 <<<<<<< HEAD
   type: contains
 - source: dir:_codeql_detected_source_root:governance
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:_codeql_detected_source_root:governance:17-sociological
 =======
 >>>>>>> origin/alert-autofix-37
@@ -10947,16 +10482,7 @@ edges:
   target: dir:_codeql_detected_source_root:governance:06-security
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: file:_codeql_detected_source_root:governance:governance-map.yaml
-  type: contains
-- source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:29-docs
-  type: contains
-- source: dir:_codeql_detected_source_root:governance
-  target: file:_codeql_detected_source_root:governance:technical_debt_manager.py
-  type: contains
-- source: dir:_codeql_detected_source_root:governance
-  target: file:_codeql_detected_source_root:governance:instant_debt_resolution.py
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:38-sbom
@@ -10971,6 +10497,7 @@ edges:
   target: dir:_codeql_detected_source_root:governance:32-rules
   type: contains
 - source: dir:_codeql_detected_source_root:governance
+<<<<<<< HEAD
   target: dir:_codeql_detected_source_root:governance:schemas
   type: contains
 - source: dir:_codeql_detected_source_root:governance
@@ -11001,6 +10528,14 @@ edges:
   target: dir:_codeql_detected_source_root:governance:80-feedback
   type: contains
 - source: dir:_codeql_detected_source_root:governance
+=======
+  target: dir:_codeql_detected_source_root:governance:35-scripts
+  type: contains
+- source: dir:_codeql_detected_source_root:governance
+  target: dir:_codeql_detected_source_root:governance:34-config
+  type: contains
+- source: dir:_codeql_detected_source_root:governance
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:_codeql_detected_source_root:governance:01-architecture
   type: contains
 - source: dir:_codeql_detected_source_root:governance
@@ -11010,7 +10545,7 @@ edges:
   target: dir:_codeql_detected_source_root:governance:11-tools-systems
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: file:_codeql_detected_source_root:governance:governance.yaml
+  target: dir:_codeql_detected_source_root:governance:10-stakeholder
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: file:_codeql_detected_source_root:governance:governance.yaml
@@ -11023,9 +10558,6 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:18-complex-system
-  type: contains
-- source: dir:_codeql_detected_source_root:governance
-  target: dir:_codeql_detected_source_root:governance:_legacy
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:39-automation
@@ -11056,9 +10588,6 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:tests
   target: dir:_codeql_detected_source_root:tests:vectors
-  type: contains
-- source: dir:_codeql_detected_source_root:tests
-  target: file:_codeql_detected_source_root:tests:test_path_validation.py
   type: contains
 - source: dir:_codeql_detected_source_root:tests
   target: dir:_codeql_detected_source_root:tests:automation
@@ -11466,13 +10995,7 @@ edges:
   target: file:.github:workflows:validate-copilot-instructions.yml
   type: contains
 - source: dir:.github:workflows
-  target: file:.github:workflows:governance-validation.yml
-  type: contains
-- source: dir:.github:workflows
   target: file:.github:workflows:dynamic-ci-assistant.yml
-  type: contains
-- source: dir:.github:workflows
-  target: file:.github:workflows:gac-validation.yml
   type: contains
 - source: dir:.github:workflows
   target: file:.github:workflows:copilot-setup-steps.yml
@@ -11544,9 +11067,6 @@ edges:
   target: file:.github:workflows:system-evolution.yml
   type: contains
 - source: dir:.github:workflows
-  target: file:.github:workflows:extreme-problem-identification.yml
-  type: contains
-- source: dir:.github:workflows
   target: file:.github:workflows:ci-auto-comment.yml
   type: contains
 - source: dir:.github:workflows
@@ -11613,9 +11133,6 @@ edges:
   target: file:.github:workflows:pr-security-gate.yml
   type: contains
 - source: dir:.github:workflows
-  target: file:.github:workflows:gac-auto-sync.yml
-  type: contains
-- source: dir:.github:workflows
   target: file:.github:workflows:label.yml
   type: contains
 - source: dir:.github:workflows
@@ -11629,9 +11146,6 @@ edges:
   type: contains
 - source: dir:.github:workflows
   target: file:.github:workflows:validate-island-ai-instructions.yml
-  type: contains
-- source: dir:.github:workflows
-  target: file:.github:workflows:python-validation.yml
   type: contains
 - source: dir:.github:workflows
   target: file:.github:workflows:conftest-validation.yml
@@ -11964,18 +11478,6 @@ edges:
   target: file:tools:generate-sankey-data.py
   type: contains
 - source: dir:tools
-  target: dir:tools:governance
-  type: contains
-- source: dir:tools:governance
-  target: file:tools:governance:generate-consolidated-report.py
-  type: contains
-- source: dir:tools:governance
-  target: file:tools:governance:validate-governance-matrix.py
-  type: contains
-- source: dir:tools:governance
-  target: file:tools:governance:language-governance-analyzer.py
-  type: contains
-- source: dir:tools
   target: file:tools:ai-auto-fix.py
   type: contains
 - source: dir:tools
@@ -12248,9 +11750,6 @@ edges:
 - source: dir:docs:examples
   target: dir:docs:examples:configuration
   type: contains
-- source: dir:docs:examples
-  target: dir:docs:examples:project-generation
-  type: contains
 - source: dir:docs
   target: file:docs:unmanned-island.mndoc.yaml
   type: contains
@@ -12366,6 +11865,7 @@ edges:
   target: file:core:slsa_provenance:attestation_manager.py
   type: contains
 - source: dir:core
+<<<<<<< HEAD
   target: dir:core:project_factory
 <<<<<<< HEAD
   type: contains
@@ -12391,6 +11891,8 @@ edges:
   target: file:core:project_factory:__init__.py
   type: contains
 - source: dir:core
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:core:training_system
 =======
 >>>>>>> origin/alert-autofix-37
@@ -12660,9 +12162,6 @@ edges:
   target: file:governance:03-change:change-processes.yaml
   type: contains
 - source: dir:governance:03-change
-  target: file:governance:03-change:dimension.yaml
-  type: contains
-- source: dir:governance:03-change
   target: file:governance:03-change:change-rollback-procedures.yaml
   type: contains
 - source: dir:governance:03-change
@@ -12683,9 +12182,6 @@ edges:
 - source: dir:governance
   target: dir:governance:21-ecological
   type: contains
-- source: dir:governance:21-ecological
-  target: file:governance:21-ecological:dimension.yaml
-  type: contains
 - source: dir:governance
   target: dir:governance:05-compliance
   type: contains
@@ -12697,9 +12193,6 @@ edges:
   type: contains
 - source: dir:governance:05-compliance
   target: file:governance:05-compliance:compliance-check-rules.yaml
-  type: contains
-- source: dir:governance:05-compliance
-  target: file:governance:05-compliance:dimension.yaml
   type: contains
 - source: dir:governance:05-compliance
   target: file:governance:05-compliance:compliance-standards.yaml
@@ -12726,6 +12219,7 @@ edges:
   target: file:governance:05-compliance:__init__.py
   type: contains
 - source: dir:governance
+<<<<<<< HEAD
   target: file:governance:PHASE5_STATE.yaml
   type: contains
 - source: dir:governance
@@ -12744,6 +12238,8 @@ edges:
   target: file:governance:10-policy:framework.yaml
   type: contains
 - source: dir:governance
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:governance:23-policies
   type: contains
 - source: dir:governance:23-policies
@@ -12763,9 +12259,6 @@ edges:
   type: contains
 - source: dir:governance:23-policies
   target: file:governance:23-policies:data-privacy-policy.yaml
-  type: contains
-- source: dir:governance:23-policies
-  target: file:governance:23-policies:dimension.yaml
   type: contains
 - source: dir:governance:23-policies
   target: dir:governance:23-policies:compliance
@@ -12791,9 +12284,6 @@ edges:
 - source: dir:governance:31-schemas
   target: dir:governance:31-schemas:mndoc
   type: contains
-- source: dir:governance:31-schemas
-  target: file:governance:31-schemas:dimension.yaml
-  type: contains
 - source: dir:governance
   target: dir:governance:14-improvement
   type: contains
@@ -12813,12 +12303,6 @@ edges:
   target: file:governance:14-improvement:knowledge-management.yaml
   type: contains
 - source: dir:governance:14-improvement
-  target: file:governance:14-improvement:dimension.yaml
-  type: contains
-- source: dir:governance:14-improvement
-  target: file:governance:14-improvement:self-healing-improvement.yaml
-  type: contains
-- source: dir:governance:14-improvement
   target: file:governance:14-improvement:improvement-implementation.yaml
   type: contains
 - source: dir:governance:14-improvement
@@ -12831,7 +12315,7 @@ edges:
   target: file:governance:14-improvement:__init__.py
   type: contains
 - source: dir:governance
-  target: file:governance:debt_auto_fix.py
+  target: dir:governance:20-information
   type: contains
 - source: dir:governance:20-information
   target: file:governance:20-information:dimension.yaml
@@ -12840,10 +12324,13 @@ edges:
   target: file:governance:20-information:dimension.yaml
   type: contains
 - source: dir:governance
-  target: dir:governance:examples
+  target: dir:governance:30-integration
   type: contains
-- source: dir:governance:examples
-  target: file:governance:examples:api_contract_example.py
+- source: dir:governance:30-integration
+  target: file:governance:30-integration:integration-coordinator.py
+  type: contains
+- source: dir:governance:30-integration
+  target: file:governance:30-integration:GOVERNANCE_DEPENDENCY_MAP.yaml
   type: contains
 - source: dir:governance:30-integration
   target: file:governance:30-integration:dimension.yaml
@@ -12862,9 +12349,6 @@ edges:
   type: contains
 - source: dir:governance:09-performance
   target: file:governance:09-performance:performance-assessment.yaml
-  type: contains
-- source: dir:governance:09-performance
-  target: file:governance:09-performance:dimension.yaml
   type: contains
 - source: dir:governance:09-performance
   target: file:governance:09-performance:performance-targets.yaml
@@ -12915,9 +12399,6 @@ edges:
   target: file:governance:08-process:process-improvement-procedures.yaml
   type: contains
 - source: dir:governance:08-process
-  target: file:governance:08-process:dimension.yaml
-  type: contains
-- source: dir:governance:08-process
   target: file:governance:08-process:process-policy.yaml
   type: contains
 - source: dir:governance:08-process
@@ -12928,9 +12409,6 @@ edges:
   type: contains
 - source: dir:governance
   target: dir:governance:15-economic
-  type: contains
-- source: dir:governance:15-economic
-  target: file:governance:15-economic:dimension.yaml
   type: contains
 - source: dir:governance:15-economic
   target: dir:governance:15-economic:schemas
@@ -12946,9 +12424,6 @@ edges:
   type: contains
 - source: dir:governance:37-behavior-contracts
   target: file:governance:37-behavior-contracts:core.contract_service.L1.yaml
-  type: contains
-- source: dir:governance:37-behavior-contracts
-  target: file:governance:37-behavior-contracts:dimension.yaml
   type: contains
 - source: dir:governance:37-behavior-contracts
   target: file:governance:37-behavior-contracts:automation.architect.yaml
@@ -12993,9 +12468,6 @@ edges:
   target: file:governance:04-risk:risk-assessment-framework.yaml
   type: contains
 - source: dir:governance:04-risk
-  target: file:governance:04-risk:dimension.yaml
-  type: contains
-- source: dir:governance:04-risk
   target: file:governance:04-risk:risk-response-strategies.yaml
   type: contains
 - source: dir:governance:04-risk
@@ -13017,9 +12489,6 @@ edges:
   target: dir:governance:36-modules
   type: contains
 - source: dir:governance:36-modules
-  target: file:governance:36-modules:dimension.yaml
-  type: contains
-- source: dir:governance:36-modules
   target: file:governance:36-modules:core.unified_integration.yaml
   type: contains
 - source: dir:governance
@@ -13038,9 +12507,6 @@ edges:
   target: file:governance:28-tests:skeleton-testing-runtime-mapping.yaml
   type: contains
 - source: dir:governance:28-tests
-  target: file:governance:28-tests:dimension.yaml
-  type: contains
-- source: dir:governance:28-tests
   target: dir:governance:28-tests:reports
   type: contains
 - source: dir:governance:28-tests
@@ -13054,9 +12520,6 @@ edges:
   type: contains
 - source: dir:governance:28-tests
   target: file:governance:28-tests:validate-governance-matrix.py
-  type: contains
-- source: dir:governance:28-tests
-  target: file:governance:28-tests:self-healing-validation.py
   type: contains
 - source: dir:governance:28-tests
   target: file:governance:28-tests:conftest.py
@@ -13098,9 +12561,6 @@ edges:
   target: file:governance:12-culture-capability:culture-strategy.yaml
   type: contains
 - source: dir:governance:12-culture-capability
-  target: file:governance:12-culture-capability:dimension.yaml
-  type: contains
-- source: dir:governance:12-culture-capability
   target: file:governance:12-culture-capability:competency-framework.yaml
   type: contains
 - source: dir:governance:12-culture-capability
@@ -13119,22 +12579,10 @@ edges:
   target: file:governance:12-culture-capability:maturity-assessment.yaml
   type: contains
 - source: dir:governance
-  target: file:governance:PHASE4_STATE.yaml
-  type: contains
-- source: dir:governance
   target: dir:governance:00-vision-strategy
   type: contains
 - source: dir:governance:00-vision-strategy
-  target: dir:governance:00-vision-strategy:gitops
-  type: contains
-- source: dir:governance:00-vision-strategy
-  target: dir:governance:00-vision-strategy:crd
-  type: contains
-- source: dir:governance:00-vision-strategy
   target: file:governance:00-vision-strategy:strategic-objectives.yaml
-  type: contains
-- source: dir:governance:00-vision-strategy
-  target: dir:governance:00-vision-strategy:monitoring
   type: contains
 - source: dir:governance:00-vision-strategy
   target: file:governance:00-vision-strategy:alignment-framework.yaml
@@ -13143,16 +12591,7 @@ edges:
   target: file:governance:00-vision-strategy:governance-charter.yaml
   type: contains
 - source: dir:governance:00-vision-strategy
-  target: file:governance:00-vision-strategy:dimension.yaml
-  type: contains
-- source: dir:governance:00-vision-strategy
-  target: file:governance:00-vision-strategy:INSTANT-EXECUTION-MANIFEST.yaml
-  type: contains
-- source: dir:governance:00-vision-strategy
   target: file:governance:00-vision-strategy:vision-statement.yaml
-  type: contains
-- source: dir:governance:00-vision-strategy
-  target: dir:governance:00-vision-strategy:gatekeeper
   type: contains
 - source: dir:governance:00-vision-strategy
   target: dir:governance:00-vision-strategy:gac-templates
@@ -13164,16 +12603,7 @@ edges:
   target: file:governance:00-vision-strategy:communication-plan.yaml
   type: contains
 - source: dir:governance:00-vision-strategy
-  target: dir:governance:00-vision-strategy:k8s
-  type: contains
-- source: dir:governance:00-vision-strategy
-  target: dir:governance:00-vision-strategy:tests
-  type: contains
-- source: dir:governance:00-vision-strategy
   target: file:governance:00-vision-strategy:gac-architecture.yaml
-  type: contains
-- source: dir:governance:00-vision-strategy
-  target: dir:governance:00-vision-strategy:policy
   type: contains
 - source: dir:governance:00-vision-strategy
   target: file:governance:00-vision-strategy:risk-register.yaml
@@ -13195,9 +12625,6 @@ edges:
   type: contains
 - source: dir:governance:13-metrics-reporting
   target: file:governance:13-metrics-reporting:generate-consolidated-report.py
-  type: contains
-- source: dir:governance:13-metrics-reporting
-  target: file:governance:13-metrics-reporting:dimension.yaml
   type: contains
 - source: dir:governance:13-metrics-reporting
   target: file:governance:13-metrics-reporting:report-templates.yaml
@@ -13239,9 +12666,6 @@ edges:
   target: file:governance:07-audit:audit-framework.yaml
   type: contains
 - source: dir:governance:07-audit
-  target: file:governance:07-audit:dimension.yaml
-  type: contains
-- source: dir:governance:07-audit
   target: file:governance:07-audit:audit-procedures.yaml
   type: contains
 - source: dir:governance:07-audit
@@ -13260,22 +12684,7 @@ edges:
   target: file:governance:07-audit:__init__.py
   type: contains
 - source: dir:governance
-  target: dir:governance:60-contracts
-  type: contains
-- source: dir:governance:60-contracts
-  target: file:governance:60-contracts:dimension.yaml
-  type: contains
-- source: dir:governance:60-contracts
-  target: dir:governance:60-contracts:registry
-  type: contains
-- source: dir:governance:60-contracts
-  target: file:governance:60-contracts:framework.yaml
-  type: contains
-- source: dir:governance
   target: dir:governance:27-templates
-  type: contains
-- source: dir:governance:27-templates
-  target: file:governance:27-templates:dimension.yaml
   type: contains
 - source: dir:governance
   target: dir:governance:26-tools
@@ -13302,9 +12711,6 @@ edges:
   target: file:governance:26-tools:legacy-governance-governance-dashboard.py
   type: contains
 - source: dir:governance:26-tools
-  target: file:governance:26-tools:dimension.yaml
-  type: contains
-- source: dir:governance:26-tools
   target: file:governance:26-tools:governance-cli.py
   type: contains
 - source: dir:governance:26-tools
@@ -13329,28 +12735,13 @@ edges:
   target: dir:governance:33-common
   type: contains
 - source: dir:governance:33-common
-  target: file:governance:33-common:dimension.yaml
-  type: contains
-- source: dir:governance:33-common
   target: dir:governance:33-common:tools
   type: contains
 - source: dir:governance:33-common
   target: dir:governance:33-common:schemas
   type: contains
 - source: dir:governance
-  target: dir:governance:20-intent
-  type: contains
-- source: dir:governance:20-intent
-  target: file:governance:20-intent:dimension.yaml
-  type: contains
-- source: dir:governance:20-intent
-  target: file:governance:20-intent:framework.yaml
-  type: contains
-- source: dir:governance
   target: dir:governance:24-registry
-  type: contains
-- source: dir:governance:24-registry
-  target: file:governance:24-registry:dimension.yaml
   type: contains
 - source: dir:governance:24-registry
   target: file:governance:24-registry:module-contracts-l1.yaml
@@ -13365,6 +12756,7 @@ edges:
   target: file:governance:24-registry:module-A.yaml
   type: contains
 - source: dir:governance
+<<<<<<< HEAD
   target: dir:governance:index
   type: contains
 - source: dir:governance:index
@@ -13383,16 +12775,12 @@ edges:
   target: file:governance:17-sociological:dimension.yaml
   type: contains
 - source: dir:governance
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:governance:17-sociological
-  type: contains
-- source: dir:governance:17-sociological
-  target: file:governance:17-sociological:dimension.yaml
   type: contains
 - source: dir:governance
   target: dir:governance:22-aesthetic
-  type: contains
-- source: dir:governance:22-aesthetic
-  target: file:governance:22-aesthetic:dimension.yaml
   type: contains
 - source: dir:governance
   target: dir:governance:06-security
@@ -13416,9 +12804,6 @@ edges:
   target: file:governance:06-security:incident-response-plan.yaml
   type: contains
 - source: dir:governance:06-security
-  target: file:governance:06-security:dimension.yaml
-  type: contains
-- source: dir:governance:06-security
   target: file:governance:06-security:vulnerability-management.yaml
   type: contains
 - source: dir:governance:06-security
@@ -13432,9 +12817,6 @@ edges:
   type: contains
 - source: dir:governance:06-security
   target: file:governance:06-security:__init__.py
-  type: contains
-- source: dir:governance
-  target: file:governance:governance-map.yaml
   type: contains
 - source: dir:governance
   target: dir:governance:29-docs
@@ -13459,9 +12841,6 @@ edges:
   type: contains
 - source: dir:governance:29-docs
   target: dir:governance:29-docs:architecture
-  type: contains
-- source: dir:governance:29-docs
-  target: file:governance:29-docs:dimension.yaml
   type: contains
 - source: dir:governance:29-docs
   target: file:governance:29-docs:skeleton-docs-io-contract.yaml
@@ -13497,19 +12876,10 @@ edges:
   target: file:governance:29-docs:v2-skeleton-api-io-contract.yaml
   type: contains
 - source: dir:governance
-  target: file:governance:technical_debt_manager.py
-  type: contains
-- source: dir:governance
-  target: file:governance:instant_debt_resolution.py
-  type: contains
-- source: dir:governance
   target: dir:governance:38-sbom
   type: contains
 - source: dir:governance:38-sbom
   target: file:governance:38-sbom:signing-policy.yml
-  type: contains
-- source: dir:governance:38-sbom
-  target: file:governance:38-sbom:dimension.yaml
   type: contains
 - source: dir:governance
   target: file:governance:docker-compose.yml
@@ -13533,9 +12903,6 @@ edges:
   target: file:governance:02-decision:decision-templates.yaml
   type: contains
 - source: dir:governance:02-decision
-  target: file:governance:02-decision:dimension.yaml
-  type: contains
-- source: dir:governance:02-decision
   target: file:governance:02-decision:decision-audit.yaml
   type: contains
 - source: dir:governance:02-decision
@@ -13554,15 +12921,13 @@ edges:
   target: file:governance:32-rules:language-naming-rules.yaml
   type: contains
 - source: dir:governance:32-rules
-  target: file:governance:32-rules:dimension.yaml
-  type: contains
-- source: dir:governance:32-rules
   target: file:governance:32-rules:mapping-rules.yaml
   type: contains
 - source: dir:governance:32-rules
   target: file:governance:32-rules:language-policy.yml
   type: contains
 - source: dir:governance
+<<<<<<< HEAD
   target: dir:governance:schemas
   type: contains
 - source: dir:governance
@@ -13910,6 +13275,10 @@ edges:
 - source: dir:governance:70-audit
   target: file:governance:70-audit:framework.yaml
   type: contains
+=======
+  target: dir:governance:35-scripts
+  type: contains
+>>>>>>> origin/copilot/sub-pr-402
 - source: dir:governance
   target: dir:governance:34-config
   type: contains
@@ -13921,9 +13290,6 @@ edges:
   type: contains
 - source: dir:governance:34-config
   target: file:governance:34-config:ownership-map.yaml
-  type: contains
-- source: dir:governance:34-config
-  target: file:governance:34-config:dimension.yaml
   type: contains
 - source: dir:governance:34-config
   target: dir:governance:34-config:deployment
@@ -13947,6 +13313,7 @@ edges:
   target: file:governance:34-config:logging-config.yaml
   type: contains
 - source: dir:governance
+<<<<<<< HEAD
   target: dir:governance:80-feedback
   type: contains
 - source: dir:governance:80-feedback
@@ -13956,6 +13323,8 @@ edges:
   target: file:governance:80-feedback:framework.yaml
   type: contains
 - source: dir:governance
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: dir:governance:01-architecture
   type: contains
 - source: dir:governance:01-architecture
@@ -13966,9 +13335,6 @@ edges:
   type: contains
 - source: dir:governance:01-architecture
   target: file:governance:01-architecture:organizational-structure.yaml
-  type: contains
-- source: dir:governance:01-architecture
-  target: file:governance:01-architecture:dimension.yaml
   type: contains
 - source: dir:governance:01-architecture
   target: file:governance:01-architecture:governance-model.yaml
@@ -13994,9 +13360,6 @@ edges:
 - source: dir:governance
   target: dir:governance:25-principles
   type: contains
-- source: dir:governance:25-principles
-  target: file:governance:25-principles:dimension.yaml
-  type: contains
 - source: dir:governance
   target: dir:governance:11-tools-systems
   type: contains
@@ -14011,9 +13374,6 @@ edges:
   type: contains
 - source: dir:governance:11-tools-systems
   target: file:governance:11-tools-systems:decision-support-system.yaml
-  type: contains
-- source: dir:governance:11-tools-systems
-  target: file:governance:11-tools-systems:dimension.yaml
   type: contains
 - source: dir:governance:11-tools-systems
   target: file:governance:11-tools-systems:audit-management-system.yaml
@@ -14049,9 +13409,12 @@ edges:
   target: file:governance:10-stakeholder:conflict-resolution-procedures.yaml
   type: contains
 - source: dir:governance:10-stakeholder
+<<<<<<< HEAD
   target: file:governance:10-stakeholder:dimension.yaml
   type: contains
 - source: dir:governance:10-stakeholder
+=======
+>>>>>>> origin/copilot/sub-pr-402
   target: file:governance:10-stakeholder:stakeholder-analysis.yaml
   type: contains
 - source: dir:governance:10-stakeholder
@@ -14065,27 +13428,27 @@ edges:
   type: contains
 - source: dir:governance:10-stakeholder
   target: file:governance:10-stakeholder:stakeholder-communication-plan.yaml
+<<<<<<< HEAD
   type: contains
 - source: dir:governance
   target: file:governance:governance.yaml
+=======
+>>>>>>> origin/copilot/sub-pr-402
   type: contains
 - source: dir:governance
   target: dir:governance:16-psychological
   type: contains
-- source: dir:governance:16-psychological
-  target: file:governance:16-psychological:dimension.yaml
-  type: contains
 - source: dir:governance
   target: dir:governance:18-complex-system
   type: contains
+<<<<<<< HEAD
 - source: dir:governance:18-complex-system
   target: file:governance:18-complex-system:dimension.yaml
   type: contains
+=======
+>>>>>>> origin/copilot/sub-pr-402
 - source: dir:governance
   target: dir:governance:39-automation
-  type: contains
-- source: dir:governance:39-automation
-  target: file:governance:39-automation:self-healing-engine.py
   type: contains
 - source: dir:governance:39-automation
   target: dir:governance:39-automation:engines
@@ -14095,9 +13458,6 @@ edges:
   type: contains
 - source: dir:governance:39-automation
   target: file:governance:39-automation:test_automation_system.py
-  type: contains
-- source: dir:governance:39-automation
-  target: file:governance:39-automation:dimension.yaml
   type: contains
 - source: dir:governance:39-automation
   target: file:governance:39-automation:integrated_launcher.py
@@ -14113,9 +13473,6 @@ edges:
   type: contains
 - source: dir:governance
   target: dir:governance:19-evolutionary
-  type: contains
-- source: dir:governance:19-evolutionary
-  target: file:governance:19-evolutionary:dimension.yaml
   type: contains
 - source: system:unmanned-island
   target: dir:knowledge
@@ -14166,16 +13523,7 @@ edges:
   target: dir:tests:vectors:cloud-agent-delegation
   type: contains
 - source: dir:tests
-  target: file:tests:test_path_validation.py
-  type: contains
-- source: dir:tests
   target: dir:tests:automation
-  type: contains
-- source: dir:tests:automation
-  target: file:tests:automation:test_self_awareness_security.py
-  type: contains
-- source: dir:tests:automation
-  target: file:tests:automation:test_baseline_validation_engine.py
   type: contains
 - source: dir:tests:automation
   target: file:tests:automation:test_framework_patterns.py
@@ -15007,6 +14355,7 @@ edges:
   type: configures
 statistics:
 <<<<<<< HEAD
+<<<<<<< HEAD
   total_nodes: 1753
   total_edges: 1752
   nodes_by_type:
@@ -15033,6 +14382,21 @@ statistics:
 =======
     contains: 1625
 >>>>>>> origin/alert-autofix-37
+=======
+  total_nodes: 1511
+  total_edges: 1510
+  nodes_by_type:
+    system: 1
+    directory: 623
+    module: 400
+    config: 441
+    subsystem: 22
+    document: 8
+    capability: 15
+    component: 1
+  edges_by_type:
+    contains: 1491
+>>>>>>> origin/copilot/sub-pr-402
     provides: 15
     configures: 4
 meta:

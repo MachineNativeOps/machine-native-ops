@@ -2,10 +2,8 @@
 
 # 倉庫地圖與語義邊界
 
-> 本文件為智能體和開發者提供「世界觀」參考：整個系統的架構與互動都以此 monorepo 及其內部結構為唯一真相與唯一操作介面。This
-> document provides the "worldview" for agents and developers: the entire
-> system's architecture and interactions use this monorepo and its internal
-> structure as the single source of truth and operation interface.
+> 本文件為智能體和開發者提供「世界觀」參考：整個系統的架構與互動都以此 monorepo 及其內部結構為唯一真相與唯一操作介面。
+> This document provides the "worldview" for agents and developers: the entire system's architecture and interactions use this monorepo and its internal structure as the single source of truth and operation interface.
 
 ## 🌍 System Worldview 系統世界觀
 
@@ -20,6 +18,7 @@
 
 **Important 重要**: 不得假設 repo 外還存在其他隱形系統架構。
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ### 2. Actual Repository Surface Snapshot 實際目錄快照
 
@@ -45,6 +44,8 @@
 
 =======
 >>>>>>> origin/alert-autofix-37
+=======
+>>>>>>> origin/copilot/sub-pr-402
 ---
 
 ## 🎯 Semantic Boundaries 語義邊界
@@ -212,12 +213,12 @@
 
 ### "我要改一個 agent 邏輯，要去哪裡？"
 
-| 情境 Scenario              | 目錄 Directory            |
-| -------------------------- | ------------------------- |
-| 改 LLM 工具的輸入/輸出格式 | `mcp-servers/`            |
-| 改業務代理的行為邏輯       | `agent/`                  |
-| 改平台級 AI 決策規則       | `core/`                   |
-| 改 pipeline 編排流程       | `automation/intelligent/` |
+| 情境 Scenario | 目錄 Directory |
+|--------------|----------------|
+| 改 LLM 工具的輸入/輸出格式 | `mcp-servers/` |
+| 改業務代理的行為邏輯 | `agent/` |
+| 改平台級 AI 決策規則 | `core/` |
+| 改 pipeline 編排流程 | `automation/intelligent/` |
 
 ### "我要加一個新功能，放哪裡？"
 
@@ -248,9 +249,9 @@
 
 ## 📝 Document History 文檔歷史
 
-| Date 日期  | Version 版本 | Changes 變更                    |
-| ---------- | ------------ | ------------------------------- |
-| 2025-11-30 | 1.0.0        | Initial repository map document |
+| Date 日期 | Version 版本 | Changes 變更 |
+|-----------|-------------|--------------|
+| 2025-11-30 | 1.0.0 | Initial repository map document |
 
 ---
 

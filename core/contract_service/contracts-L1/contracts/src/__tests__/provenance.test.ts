@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ProvenanceService, BuildAttestation } from '../services/provenance';
+=======
+import { ProvenanceService } from '../services/provenance';
+>>>>>>> origin/copilot/sub-pr-402
 import { writeFile, unlink } from 'fs/promises';
 import { join } from 'path';
 =======
@@ -56,6 +60,7 @@ describe('ProvenanceService', () => {
     it('should throw error for non-existent file', async () => {
 <<<<<<< HEAD
       await expect(service.generateFileDigest('/non/existent/file'))
+<<<<<<< HEAD
         .rejects.toThrow();
     });
 
@@ -81,6 +86,9 @@ describe('ProvenanceService', () => {
         /not allowed/
       );
 >>>>>>> origin/alert-autofix-37
+=======
+        .rejects.toThrow(/ENOENT/);
+>>>>>>> origin/copilot/sub-pr-402
     });
   });
 
@@ -139,6 +147,7 @@ describe('ProvenanceService', () => {
       await expect(service.createBuildAttestation('../', {
         id: 'test-builder',
         version: '1.0.0'
+<<<<<<< HEAD
       })).rejects.toThrow();
     });
 
@@ -177,6 +186,9 @@ describe('ProvenanceService', () => {
         }
       }
 >>>>>>> origin/alert-autofix-37
+=======
+      })).rejects.toThrow('Subject path must be a file');
+>>>>>>> origin/copilot/sub-pr-402
     });
   });
 
@@ -193,7 +205,7 @@ describe('ProvenanceService', () => {
       const invalidAttestation = {
         id: 'test',
         // Missing required fields
-      } as unknown as BuildAttestation;
+      } as unknown as Attestation;
 
       const isValid = await service.verifyAttestation(invalidAttestation);
       expect(isValid).toBe(false);
@@ -222,32 +234,6 @@ describe('ProvenanceService', () => {
 
       const isValid = await service.verifyAttestation(attestation);
       expect(isValid).toBe(true);
-    });
-
-    it('should reject attestation with path traversal in subject path', async () => {
-      const attestation = {
-        id: 'test-123',
-        timestamp: new Date().toISOString(),
-        subject: {
-          name: 'malicious-artifact',
-          digest: 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-          path: '../../../etc/passwd'
-        },
-        predicate: {
-          type: 'https://slsa.dev/provenance/v1',
-          builder: { id: 'test', version: '1.0.0' },
-          recipe: { type: 'test' },
-          metadata: {
-            buildStartedOn: new Date().toISOString(),
-            buildFinishedOn: new Date().toISOString(),
-            completeness: { parameters: true, environment: true, materials: true },
-            reproducible: false
-          }
-        }
-      };
-
-      const isValid = await service.verifyAttestation(attestation);
-      expect(isValid).toBe(false);
     });
   });
 

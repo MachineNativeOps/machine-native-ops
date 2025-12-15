@@ -9,23 +9,20 @@
 
 ## 📋 文件目的 | Document Purpose
 
-本文件定義 HLP
-Executor 的緊急應變程序，包含 P1/P2 級別事件的症狀識別、診斷步驟、恢復措施和升級路徑。
+本文件定義 HLP Executor 的緊急應變程序，包含 P1/P2 級別事件的症狀識別、診斷步驟、恢復措施和升級路徑。
 
-This document defines emergency response procedures for HLP Executor, including
-symptom identification, diagnostic steps, recovery actions, and escalation paths
-for P1/P2 incidents.
+This document defines emergency response procedures for HLP Executor, including symptom identification, diagnostic steps, recovery actions, and escalation paths for P1/P2 incidents.
 
 ---
 
 ## 🚨 緊急等級定義 | Emergency Level Definitions
 
-| 等級   | 名稱     | 定義         | 響應時間  | 恢復目標 (RTO) |
-| ------ | -------- | ------------ | --------- | -------------- |
-| **P1** | Critical | 服務完全中斷 | < 5 分鐘  | < 30 秒        |
-| **P2** | High     | 服務功能受損 | < 15 分鐘 | < 5 分鐘       |
-| **P3** | Medium   | 服務性能下降 | < 1 小時  | < 30 分鐘      |
-| **P4** | Low      | 輕微問題     | < 4 小時  | < 2 小時       |
+| 等級 | 名稱 | 定義 | 響應時間 | 恢復目標 (RTO) |
+|------|------|------|----------|----------------|
+| **P1** | Critical | 服務完全中斷 | < 5 分鐘 | < 30 秒 |
+| **P2** | High | 服務功能受損 | < 15 分鐘 | < 5 分鐘 |
+| **P3** | Medium | 服務性能下降 | < 1 小時 | < 30 分鐘 |
+| **P4** | Low | 輕微問題 | < 4 小時 | < 2 小時 |
 
 ---
 
@@ -46,6 +43,7 @@ for P1/P2 incidents.
 ### 🎯 症狀識別 | Symptom Identification
 
 #### 自動檢測 | Automatic Detection
+
 ```yaml
 alerting_rules:
   - alert: HLPExecutorAllReplicasDown
@@ -54,13 +52,12 @@ alerting_rules:
     for: 1m
     severity: P1
     annotations:
-      summary: 'All HLP Executor replicas are down'
-      description:
-        'All {{ $labels.namespace }}/{{ $labels.deployment }} replicas are
-        unhealthy'
+      summary: "All HLP Executor replicas are down"
+      description: "All {{ $labels.namespace }}/{{ $labels.deployment }} replicas are unhealthy"
 ```
 
 #### 明顯症狀 | Observable Symptoms
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 - ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503
@@ -68,14 +65,17 @@ alerting_rules:
 =======
 - ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503 or no response
 >>>>>>> origin/alert-autofix-37
+=======
+
+- ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503 or no response
+>>>>>>> origin/copilot/sub-pr-402
 - ❌ Prometheus 顯示 0 個健康副本 | Prometheus shows 0 healthy replicas
 - ❌ kubectl 顯示所有 Pod 處於 CrashLoopBackOff、Error 或 Pending 狀態
-- ❌ 用戶報告無法提交新的 HLP 執行 | Users report inability to submit new HLP
-  executions
-- ❌ 監控儀表板顯示服務完全離線 | Monitoring dashboard shows service completely
-  offline
+- ❌ 用戶報告無法提交新的 HLP 執行 | Users report inability to submit new HLP executions
+- ❌ 監控儀表板顯示服務完全離線 | Monitoring dashboard shows service completely offline
 
 #### 業務影響 | Business Impact
+
 - 🚫 所有新的 HLP 執行請求被拒絕 | All new HLP execution requests rejected
 - 🚫 進行中的執行可能中斷 | In-progress executions may be interrupted
 - 🚫 狀態同步停止 | State synchronization stopped
@@ -84,6 +84,7 @@ alerting_rules:
 ### 🔍 診斷步驟 | Diagnostic Steps
 
 #### 第一步：快速狀態檢查 (< 30 秒)
+
 ```bash
 # 1. Check pod status
 kubectl get pods -n unmanned-island-system -l app=hlp-executor-core
@@ -101,6 +102,7 @@ kubectl describe deployment hlp-executor-core -n unmanned-island-system | tail -
 ```
 
 #### 第二步：應用層診斷 (如果 Pod CrashLoopBackOff)
+
 ```bash
 # 1. Get recent logs from crashed pods
 kubectl logs -n unmanned-island-system -l app=hlp-executor-core --tail=200 --all-containers
@@ -123,6 +125,7 @@ done
 ```
 
 #### 第三步：資源層診斷 (如果 Pod Pending)
+
 ```bash
 # 1. Check node resources
 kubectl top nodes
@@ -146,6 +149,7 @@ kubectl get pvc -n unmanned-island-system hlp-executor-state-pvc
 ```
 
 #### 第四步：配置層診斷 (如果 Pod Error)
+
 ```bash
 # 1. Check ConfigMap
 kubectl get configmap hlp-executor-config -n unmanned-island-system -o yaml
@@ -171,12 +175,17 @@ kubectl describe pod -n unmanned-island-system -l app=hlp-executor-core | \
 
 #### 恢復路徑 A: 快速重啟 (應用層問題)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 **使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash,
 configuration correct
 =======
 **使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash, configuration correct
 >>>>>>> origin/alert-autofix-37
+=======
+
+**使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash, configuration correct
+>>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Force restart all pods
@@ -198,6 +207,7 @@ kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
 ```
 
 #### 恢復路徑 B: 配置修復 (配置問題)
+
 **使用場景**: ConfigMap/Secret 錯誤或遺失 | ConfigMap/Secret errors or missing
 
 ```bash
@@ -222,12 +232,17 @@ kubectl logs -n unmanned-island-system -l app=hlp-executor-core -f --tail=50
 
 #### 恢復路徑 C: 資源調整 (資源不足)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 **使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods
 cannot be scheduled
 =======
 **使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods cannot be scheduled
 >>>>>>> origin/alert-autofix-37
+=======
+
+**使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods cannot be scheduled
+>>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Reduce resource requests temporarily (emergency only!)
@@ -269,6 +284,7 @@ kubectl scale deployment hlp-executor-core -n unmanned-island-system --replicas=
 ```
 
 #### 恢復路徑 D: 緊急回滾 (新版本問題)
+
 **使用場景**: 最近部署的版本導致故障 | Recent deployment caused failure
 
 ```bash
@@ -310,10 +326,10 @@ T+30min: If not resolved → Engage vendor support (if applicable)
 ```
 
 #### 升級觸發條件 | Escalation Triggers
+
 - ⏱️ **5 分鐘**: On-Call SRE 未響應 | On-Call SRE not responding
 - ⏱️ **15 分鐘**: 恢復措施無效 | Recovery actions ineffective
-- ⏱️ **30 分鐘**: 需要額外資源或授權 | Additional resources or authorization
-  needed
+- ⏱️ **30 分鐘**: 需要額外資源或授權 | Additional resources or authorization needed
 
 ---
 
@@ -334,6 +350,7 @@ T+30min: If not resolved → Engage vendor support (if applicable)
 ### 🎯 症狀識別 | Symptom Identification
 
 #### 自動檢測 | Automatic Detection
+
 ```yaml
 alerting_rules:
   - alert: HLPExecutorStateCorruptionDetected
@@ -342,11 +359,12 @@ alerting_rules:
     for: 2m
     severity: P2
     annotations:
-      summary: 'HLP Executor state corruption detected'
-      description: '{{ $value }} corruptions detected in the last 5 minutes'
+      summary: "HLP Executor state corruption detected"
+      description: "{{ $value }} corruptions detected in the last 5 minutes"
 ```
 
 #### 明顯症狀 | Observable Symptoms
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 - ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond
@@ -354,15 +372,17 @@ alerting_rules:
 =======
 - ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond expected time
 >>>>>>> origin/alert-autofix-37
+=======
+
+- ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond expected time
+>>>>>>> origin/copilot/sub-pr-402
 - ⚠️ 狀態轉換驗證失敗 | State transition validation failures
-- ⚠️ Checkpoint 無法恢復或驗證失敗 | Checkpoints cannot be restored or
-  validation fails
-- ⚠️ 日誌中出現 "state_machine_error" 或 "invalid_state_transition" | Logs show
-  "state_machine_error" or "invalid_state_transition"
-- ⚠️ Prometheus 顯示異常的狀態轉換延遲 | Prometheus shows abnormal state
-  transition latency
+- ⚠️ Checkpoint 無法恢復或驗證失敗 | Checkpoints cannot be restored or validation fails
+- ⚠️ 日誌中出現 "state_machine_error" 或 "invalid_state_transition" | Logs show "state_machine_error" or "invalid_state_transition"
+- ⚠️ Prometheus 顯示異常的狀態轉換延遲 | Prometheus shows abnormal state transition latency
 
 #### 業務影響 | Business Impact
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 - ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter
@@ -370,14 +390,18 @@ alerting_rules:
 =======
 - ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter inconsistent state
 >>>>>>> origin/alert-autofix-37
+=======
+
+- ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter inconsistent state
+>>>>>>> origin/copilot/sub-pr-402
 - ⚠️ 回滾功能可能受損 | Rollback functionality may be impaired
 - ⚠️ 執行時間增加 | Execution time increased
-- 📊 SLO 影響: State transition latency > P90 50ms | SLO impact: State
-  transition latency > P90 50ms
+- 📊 SLO 影響: State transition latency > P90 50ms | SLO impact: State transition latency > P90 50ms
 
 ### 🔍 診斷步驟 | Diagnostic Steps
 
 #### 第一步：識別受影響的執行 (< 1 分鐘)
+
 ```bash
 # 1. Query for corrupted state metrics
 kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -397,6 +421,7 @@ kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
 ```
 
 #### 第二步：驗證 Checkpoint 完整性
+
 ```bash
 # 1. Run checkpoint validation
 kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -413,6 +438,7 @@ kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
 ```
 
 #### 第三步：分析狀態機日誌
+
 ```bash
 # 1. Extract state transition logs
 kubectl logs -n unmanned-island-system -l app=hlp-executor-core --tail=1000 | \
@@ -441,6 +467,7 @@ kubectl logs -n unmanned-island-system -l app=hlp-executor-core --tail=1000 | \
 ### 🛠️ 恢復措施 | Recovery Actions
 
 #### 恢復路徑 A: 單一執行恢復 (隔離問題)
+
 **使用場景**: 只有少數執行受影響 | Only a few executions affected
 
 ```bash
@@ -451,14 +478,14 @@ STUCK_EXECUTIONS=$(kubectl exec -it deployment/hlp-executor-core -n unmanned-isl
 # Step 2: Attempt to recover each execution
 for exec_id in $STUCK_EXECUTIONS; do
   echo "Recovering execution: $exec_id"
-
+  
   # Try to rollback to last known good checkpoint
   kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
     python3 -m core.safety_mechanisms.partial_rollback \
     --execution-id "$exec_id" \
     --scope phase \
     --to-checkpoint latest-valid
-
+  
   # Verify recovery
   kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
     curl -s "http://localhost:8081/admin/executions/$exec_id/status" | jq
@@ -469,12 +496,17 @@ done
 
 #### 恢復路徑 B: 重建狀態索引 (廣泛問題)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 **使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected,
 state index may be corrupted
 =======
 **使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected, state index may be corrupted
 >>>>>>> origin/alert-autofix-37
+=======
+
+**使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected, state index may be corrupted
+>>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Enable maintenance mode (new executions queued)
@@ -509,12 +541,17 @@ kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
 
 #### 恢復路徑 C: 完整回滾與重啟 (嚴重損壞)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 **使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed
 online
 =======
 **使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed online
 >>>>>>> origin/alert-autofix-37
+=======
+
+**使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed online
+>>>>>>> origin/copilot/sub-pr-402
 
 ```bash
 # Step 1: Stop all new executions (circuit breaker)
@@ -576,13 +613,14 @@ T+2hr:   If not resolved → Schedule incident review
 ## 📊 事後處理 | Post-Incident Actions
 
 ### 立即行動 (事件解決後 1 小時內)
+
 - [ ] 更新事件追蹤工單狀態 | Update incident tracking ticket status
-- [ ] 在 Slack #incidents 頻道發布解決通知 | Post resolution notice in Slack
-      #incidents channel
+- [ ] 在 Slack #incidents 頻道發布解決通知 | Post resolution notice in Slack #incidents channel
 - [ ] 保存所有診斷日誌和指標 | Preserve all diagnostic logs and metrics
 - [ ] 創建初步事件報告 | Create preliminary incident report
 
 ### 24 小時內
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 - [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report
@@ -590,11 +628,16 @@ T+2hr:   If not resolved → Schedule incident review
 =======
 - [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report (Post-Mortem)
 >>>>>>> origin/alert-autofix-37
+=======
+
+- [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report (Post-Mortem)
+>>>>>>> origin/copilot/sub-pr-402
 - [ ] 識別根本原因 | Identify root cause
 - [ ] 列出行動項目 (Action Items) | List action items
 - [ ] 安排事件檢討會議 | Schedule incident review meeting
 
 ### 1 週內
+
 - [ ] 實施預防措施 | Implement preventive measures
 - [ ] 更新 Runbook (如果流程有改進) | Update Runbook (if process improved)
 - [ ] 更新監控告警規則 (如果需要) | Update monitoring/alerting rules (if needed)
@@ -607,25 +650,25 @@ T+2hr:   If not resolved → Schedule incident review
 ```yaml
 emergency_contacts:
   primary_oncall:
-    pagerduty: 'https://unmanned-island.pagerduty.com/services/P1234-HLP-EXECUTOR'
-    slack: '#sre-oncall'
-    phone: '+1-555-SRE-0100'
-
+    pagerduty: "https://unmanned-island.pagerduty.com/services/P1234-HLP-EXECUTOR"
+    slack: "#sre-oncall"
+    phone: "+1-555-SRE-0100"
+  
   platform_lead:
-    name: 'Platform Engineering Lead'
-    slack: '@platform-lead'
-    email: 'platform-lead@unmanned-island.com'
-    phone: '+1-555-PLAT-101'
-
+    name: "Platform Engineering Lead"
+    slack: "@platform-lead"
+    email: "platform-lead@unmanned-island.com"
+    phone: "+1-555-PLAT-101"
+  
   cto:
-    name: 'Chief Technology Officer'
-    slack: '@cto'
-    email: 'cto@unmanned-island.com'
-    phone: '+1-555-CTO-0102'
-
+    name: "Chief Technology Officer"
+    slack: "@cto"
+    email: "cto@unmanned-island.com"
+    phone: "+1-555-CTO-0102"
+  
   vendor_support:
-    kubernetes: 'https://support.kubernetes.io'
-    cloud_provider: '+1-800-CLOUD-00'
+    kubernetes: "https://support.kubernetes.io"
+    cloud_provider: "+1-800-CLOUD-00"
 ```
 
 ---
@@ -643,5 +686,4 @@ emergency_contacts:
 
 **文件維護者 | Document Maintainer**: SRE Team  
 **審核週期 | Review Cycle**: After each P1/P2 incident  
-**緊急更新流程 | Emergency Update Process**: Direct commit + immediate team
-notification
+**緊急更新流程 | Emergency Update Process**: Direct commit + immediate team notification

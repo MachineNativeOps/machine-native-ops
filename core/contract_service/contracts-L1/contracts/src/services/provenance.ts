@@ -4,6 +4,7 @@ import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
 
+<<<<<<< HEAD
 import sanitize from 'sanitize-filename';
 
 import { PathValidator } from '../utils/path-validator';
@@ -12,6 +13,8 @@ import { PathValidator } from '../utils/path-validator';
 import { relative, resolve } from 'path';
 
 >>>>>>> origin/alert-autofix-37
+=======
+>>>>>>> origin/copilot/sub-pr-402
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 // Define a safe root directory for allowed file operations
@@ -277,12 +280,17 @@ export interface Dependency {
 export class ProvenanceService {
   private readonly slsaService: SLSAAttestationService;
 
+<<<<<<< HEAD
   // Define the root directory for allowed files. Change as needed for your project needs
   // Use a fixed absolute path or environment variable for SAFE_ROOT
   private static getSafeRoot(): string {
     return process.env.SAFE_ROOT_PATH
       ? resolve(process.env.SAFE_ROOT_PATH)
       : resolve(process.cwd(), 'safefiles');
+=======
+  constructor() {
+    this.slsaService = new SLSAAttestationService();
+>>>>>>> origin/copilot/sub-pr-402
   }
 
   constructor() {
@@ -349,6 +357,9 @@ export class ProvenanceService {
     metadata: Partial<MetadataInfo> = {}
   ): Promise<BuildAttestation> {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/copilot/sub-pr-402
     // Use validateAndNormalizePath to resolve symlinks and validate path security
     const validatedPath = await validateAndNormalizePath(subjectPath);
 =======
@@ -365,9 +376,12 @@ export class ProvenanceService {
     const subject = this.slsaService.createSubjectFromContent(
 <<<<<<< HEAD
       path.relative(process.cwd(), validatedPath),
+<<<<<<< HEAD
 =======
       relative(process.cwd(), validatedPath),
 >>>>>>> origin/alert-autofix-37
+=======
+>>>>>>> origin/copilot/sub-pr-402
       content
     );
 

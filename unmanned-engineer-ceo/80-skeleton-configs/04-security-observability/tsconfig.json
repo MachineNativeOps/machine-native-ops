@@ -11,6 +11,13 @@
     "types": ["node"]
 >>>>>>> origin/alert-autofix-37
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist", "build"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ]
 }

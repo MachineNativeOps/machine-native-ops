@@ -1,16 +1,3 @@
-/**
- * @fileoverview Centralized error handling middleware for Express applications.
- *
- * This module provides robust error handling that:
- * - Normalizes all errors to a consistent format
- * - Distinguishes between application errors and unexpected exceptions
- * - Provides appropriate error responses based on environment
- * - Maintains trace IDs for distributed debugging
- * - Handles 404 Not Found responses
- *
- * @module middleware/error
- */
-
 import { randomUUID } from 'crypto';
 
 import { Request, Response, NextFunction } from 'express';
@@ -35,6 +22,7 @@ export class ErrorCleanupPatterns {
   }
 }
 
+<<<<<<< HEAD
 /**
  * Safely converts any thrown value to an Error object.
  *
@@ -72,6 +60,33 @@ export class ErrorCleanupPatterns {
 const convertToError = (err: unknown): Error => {
   if (err instanceof Error) {
     return err;
+=======
+export enum ErrorCode {
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
+  UNAUTHORIZED = 'UNAUTHORIZED',
+  FORBIDDEN = 'FORBIDDEN',
+  INTERNAL_ERROR = 'INTERNAL_ERROR',
+  SERVICE_UNAVAILABLE = 'SERVICE_UNAVAILABLE',
+  RATE_LIMIT = 'RATE_LIMIT',
+}
+
+export class AppError extends Error {
+  public readonly code: ErrorCode;
+  public readonly statusCode: number;
+  public readonly traceId: string;
+  public readonly timestamp: string;
+  public readonly isOperational: boolean;
+
+  constructor(message: string, code: ErrorCode, statusCode = 500, isOperational = true) {
+    super(message);
+    this.code = code;
+    this.statusCode = statusCode;
+    this.traceId = randomUUID();
+    this.timestamp = new Date().toISOString();
+    this.isOperational = isOperational;
+    Error.captureStackTrace(this, this.constructor);
+>>>>>>> origin/copilot/sub-pr-402
   }
   if (err === null || err === undefined) {
     return new Error(UNKNOWN_ERROR_FALLBACK);
@@ -199,56 +214,6 @@ function sanitizeErrorMessage(message: string): string {
 }
 >>>>>>> origin/alert-autofix-37
 
-/**
- * Global error handling middleware for Express applications.
- *
- * This middleware catches all errors passed to `next(error)` and provides
- * consistent error responses. It differentiates between:
- *
- * 1. **AppError instances**: Custom application errors with structured data
- *    - Uses the error's status code, message, and trace ID
- *    - Includes validation errors if present
- *    - Logs at appropriate level based on status code
- *
- * 2. **Unexpected errors**: All other errors (programming errors, etc.)
- *    - Returns 500 Internal Server Error
- *    - Hides internal details in production (security)
- *    - Shows full details in development for debugging
- *    - Generates new trace ID if not present
- *
- * Response format:
- * ```json
- * {
- *   "error": {
- *     "code": "ERROR_CODE",
- *     "message": "Human-readable message",
- *     "status": 400,
- *     "traceId": "uuid-v4",
- *     "timestamp": "2025-12-01T00:00:00.000Z",
- *     "details": {} // Optional validation errors
- *   }
- * }
- * ```
- *
- * @param err - The error that was thrown or passed to next()
- * @param req - Express request object
- * @param res - Express response object
- * @param _next - Express next function (unused but required for error middleware signature)
- *
- * @example
- * // Usage in Express app
- * app.use(errorMiddleware);
- *
- * // In route handlers, throw AppError for expected errors:
- * throw createError.badRequest('Invalid user ID');
- *
- * // Or pass to next() for unexpected errors:
- * try {
- *   await riskyOperation();
- * } catch (error) {
- *   next(error);
- * }
- */
 export const errorMiddleware = (
   err: Error | AppError,
   req: Request,
@@ -364,47 +329,6 @@ export const errorMiddleware = (
   }
 };
 
-/**
- * Middleware to handle requests to undefined routes (404 Not Found).
- *
- * This middleware should be registered AFTER all valid routes but BEFORE
- * the error handling middleware. It catches any requests that don't match
- * defined routes and returns a standardized 404 response.
- *
- * Response format:
- * ```json
- * {
- *   "error": {
- *     "code": "NOT_FOUND",
- *     "message": "Route GET /undefined-path not found",
- *     "traceId": "uuid-v4",
- *     "timestamp": "2025-12-01T00:00:00.000Z"
- *   }
- * }
- * ```
- *
- * @param req - Express request object
- * @param res - Express response object
- * @param _next - Express next function (unused, responds directly)
- *
- * @example
- * // Correct middleware ordering in Express app:
- * app.use('/api', apiRoutes);           // 1. Define routes first
- * app.use(notFoundMiddleware);           // 2. Catch undefined routes
- * app.use(errorMiddleware);              // 3. Handle errors last
- *
- * @example
- * // Response for GET /undefined-route:
- * // HTTP 404
- * // {
- * //   "error": {
- * //     "code": "NOT_FOUND",
- * //     "message": "Route GET /undefined-route not found",
- * //     "traceId": "a1b2c3d4-...",
- * //     "timestamp": "2025-12-01T10:00:00.000Z"
- * //   }
- * // }
- */
 export const notFoundMiddleware = (req: Request, res: Response, _next: NextFunction): void => {
   const error = createError.notFound(`Route ${req.method} ${req.url} not found`);
   const traceId = req.traceId || randomUUID();

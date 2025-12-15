@@ -3,7 +3,10 @@
     "target": "ES2020",
     "module": "commonjs",
     "lib": ["ES2020"],
+<<<<<<< HEAD
     "types": ["node"],
+=======
+>>>>>>> origin/copilot/sub-pr-402
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,

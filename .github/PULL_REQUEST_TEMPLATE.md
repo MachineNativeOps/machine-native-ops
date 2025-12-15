@@ -10,6 +10,7 @@
 
 <!-- Please check the relevant option(s) -->
 
+<<<<<<< HEAD
 - [x] 🐛 Bug fix (non-breaking change which fixes an issue)
 - [x] ✨ New feature (non-breaking change which adds functionality)
 - [x] 💥 Breaking change (fix or feature that would cause existing functionality
@@ -19,14 +20,24 @@
 - [x] ♻️ Code refactoring (no functional changes)
 - [x] 🧪 Test addition or modification
 - [x] 🏗️ Build/CI pipeline changes
+=======
+- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
+- [ ] ✨ New feature (non-breaking change which adds functionality)
+- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] 📚 Documentation update
+- [ ] 🔧 Configuration change
+- [ ] ♻️ Code refactoring (no functional changes)
+- [ ] 🧪 Test addition or modification
+- [ ] 🏗️ Build/CI pipeline changes
+>>>>>>> origin/copilot/sub-pr-402
 
 ## Changes Made
 
 <!-- List the specific changes made in this PR -->
 
--
--
--
+- 
+- 
+- 
 
 ## Testing
 
@@ -75,5 +86,4 @@
 
 ---
 
-**By submitting this pull request, I confirm that my contribution is made under
-the terms of the MIT License.**
+**By submitting this pull request, I confirm that my contribution is made under the terms of the MIT License.**
