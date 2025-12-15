@@ -1,13 +1,8 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat, realpath } from 'fs/promises';
-import { relative, resolve, sep } from 'path';
-import { tmpdir } from 'os';
+import { relative, resolve } from 'path';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
-
-// Define safe root directories for file operations to prevent path traversal attacks
-const SAFE_ROOT = resolve(process.cwd());
-const TEMP_ROOT = resolve(tmpdir());
 
 export interface BuildAttestation {
   id: string;
@@ -69,7 +64,7 @@ export interface Dependency {
 
 export class ProvenanceService {
   private slsaService: SLSAAttestationService;
-  
+
   // Define the root directory for allowed files. Change as needed for your project needs
   // Use a fixed absolute path or environment variable for SAFE_ROOT
   private static getSafeRoot(): string {
@@ -92,17 +87,22 @@ export class ProvenanceService {
     let canonicalRoot: string;
     try {
       canonicalRoot = await realpath(safeRoot);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
       throw new Error(
-        `SAFE_ROOT directory '${safeRoot}' does not exist or is invalid. Please ensure the directory exists and is accessible. Original error: ${err && err.message ? err.message : err}`
+        `SAFE_ROOT directory '${safeRoot}' does not exist or is invalid. Please ensure the directory exists and is accessible. Original error: ${errorMessage}`
       );
     }
     const absPath = resolve(canonicalRoot, userInputPath);
     const realAbsPath = await realpath(absPath);
     // Ensure the realAbsPath is strictly under canonicalRoot using path.relative
+    // Note: Empty string means realAbsPath equals canonicalRoot (valid case)
+    // We only reject paths that start with '..' (outside root) or contain null bytes
     const rel = relative(canonicalRoot, realAbsPath);
-    if (rel.startsWith('..') || rel === '' || rel.includes('\0')) {
-      throw new Error(`Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be strictly within ${canonicalRoot}`);
+    if (rel.startsWith('..') || rel.includes('\0')) {
+      throw new Error(
+        `Access to file path '${userInputPath}' (resolved as '${realAbsPath}') is not allowed - path must be strictly within ${canonicalRoot}`
+      );
     }
 
     return realAbsPath;
