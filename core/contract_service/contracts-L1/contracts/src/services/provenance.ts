@@ -96,6 +96,8 @@ export class ProvenanceService {
     const absPath = resolve(canonicalRoot, userInputPath);
     const realAbsPath = await realpath(absPath);
     // Ensure the realAbsPath is strictly under canonicalRoot using path.relative
+    // Note: Empty string means realAbsPath equals canonicalRoot (valid case)
+    // We only reject paths that start with '..' (outside root) or contain null bytes
     const rel = relative(canonicalRoot, realAbsPath);
     if (rel.startsWith('..') || rel.includes('\0')) {
       throw new Error(
