@@ -4,15 +4,9 @@
     "rootDir": ".",
     "outDir": "./dist",
     "baseUrl": ".",
-    "types": ["node"]
+    "types": ["node"],
+    "noUnusedLocals": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "build"]
 }

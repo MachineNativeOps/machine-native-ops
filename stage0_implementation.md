@@ -2,7 +2,8 @@
 
 ## ðŸŽ¯ 總體目標
 
-在正式進入 Stage 1（基礎設施）之前，完成項目的**完整骨架搭建**和**自動化基礎設施**，確保開發團隊可以高效協作。
+在正式進入 Stage
+1（基礎設施）之前，完成項目的**完整骨架搭建**和**自動化基礎設施**，確保開發團隊可以高效協作。
 
 ---
 
@@ -19,20 +20,21 @@ Week 5-6: 驗證 + 優化 + 團隊培訓
 ## ðŸ"Œ Stage 0.1: 項目骨架（Week 1-2）
 
 ### 目標
+
 建立完整的目錄結構和配置文件，確保所有開發工具就位。
 
 ### 交付物
 
-| 項目 | 負責人 | 工作量 | 狀態 |
-|------|--------|--------|------|
-| 根目錄結構 | 架構師 | 2天 | ⬜ |
-| 多語言配置文件 | 全棧工程師 | 3天 | ⬜ |
-| GitHub 配置 | DevOps 工程師 | 2天 | ⬜ |
-| 核心目錄（空骨架） | Rust 工程師 | 2天 | ⬜ |
-| 服務目錄（空骨架） | Go 工程師 | 2天 | ⬜ |
-| Agents 目錄（空骨架） | TS/Python 工程師 | 3天 | ⬜ |
-| 文檔框架 | 技術寫手 | 3天 | ⬜ |
-| 基礎設施配置 | DevOps 工程師 | 2天 | ⬜ |
+| 項目                  | 負責人           | 工作量 | 狀態 |
+| --------------------- | ---------------- | ------ | ---- |
+| 根目錄結構            | 架構師           | 2天    | ⬜   |
+| 多語言配置文件        | 全棧工程師       | 3天    | ⬜   |
+| GitHub 配置           | DevOps 工程師    | 2天    | ⬜   |
+| 核心目錄（空骨架）    | Rust 工程師      | 2天    | ⬜   |
+| 服務目錄（空骨架）    | Go 工程師        | 2天    | ⬜   |
+| Agents 目錄（空骨架） | TS/Python 工程師 | 3天    | ⬜   |
+| 文檔框架              | 技術寫手         | 3天    | ⬜   |
+| 基礎設施配置          | DevOps 工程師    | 2天    | ⬜   |
 
 ### 詳細任務
 
@@ -55,6 +57,7 @@ Week 5-6: 驗證 + 優化 + 團隊培訓
 ```
 
 **執行命令**:
+
 ```bash
 # 初始化項目
 git init
@@ -69,35 +72,36 @@ cat > Makefile << 'EOF'
 .PHONY: help install build test clean
 
 help:
-	@echo "Island AI - Makefile Commands"
-	@echo "  make install  - 安裝所有依賴"
-	@echo "  make build    - 構建所有項目"
-	@echo "  make test     - 運行所有測試"
-	@echo "  make clean    - 清理構建產物"
+ @echo "Island AI - Makefile Commands"
+ @echo "  make install  - 安裝所有依賴"
+ @echo "  make build    - 構建所有項目"
+ @echo "  make test     - 運行所有測試"
+ @echo "  make clean    - 清理構建產物"
 
 install:
-	npm install
-	cd core && cargo build
-	cd services && go mod download
+ npm install
+ cd core && cargo build
+ cd services && go mod download
 
 build:
-	npm run build
-	cd core && cargo build --release
-	cd services && go build ./...
+ npm run build
+ cd core && cargo build --release
+ cd services && go build ./...
 
 test:
-	npm run test
-	cd core && cargo test
-	cd services && go test ./...
+ npm run test
+ cd core && cargo test
+ cd services && go test ./...
 
 clean:
-	rm -rf node_modules dist target build
+ rm -rf node_modules dist target build
 EOF
 ```
 
 #### 1.2 多語言配置（3天）
 
 ##### TypeScript/JavaScript
+
 ```bash
 # package.json
 cat > package.json << 'EOF'
@@ -158,6 +162,7 @@ EOF
 ```
 
 ##### Rust
+
 ```bash
 # Cargo.toml (工作空間)
 cat > Cargo.toml << 'EOF'
@@ -205,6 +210,7 @@ EOF
 ```
 
 ##### Go
+
 ```bash
 # go.work
 cat > go.work << 'EOF'
@@ -222,6 +228,7 @@ EOF
 ```
 
 ##### Java (Maven)
+
 ```bash
 # pom.xml (父項目)
 cat > pom.xml << 'EOF'
@@ -316,7 +323,7 @@ EOF
 
 #### 1.4 核心目錄創建（2天）
 
-```bash
+````bash
 # 創建 Rust 核心層骨架
 mkdir -p core/{runtime,knowledge-base,decision-engine,workflow-orchestrator}/{src,tests,benches}
 
@@ -341,7 +348,7 @@ EOF
 # runtime/src/lib.rs
 cat > core/runtime/src/lib.rs << 'EOF'
 //! Island AI Runtime
-//! 
+//!
 //! Agent 運行時核心模塊
 
 pub mod agent;
@@ -381,9 +388,11 @@ use island_runtime::{Agent, Runtime};
 let runtime = Runtime::new();
 let agent = Agent::new("developer-agent");
 runtime.spawn(agent);
-```
+````
+
 EOF
-```
+
+````
 
 #### 1.5 服務目錄創建（2天）
 
@@ -414,7 +423,7 @@ import (
 
 func main() {
     r := gin.Default()
-    
+
     r.GET("/health", func(c *gin.Context) {
         c.JSON(200, gin.H{
             "status": "healthy",
@@ -422,7 +431,7 @@ func main() {
             "version": "1.0.0",
         })
     })
-    
+
     log.Println("Island AI API Gateway starting on :8080")
     r.Run(":8080")
 }
@@ -438,15 +447,17 @@ Island AI 統一 API 網關，提供路由、認證、限流等功能。
 
 ```bash
 go run cmd/server/main.go
-```
+````
 
 ## 測試
 
 ```bash
 curl http://localhost:8080/health
 ```
+
 EOF
-```
+
+````
 
 #### 1.6 Agents 目錄創建（3天）
 
@@ -521,7 +532,7 @@ Security Agent
 class SecurityAgent:
     def __init__(self, name: str = "security-agent"):
         self.name = name
-    
+
     async def scan(self, target: str) -> dict:
         """執行安全掃描"""
         # TODO: 實現安全掃描邏輯
@@ -532,24 +543,25 @@ class SecurityAgent:
 
 __all__ = ["SecurityAgent"]
 EOF
-```
+````
 
 ---
 
 ## ðŸ"Œ Stage 0.2: 自動化基礎（Week 3-4）
 
 ### 目標
+
 建立完整的 CI/CD 流程和自動同步機制。
 
 ### 交付物
 
-| 項目 | 負責人 | 工作量 | 狀態 |
-|------|--------|--------|------|
-| Git Hooks 配置 | DevOps | 1天 | ⬜ |
-| GitHub Actions (8個工作流) | DevOps | 5天 | ⬜ |
-| 自動同步腳本 | DevOps | 3天 | ⬜ |
-| 測試框架搭建 | QA 工程師 | 3天 | ⬜ |
-| 代碼質量工具 | 全棧工程師 | 2天 | ⬜ |
+| 項目                       | 負責人     | 工作量 | 狀態 |
+| -------------------------- | ---------- | ------ | ---- |
+| Git Hooks 配置             | DevOps     | 1天    | ⬜   |
+| GitHub Actions (8個工作流) | DevOps     | 5天    | ⬜   |
+| 自動同步腳本               | DevOps     | 3天    | ⬜   |
+| 測試框架搭建               | QA 工程師  | 3天    | ⬜   |
+| 代碼質量工具               | 全棧工程師 | 2天    | ⬜   |
 
 ### 詳細任務
 
@@ -647,16 +659,17 @@ EOF
 ## ðŸ"Œ Stage 0.3: 驗證與優化（Week 5-6）
 
 ### 目標
+
 全面驗證自動化流程，優化性能，培訓團隊。
 
 ### 交付物
 
-| 項目 | 負責人 | 工作量 | 狀態 |
-|------|--------|--------|------|
-| 端到端測試 | QA | 3天 | ⬜ |
-| 性能優化 | 全棧工程師 | 3天 | ⬜ |
-| 文檔完善 | 技術寫手 | 4天 | ⬜ |
-| 團隊培訓 | 架構師 | 2天 | ⬜ |
+| 項目       | 負責人     | 工作量 | 狀態 |
+| ---------- | ---------- | ------ | ---- |
+| 端到端測試 | QA         | 3天    | ⬜   |
+| 性能優化   | 全棧工程師 | 3天    | ⬜   |
+| 文檔完善   | 技術寫手   | 4天    | ⬜   |
+| 團隊培訓   | 架構師     | 2天    | ⬜   |
 
 ---
 
@@ -687,12 +700,12 @@ EOF
 
 ## ðŸ†˜ 風險與應對
 
-| 風險 | 概率 | 影響 | 應對措施 |
-|------|------|------|----------|
-| Git hooks 不執行 | 中 | 高 | 提供自動安裝腳本 |
-| GitHub Actions 配額不足 | 低 | 中 | 優化工作流，使用緩存 |
-| 團隊不熟悉工具 | 高 | 中 | 詳細文檔 + 培訓 |
-| 多語言依賴衝突 | 中 | 高 | 統一版本管理 |
+| 風險                    | 概率 | 影響 | 應對措施             |
+| ----------------------- | ---- | ---- | -------------------- |
+| Git hooks 不執行        | 中   | 高   | 提供自動安裝腳本     |
+| GitHub Actions 配額不足 | 低   | 中   | 優化工作流，使用緩存 |
+| 團隊不熟悉工具          | 高   | 中   | 詳細文檔 + 培訓      |
+| 多語言依賴衝突          | 中   | 高   | 統一版本管理         |
 
 ---
 
@@ -728,6 +741,7 @@ EOF
 Stage 0 完成後，即可進入：
 
 **Stage 1: 基礎設施（3個月，$1.5M）**
+
 - Agent 運行時實現
 - 知識庫系統 v1
 - 工作流編排引擎
@@ -735,4 +749,4 @@ Stage 0 完成後，即可進入：
 
 ---
 
-*準備好開始了嗎？讓我們打造未來的 AI 工程平台！* ðŸš€
+_準備好開始了嗎？讓我們打造未來的 AI 工程平台！_ ðŸš€
