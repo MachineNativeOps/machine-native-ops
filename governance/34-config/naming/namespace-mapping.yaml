@@ -1,0 +1,36 @@
+---
+version: v1
+kind: CanonicalNamespaceMapping
+metadata:
+  name: canonical-namespace-mapping
+  description: "Map legacy namespaces to canonical naming (see canonical-naming-machine-spec.yaml)"
+spec:
+  namespaces:
+    - old_name: governance-policies
+      canonical_name: dev-governance-policies
+      urn: "urn:axiom:governance:policies:env:dev:v1"
+      labels:
+        environment: dev
+        tenant: platform
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: governance-common
+      canonical_name: dev-governance-common
+      urn: "urn:axiom:governance:common:env:dev:v1"
+      labels:
+        environment: dev
+        tenant: platform
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: contracts-l1
+      canonical_name: dev-core-contracts-l1-service
+      urn: "urn:axiom:core:contracts-l1:env:dev:v1"
+      labels:
+        environment: dev
+        tenant: core
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: scheduler-service
+      canonical_name: dev-scheduler-service
+      urn: "urn:axiom:platform:scheduler:env:dev:v1"
+      labels:
+        environment: dev
+        tenant: platform
+        app.kubernetes.io/managed-by: axiom-naming-controller
