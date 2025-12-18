@@ -82,6 +82,28 @@ ai/             ←→  island-ai/
 | **⚖️ Structural Governance** | `src/governance/` | `governance/` (頂層) | 同上 |
 | **🚁 Autonomous Framework** | `src/autonomous/` | `autonomous/`, `deployment/`, `deploy/`, `automation/` | 功能分散在多個目錄 |
 
+### 🛑 根目錄整合缺口（2025-12-18 更新）
+
+前幾次 PR 承諾要整合的根目錄仍未落地，需以「先收斂、後優化」處理：
+
+| 未整合根目錄 | 目標位置 | 狀態 | 說明 |
+|--------------|----------|------|------|
+| `ai/` | `src/ai/` | 🔴 未整合 | 與 `island-ai/` 並存，導致雙入口 |
+| `island-ai/` | `src/ai/` | 🔴 未整合 | 同上 |
+| `agent/` | `src/ai/agents/` | 🔴 未整合 | 智能代理與 AI 決策重疊 |
+| `automation/` | `src/autonomous/automation/` | 🔴 未整合 | 應併入自主框架 |
+| `autonomous/` | `src/autonomous/` | 🟠 部分 | 尚未與 `deployment/`、`deploy/` 對齊 |
+| `deployment/` | `src/autonomous/deployment/` | 🔴 未整合 | Kubernetes/部署腳本分散 |
+| `deploy/` | `src/autonomous/deployment/k8s/` | 🔴 未整合 | 與 `deployment/` 重複 |
+| `infra/` | `src/autonomous/infrastructure/` | 🔴 未整合 | 與 `infrastructure/` 重複 |
+| `infrastructure/` | `src/autonomous/infrastructure/` | 🔴 未整合 | 需與 `infra/` 合併 |
+| `script/` | `scripts/` | 🔴 未整合 | 與 `scripts/` 並存，易混淆 |
+
+**P0 行動（立即執行，<48h）：**
+- 鎖定新增頂層目錄的 PR，僅允許移動到 `src/`, `config/`, `scripts/`, `docs/`
+- 依上表批次 `git mv`（先 `ai`/`island-ai`，再部署與基礎設施目錄）
+- 更新導入路徑與 CI 檢查腳本，確保 `machinenativeops.yaml` 為單一入口
+
 ### 配置文件分散情況
 
 ```
