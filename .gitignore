@@ -77,3 +77,5 @@ reports/security/
 _codeql_detected_source_root
 .config/
 .devcontainer/
+synergymesh.egg-info/
+machinenativeops.egg-info/
