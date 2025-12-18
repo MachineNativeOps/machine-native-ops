@@ -303,7 +303,7 @@ metadata:
 # 驗證這些違規會被正確檢測:
 #
 # 1. 使用 Conftest:
-# conftest test examples/governance/naming/sample-ci-violations.yaml \
+# conftest test src/governance/dimensions/27-templates/examples/sample-ci-violations.yaml \
 #   --policy templates/conftest/naming.rego
 #
 # 預期: 所有 ❌ FAIL 的資源應該被拒絕
@@ -311,12 +311,12 @@ metadata:
 # 2. 使用 Python 工具:
 # python tools/governance/python/validate_naming.py \
 #   --spec canonical/machine-spec.yaml \
-#   --resource examples/governance/naming/sample-ci-violations.yaml
+#   --resource src/governance/dimensions/27-templates/examples/sample-ci-violations.yaml
 #
 # 預期: 返回非零退出碼，列出所有違規
 #
 # 3. 使用 Gatekeeper (需要集群):
-# kubectl apply -f examples/governance/naming/sample-ci-violations.yaml --dry-run=server
+# kubectl apply -f src/governance/dimensions/27-templates/examples/sample-ci-violations.yaml --dry-run=server
 #
 # 預期: Admission webhook 拒絕這些資源
 

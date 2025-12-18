@@ -1,8 +1,8 @@
 # =============================================================================
 # SynergyMesh Governance - Dimensions Index
-# Machine-First Governance Framework (00-80 Dimensions)
+# Machine-First Governance Framework (00-99 Dimensions)
 # =============================================================================
-# Total Dimensions: 81 (00-80)
+# Total Dimensions: 85 (00-83 core, 90-99 meta-specification layer)
 # Format: Machine-Friendly YAML
 # Validation: JSON Schema Enforced
 # =============================================================================
@@ -11,11 +11,11 @@ apiVersion: governance.machinenativeops.io/v2
 kind: DimensionIndex
 metadata:
   name: governance-dimensions-index
-  version: "2.0.0"
+  version: "2.2.0"
   created_at: "2025-12-11T00:00:00Z"
-  updated_at: "2025-12-11T00:00:00Z"
+  updated_at: "2025-12-18T00:00:00Z"
   owner: governance-bot
-  total_dimensions: 81
+  total_dimensions: 85
 
 # =============================================================================
 # DIMENSION SCHEMA REFERENCE
@@ -25,7 +25,7 @@ schema:
   validation: required
 
 # =============================================================================
-# DIMENSIONS REGISTRY (00-80)
+# DIMENSIONS REGISTRY (00-99)
 # =============================================================================
 dimensions:
   # ===========================================================================
@@ -1339,18 +1339,111 @@ dimensions:
       tags: [synthesis, integration, holistic, optimization]
       compliance: [Systems-Thinking]
 
+  # ===========================================================================
+  # EXTENDED LAYER (81+)
+  # ===========================================================================
+  - id: "81-auto-comment"
+    name: "自動評論治理"
+    name_en: "Auto Comment Governance"
+    version: "1.0.0"
+    category: extended
+    status: active
+    path: "./81-auto-comment/"
+    schema: "./81-auto-comment/schema.json"
+    policy: "./81-auto-comment/policy.rego"
+    dependencies: ["39-automation", "80-synthesis"]
+    description: "CI/CD自動診斷、評論生成與修復建議"
+    metadata:
+      owner: governance-bot
+      tags: [auto-comment, ci, diagnosis, repair]
+      compliance: [DevOps, GitOps]
+
+  - id: "82-stakeholder"
+    name: "利害關係人治理"
+    name_en: "Stakeholder Governance"
+    version: "1.0.0"
+    category: extended
+    status: active
+    path: "./82-stakeholder/"
+    schema: "./82-stakeholder/schema.json"
+    policy: "./82-stakeholder/policy.rego"
+    dependencies: ["00-vision-strategy"]
+    description: "利害關係人識別、管理與參與治理"
+    metadata:
+      owner: governance-bot
+      tags: [stakeholder, engagement, management]
+      compliance: [ISO-42001]
+
+  - id: "83-integration"
+    name: "整合治理"
+    name_en: "Integration Governance"
+    version: "1.0.0"
+    category: extended
+    status: active
+    path: "./83-integration/"
+    schema: "./83-integration/schema.json"
+    policy: "./83-integration/policy.rego"
+    dependencies: ["01-architecture"]
+    description: "整合模式、編排策略與互操作性治理"
+    metadata:
+      owner: governance-bot
+      tags: [integration, orchestration, interoperability]
+      compliance: [Enterprise-Integration]
+
+  # ===========================================================================
+  # META-SPECIFICATION LAYER (90-99)
+  # ===========================================================================
+  - id: "99-naming-convention"
+    name: "統一命名規範治理"
+    name_en: "Unified Naming Convention Governance"
+    version: "1.0.0"
+    category: meta-specification
+    layer: "90-99"
+    layer_name: "Meta-Specification Layer"
+    status: active
+    path: "./99-naming-convention/"
+    schema: "./99-naming-convention/schema.json"
+    policy: "./99-naming-convention/policy.rego"
+    dependencies: ["01-architecture", "25-principles", "31-schemas"]
+    description: "統一命名規範，涵蓋目錄、檔案、鍵值、URI/URN 等九大子規範"
+    sub_specifications:
+      - "01-directory-naming"
+      - "02-file-naming"
+      - "03-extension-standards"
+      - "04-key-naming"
+      - "05-value-naming"
+      - "06-mapping-standards"
+      - "07-reference-standards"
+      - "08-dependency-standards"
+      - "09-uri-urn-standards"
+    metadata:
+      owner: governance-bot
+      tags: [naming, convention, uri, urn, kebab-case, canonical, meta-spec]
+      compliance: [ISO-42001, NIST-AI-RMF]
+      urn: "urn:machinenativeops:governance:naming-convention:v1"
+
 # =============================================================================
 # STATISTICS
 # =============================================================================
 statistics:
-  total_dimensions: 81
+  total_dimensions: 85
   categories:
     strategic: 10
     operational: 20
     execution: 20
     observability: 20
     feedback: 11
+    extended: 3
+    meta-specification: 1
+  layers:
+    "00-09": "Strategic Layer"
+    "10-29": "Operational Layer"
+    "30-49": "Execution Layer"
+    "50-59": "Observability Layer"
+    "60-80": "Advanced/Feedback Layer"
+    "81-83": "Extended Layer"
+    "90-99": "Meta-Specification Layer"
   status:
-    active: 81
+    active: 85
     deprecated: 0
     draft: 0

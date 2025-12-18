@@ -774,7 +774,7 @@ error_budget:
 
 ### 示例
 
-- `examples/governance/observability/prometheus-rules.yaml` - Prometheus 规则示例
+- `src/governance/dimensions/examples/observability/prometheus-rules.yaml` - Prometheus 规则示例
 
 ## 参考资料
 

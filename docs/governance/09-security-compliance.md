@@ -786,7 +786,7 @@ metadata:
 ### 模板和示例
 
 - `templates/governance/k8s/deployment.template.yaml` - 安全 Deployment 模板
-- `examples/governance/security/security-review-checklist.yaml` - 安全审查清单
+- `src/governance/dimensions/examples/security-review-checklist.yaml` - 安全审查清单
 
 ### 参考资料
 

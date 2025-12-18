@@ -420,7 +420,7 @@ python tools/governance/python/detect_circular_dependencies.py \
     - Troubleshooting 指南
     - 团队特定的指南
 
-  examples/governance/:
+  src/governance/dimensions/:
     - 代码示例
     - 配置模板
     - 脚本和工具

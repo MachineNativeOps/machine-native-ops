@@ -580,7 +580,7 @@ risks:
 
 ### 示例
 
-- `examples/governance/` - 各种治理工件示例
+- `src/governance/dimensions/` - 各种治理工件示例
 
 ## 参考资料
 

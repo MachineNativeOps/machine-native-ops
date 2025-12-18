@@ -69,14 +69,14 @@
 1. 阅读 [命名治理标准](./04-naming-standards.md)
 2. 使用 [命名生成工具](../../tools/bash/generate_resource_name.sh)
 3. 在 CI/CD 中集成 [命名验证](../../templates/ci/github-actions-naming-check.yml)
-4. 查看 [良好vs不良命名示例](../../examples/governance/naming/good-vs-bad-naming.yaml)
+4. 查看 [良好vs不良命名示例](../../src/governance/dimensions/27-templates/examples/good-vs-bad-naming.yaml)
 
 ### 对于运维人员
 
 1. 阅读 [变更管理流程](./05-change-management.md)
 2. 使用 [变更请求模板](../../templates/forms/change-request.template.yaml)
 3. 配置 [Prometheus 告警](../../templates/k8s/prometheus-rule-naming-alert.template.yaml)
-4. 查看 [变更请求示例](../../examples/governance/change-management/CHG-2025-001.yaml)
+4. 查看 [变更请求示例](../../src/governance/dimensions/03-change/examples/CHG-2025-001.yaml)
 
 ### 对于架构师
 

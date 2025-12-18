@@ -25,11 +25,11 @@
     - `ai/`、`island-ai/` → `src/ai/`
     - `infra/`、`infrastructure/` → `src/autonomous/infrastructure/`
     - `deploy/`、`deployment/` → `src/autonomous/deployment/`
-    - `NamespaceTutorial` → `examples/namespace-tutorial`
+    - `NamespaceTutorial` → `docs/tutorials/namespace/`
 - **Target root layout / 目標根目錄佈局**
   - `src/{ai,core,governance,autonomous/{infrastructure,deployment,agents}}`
   - `config/{dev,staging,prod}`（合併 `.config/`、`config/`、`.devcontainer/`）
-  - `scripts/{dev,ci,ops,governance}`, `docs/`, `examples/namespace-tutorial/`
+  - `scripts/{dev,ci,ops,governance}`, `docs/`, `docs/tutorials/namespace/`
   - `governance/{policies,strategies,docs,tools,assets}`, `tests/{unit,e2e}`（選配）, `.github/`
 - **Versioning / 版本策略**
   - 採 SemVer `X.Y.Z`，Git tag `vX.Y.Z`，目前版本 `4.0.0`
@@ -37,7 +37,7 @@
 - **Migration phases / 遷移階段**（對應 `migrationProcedure.phases`，保持規格中的 phase-0、phase-2.x 命名）
   1. `phase-0` 備份：建立 `refactor/phase2-directory-restructure` 分支並推送 `pre-restructure-*` tag。
   2. `phase-2.1` 骨架：建立標準目錄（`src/`、`config/`、`scripts/`、`governance/`、`examples/`）。
-  3. `phase-2.2` 非相依移動：如 `NamespaceTutorial` → `examples/namespace-tutorial`，治理文檔移至 `governance/docs/`。
+  3. `phase-2.2` 非相依移動：如 `NamespaceTutorial` → `docs/tutorials/namespace/`，治理文檔移至 `governance/docs/`。
   4. `phase-2.3` 合併重複：`ai/`+`island-ai/`、`infra/`+`infrastructure/`、`deploy/`+`deployment/`、`.config/`+`config/`。
   5. `phase-2.4` 路徑修正：更新程式碼匯入與模組路徑。
   6. `phase-2.5` CI 更新：修正工作流程中的腳本路徑。

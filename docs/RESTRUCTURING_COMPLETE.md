@@ -68,7 +68,7 @@ The MachineNativeOps repository has undergone a comprehensive architectural rest
 - ✅ Core engine: `core/` → `src/core/`
 - ✅ Applications: `apps/` → `src/apps/`
 - ✅ Services: `services/` → `src/services/`
-- ✅ Examples: `NamespaceTutorial/` → `examples/namespace-tutorial/` (kebab-case)
+- ✅ Examples: `NamespaceTutorial/` → `docs/tutorials/namespace/` (kebab-case)
 
 ### Phase 2.3: Full Consolidation ✅
 **Additional migrations:**

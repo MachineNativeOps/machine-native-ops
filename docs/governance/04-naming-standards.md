@@ -312,7 +312,7 @@ spec:
 ### 例外示例
 
 ```yaml
-# examples/governance/exception/EXC-2025-001.yaml
+# src/governance/dimensions/examples/exception/EXC-2025-001.yaml
 metadata:
   id: "EXC-2025-001"
   title: "Legacy System 命名例外"
@@ -410,7 +410,7 @@ python tools/governance/python/audit_naming_compliance.py \
 - `policies/naming/` - 所有命名策略
 - `tools/governance/bash/generate_resource_name.sh` - 名称生成器
 - `tools/governance/python/validate_naming.py` - 名称验证器
-- `examples/governance/naming/` - 示例和参考
+- `src/governance/dimensions/27-templates/examples/` - 示例和参考
 
 ## FAQ
 

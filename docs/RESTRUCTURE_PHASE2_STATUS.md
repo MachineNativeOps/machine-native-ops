@@ -32,8 +32,8 @@ This report documents the progress on the large-scale directory restructuring pr
 
 #### Phase 2.2: Non-Dependent Directory Migration
 - **Status**: ✅ COMPLETED
-- NamespaceTutorial successfully moved to `examples/namespace-tutorial/`
-- Commit: `f4df807` - "refactor: move NamespaceTutorial to examples/namespace-tutorial (Phase 2.2)"
+- NamespaceTutorial successfully moved to `docs/tutorials/namespace/`
+- Commit: `f4df807` - "refactor: move NamespaceTutorial to docs/tutorials/namespace (Phase 2.2)"
 - 16 files deleted from root-level NamespaceTutorial
 - **Note**: Files exist in working directory; git tracking being finalized
 
@@ -80,8 +80,8 @@ This report documents the progress on the large-scale directory restructuring pr
 - **Status**: Resolved through commit f4df807
 
 ### Directory Structure Nesting
-- **Issue**: git mv NamespaceTutorial examples/namespace-tutorial created nested examples/namespace-tutorial/NamespaceTutorial/
-- **Solution**: Manually restructured to flat: examples/namespace-tutorial/* (files directly accessible)
+- **Issue**: git mv NamespaceTutorial docs/tutorials/namespace created nested docs/tutorials/namespace/NamespaceTutorial/
+- **Solution**: Manually restructured to flat: docs/tutorials/namespace/* (files directly accessible)
 - **Status**: Resolved in working directory
 
 ### Coverage & Test Baselines
@@ -114,9 +114,9 @@ This report documents the progress on the large-scale directory restructuring pr
 ### AFTER (Standardized)
 ```
 /
-├── examples/
-│   ├── namespace-tutorial/    [✅ moved]
-│   └── governance/
+├── docs/
+│   └── tutorials/
+│       └── namespace/         [✅ moved]
 ├── config/
 │   ├── dev/
 │   ├── staging/
@@ -146,13 +146,13 @@ This report documents the progress on the large-scale directory restructuring pr
 
 | Commit | Message | Changes |
 |--------|---------|---------|
-| f4df807 | refactor: move NamespaceTutorial to examples/namespace-tutorial (Phase 2.2) | 16 files deleted from NamespaceTutorial/ |
+| f4df807 | refactor: move NamespaceTutorial to docs/tutorials/namespace (Phase 2.2) | 16 files deleted from NamespaceTutorial/ |
 | Pre-restructure-backup-20251218-041816 | Full backup tag | Full repository state preserved |
 
 ## Next Steps (Immediate)
 
 1. **Finalize Phase 2.2 Git Tracking**
-   - Explicitly add examples/namespace-tutorial files to git index
+   - Explicitly add docs/tutorials/namespace files to git index
    - Create commit for new files in examples/
 
 2. **Execute Phase 2.3**

@@ -137,7 +137,7 @@ MachineNativeOps/
 
 | # | Commit | Message | Files | Type |
 |---|--------|---------|-------|------|
-| 1 | f4df807 | refactor: move NamespaceTutorial to examples/namespace-tutorial (Phase 2.2) | 16 | Move |
+| 1 | f4df807 | refactor: move NamespaceTutorial to docs/tutorials/namespace (Phase 2.2) | 16 | Move |
 | 2 | d5c008b | refactor(phase3.1): consolidate ai/ and island-ai/ into src/ai/ | 155 | Consolidate |
 | 3 | d95efc3 | refactor(phase3.2): consolidate infra/ into src/autonomous/infrastructure/ | 146 | Consolidate |
 | 4 | 14f4b22 | refactor(phase3.3): consolidate deployment/ and deploy/ into src/autonomous/deployment/ | 25 | Consolidate |
@@ -202,7 +202,7 @@ consolidated modules in proper locations.
 
 #### Phase 2: Foundation & Initial Restructuring
 - ✅ Created standard directory skeleton
-- ✅ Migrated NamespaceTutorial to examples/namespace-tutorial/
+- ✅ Migrated NamespaceTutorial to docs/tutorials/namespace/
 
 #### Phase 3: Duplicate Directory Consolidation
 - ✅ AI consolidation: ai/ + island-ai/ → src/ai/ (155 files)

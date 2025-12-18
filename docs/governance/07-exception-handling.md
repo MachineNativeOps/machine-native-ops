@@ -564,7 +564,7 @@ longRunning:  # 超过 6 个月
 ### 模板
 
 - `templates/governance/forms/exception-request.template.yaml` - 例外请求模板
-- `examples/governance/exception/EXC-2025-001.yaml` - 完整示例
+- `src/governance/dimensions/examples/exception/EXC-2025-001.yaml` - 完整示例
 
 ### 验证工具
 

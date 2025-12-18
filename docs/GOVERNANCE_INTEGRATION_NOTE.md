@@ -26,7 +26,7 @@
 - `docs/governance/` - 治理文档
 - `templates/governance/` - 治理专用模板（表单、CI、K8s）
 - `tools/governance/` - 治理专用工具（命名生成器、验证器）
-- `examples/governance/` - 治理案例示例
+- `src/governance/dimensions/` - 治理案例示例
 
 ## 与现有结构的关系
 
@@ -50,7 +50,7 @@
 ├── schemas/ + policies/          定义规则
 ├── templates/governance/         提供模板
 ├── tools/governance/             提供工具
-└── examples/governance/          提供示例
+└── src/governance/dimensions/    提供示例
 
          ↓ 应用于 ↓
 
@@ -124,8 +124,8 @@ git commit -m "chore: add change request CHG-2025-XXX"
 | **CI模板** | `templates/governance/ci/*.yml` | CI/CD 集成模板 |
 | **工具** | `tools/governance/bash/*.sh` | Bash 工具 |
 | **工具** | `tools/governance/python/*.py` | Python 工具 |
-| **示例** | `examples/governance/naming/*.yaml` | 命名示例 |
-| **示例** | `examples/governance/change-management/*.yaml` | 变更示例 |
+| **示例** | `src/governance/dimensions/27-templates/examples/*.yaml` | 命名示例 |
+| **示例** | `src/governance/dimensions/03-change/examples/*.yaml` | 变更示例 |
 | **文档** | `docs/governance/*.md` | 详细文档 |
 | **参考** | `references/references.yaml` | 外部参考资料 |
 

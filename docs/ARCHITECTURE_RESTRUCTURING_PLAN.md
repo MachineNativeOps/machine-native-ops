@@ -589,7 +589,7 @@ mkdir -p scripts/{dev,ci,ops}
 
 ```bash
 # 重命名 PascalCase 目錄
-git mv NamespaceTutorial/ examples/namespace-tutorial/
+git mv NamespaceTutorial/ docs/tutorials/namespace/
 
 # 處理版本前綴目錄
 git mv v1-python-drones/ legacy/python-drones-v1/
@@ -1106,7 +1106,7 @@ echo "✅ All verifications passed!"
 | `.devcontainer/` | `config/dev/devcontainer/` | 開發容器配置 |
 | `.config/` | `config/dev/` | 開發工具配置 |
 | `script/` | `scripts/` | 腳本 (合併) |
-| `NamespaceTutorial/` | `examples/namespace-tutorial/` | 範例 (重命名) |
+| `NamespaceTutorial/` | `docs/tutorials/namespace/` | 範例 (重命名) |
 | `v1-python-drones/` | `legacy/python-drones-v1/` | 舊版本 |
 | `v2-multi-islands/` | `legacy/multi-islands-v2/` | 舊版本 |
 

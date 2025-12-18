@@ -605,8 +605,8 @@ python tools/governance/python/generate_change_audit.py \
 
 ### 示例
 
-- `examples/governance/change-management/CHG-2025-001.yaml` - 常规变更示例
-- `examples/governance/change-management/rollback-scenario.md` - 回滚场景
+- `src/governance/dimensions/03-change/examples/CHG-2025-001.yaml` - 常规变更示例
+- `src/governance/dimensions/03-change/examples/rollback-scenario.md` - 回滚场景
 
 ## 参考资料
 

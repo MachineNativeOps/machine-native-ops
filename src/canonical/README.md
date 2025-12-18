@@ -235,7 +235,7 @@ python tools/governance/python/naming-migration.py \
 | 版本歷史 | `canonical/CHANGELOG.md` |
 | 詳細文檔 | `docs/governance/04-canonical-naming-governance.md` |
 | 驗證 Schema | `schemas/naming-spec.schema.yaml` |
-| 示例資源 | `examples/governance/naming/` |
+| 示例資源 | `src/governance/dimensions/27-templates/examples/` |
 | 遷移工具 | `tools/governance/python/naming-migration.py` |
 | 參考資料 | `references/canonical-naming-governance.yaml` |
 
