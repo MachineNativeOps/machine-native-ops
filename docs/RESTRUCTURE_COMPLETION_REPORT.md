@@ -14,7 +14,7 @@ This restructuring project has successfully transformed the MachineNativeOps rep
 
 ### ✅ Phase 2: Foundation (Initial Restructuring)
 - **2.1**: Created standard directory skeleton (src/, config/, scripts/, governance/, examples/)
-- **2.2**: Migrated NamespaceTutorial → examples/namespace-tutorial/
+- **2.2**: Migrated NamespaceTutorial → docs/tutorials/namespace/
 - **Status**: ✅ Complete | **Files**: 16 processed | **Commits**: 2
 
 ### ✅ Phase 3: Consolidation (Duplicate Merging)
@@ -80,8 +80,8 @@ MachineNativeOps/
 │   ├── ops/
 │   └── governance/
 ├── 📚 docs/                             # Documentation
-├── 📖 examples/
-│   └── namespace-tutorial/              # ✅ (moved from root)
+│   └── tutorials/
+│       └── namespace/                   # ✅ (moved from root)
 ├── 🏛️ governance/                        # Governance content hub
 └── 📄 machinenativeops.yaml             # Single source of truth
 ```
@@ -103,7 +103,7 @@ MachineNativeOps/
 
 ## Commits Made (in chronological order)
 
-1. **f4df807**: refactor: move NamespaceTutorial to examples/namespace-tutorial (Phase 2.2)
+1. **f4df807**: refactor: move NamespaceTutorial to docs/tutorials/namespace (Phase 2.2)
 2. **f2f75fd**: docs: add Phase 2 restructure status report
 3. **914f13b**: docs(planning): add detailed Phase 3-5 implementation guide
 4. **45d1c4c**: docs: add session summary and accomplishments
@@ -209,7 +209,7 @@ The new structure aligns perfectly with:
 | src/ | 1,200+ | Consolidated from multiple roots |
 | config/ | 117 | Unified from .config/, .devcontainer/ |
 | scripts/ | 50+ | Ready for automation |
-| examples/ | 16+ | ✅ Includes namespace-tutorial |
+| docs/tutorials/ | 16+ | ✅ Includes namespace tutorial |
 | docs/ | 100+ | With restructuring documentation |
 | **TOTAL** | **2,000+** | ✅ All processed |
 

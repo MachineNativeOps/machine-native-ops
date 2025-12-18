@@ -16,7 +16,7 @@ PROJECT STATUS: Phase 2 Complete, Ready for Phase 3
    - Prepared all subdirectories for consolidation
 
 ✅ Phase 2.2: Initial Migration
-   - Moved NamespaceTutorial → examples/namespace-tutorial/
+   - Moved NamespaceTutorial → docs/tutorials/namespace/
    - Removed 16 files from root-level chaos
    - Commit: f4df807
 
@@ -27,7 +27,7 @@ PROJECT STATUS: Phase 2 Complete, Ready for Phase 3
 
 === COMMITS MADE ===
 
-1. f4df807 - refactor: move NamespaceTutorial to examples/namespace-tutorial (Phase 2.2)
+1. f4df807 - refactor: move NamespaceTutorial to docs/tutorials/namespace (Phase 2.2)
 2. f2f75fd - docs: add Phase 2 restructure status report
 3. [Next commit] - docs(planning): add detailed Phase 3-5 implementation guide
 

@@ -267,7 +267,7 @@ git push origin your-feature-branch
 | `.config/` | `config/dev/` | Move | 開發工具配置 |
 | `.vscode/settings.json` | `config/dev/vscode-settings.json` | Move | VSCode 配置 |
 | `script/` | `scripts/` | Move + Merge | 腳本（合併到 scripts/） |
-| `NamespaceTutorial/` | `examples/namespace-tutorial/` | Move + Rename | 命名空間教程 |
+| `NamespaceTutorial/` | `docs/tutorials/namespace/` | Move + Rename | 命名空間教程 |
 | `v1-python-drones/` | `legacy/python-drones-v1/` | Move | 舊版 Python Drones |
 | `v2-multi-islands/` | `legacy/multi-islands-v2/` | Move | 舊版 Multi-Islands |
 

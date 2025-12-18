@@ -391,9 +391,9 @@ violation[{"msg": msg, "level": "info"}] {
 ##############################################
 
 # 使用方法:
-# conftest test -p templates/conftest/naming.rego examples/governance/naming/sample-namespace.yaml
+# conftest test -p templates/conftest/naming.rego src/governance/dimensions/27-templates/examples/sample-namespace.yaml
 #
 # 預期輸出:
-# PASS - examples/governance/naming/sample-namespace.yaml - 3 tests
-# WARN - examples/governance/naming/bad-namespace.yaml - Missing URN annotation
-# FAIL - examples/governance/naming/bad-namespace.yaml - Namespace 'BadNamespace' does not match canonical pattern
+# PASS - src/governance/dimensions/27-templates/examples/sample-namespace.yaml - 3 tests
+# WARN - src/governance/dimensions/27-templates/examples/bad-namespace.yaml - Missing URN annotation
+# FAIL - src/governance/dimensions/27-templates/examples/bad-namespace.yaml - Namespace 'BadNamespace' does not match canonical pattern

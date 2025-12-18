@@ -361,7 +361,7 @@
 ```yaml
 文档:
   - docs/governance/ - 完整文档
-  - examples/governance/ - 实例参考
+  - src/governance/dimensions/ - 实例参考
   - references/references.yaml - 外部资料
 
 视频（建议录制）:
@@ -533,7 +533,7 @@ Office Hours:
   - 案例分析
 
 代码库:
-  - examples/governance/ - 示例代码
+  - src/governance/dimensions/ - 示例代码
   - templates/governance/ - 可复用模板
   - tools/governance/ - 工具和脚本
 ```

@@ -35,7 +35,7 @@ spec:
       status: "stable"
       version: "1.0.0"
       examples:
-        - "examples/governance/training/role-learning-map.yaml"
+        - "src/governance/dimensions/examples/training/role-learning-map.yaml"
       tags: ["training", "roles", "education"]
 
     # Naming governance - Core module
@@ -61,8 +61,8 @@ spec:
         - "templates/governance/ci/github-actions-naming-check.yml"
         - "templates/governance/ci/gitlab-ci-naming-check.yml"
       examples:
-        - "examples/governance/naming/good-vs-bad-naming.yaml"
-        - "examples/governance/naming/sample-k8s-deployment.yaml"
+        - "src/governance/dimensions/27-templates/examples/good-vs-bad-naming.yaml"
+        - "src/governance/dimensions/27-templates/examples/sample-k8s-deployment.yaml"
       tags: ["naming", "standards", "validation"]
 
     # Change management
@@ -80,8 +80,8 @@ spec:
       templates:
         - "templates/governance/forms/change-request.template.yaml"
       examples:
-        - "examples/governance/change-management/CHG-2025-001.yaml"
-        - "examples/governance/change-management/rollback-scenario.md"
+        - "src/governance/dimensions/03-change/examples/CHG-2025-001.yaml"
+        - "src/governance/dimensions/03-change/examples/rollback-scenario.md"
       tags: ["change", "approval", "risk"]
 
     # Metrics and audit
@@ -98,7 +98,7 @@ spec:
       templates:
         - "templates/governance/forms/audit-report.template.yaml"
       examples:
-        - "examples/governance/metrics/kpi-dashboard.yaml"
+        - "src/governance/dimensions/examples/metrics/kpi-dashboard.yaml"
       tags: ["metrics", "audit", "kpi"]
 
     # Exception handling
@@ -116,7 +116,7 @@ spec:
       templates:
         - "templates/governance/forms/exception-request.template.yaml"
       examples:
-        - "examples/governance/exception/EXC-2025-001.yaml"
+        - "src/governance/dimensions/examples/exception/EXC-2025-001.yaml"
       tags: ["exception", "compliance", "approval"]
 
     # Observability and validation
@@ -131,7 +131,7 @@ spec:
         - "templates/governance/k8s/prometheus-rule-naming-alert.template.yaml"
         - "templates/governance/monitoring/grafana-dashboard-governance.json"
       examples:
-        - "examples/governance/observability/prometheus-rules.yaml"
+        - "src/governance/dimensions/examples/observability/prometheus-rules.yaml"
       tags: ["observability", "prometheus", "grafana"]
 
     # Security and compliance
@@ -145,7 +145,7 @@ spec:
       policies:
         - "policies/security/info-security-policy-reference.yaml"
       examples:
-        - "examples/governance/security/security-review-checklist.yaml"
+        - "src/governance/dimensions/examples/security/security-review-checklist.yaml"
       tags: ["security", "compliance", "audit"]
 
     # Cross-team governance
@@ -159,7 +159,7 @@ spec:
       schemas:
         - "schemas/review-meeting.schema.yaml"
       examples:
-        - "examples/governance/review-meeting-sample.yaml"
+        - "src/governance/dimensions/examples/review-meeting-sample.yaml"
       tags: ["collaboration", "team", "governance"]
 
     # Namespace tutorial integration

@@ -338,7 +338,7 @@ python tools/governance/python/validate_naming.py --help
 
 ### 良好 vs 不良命名
 
-查看对比示例: [examples/governance/naming/good-vs-bad-naming.yaml](./examples/governance/naming/good-vs-bad-naming.yaml)
+查看对比示例: [src/governance/dimensions/27-templates/examples/good-vs-bad-naming.yaml](../../src/governance/dimensions/27-templates/examples/good-vs-bad-naming.yaml)
 
 ✅ 好的示例:
 ```yaml
@@ -362,7 +362,7 @@ metadata:
 
 ### 变更请求示例
 
-完整示例: [examples/governance/change-management/CHG-2025-001.yaml](./examples/governance/change-management/CHG-2025-001.yaml)
+完整示例: [src/governance/dimensions/03-change/examples/CHG-2025-001.yaml](../../src/governance/dimensions/03-change/examples/CHG-2025-001.yaml)
 
 ## 🔗 参考资料
 

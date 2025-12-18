@@ -266,12 +266,12 @@ metadata:
 ##############################################
 
 # 使用 Conftest 驗證:
-# conftest test examples/governance/naming/sample-naming-modes.yaml --policy templates/conftest/
+# conftest test src/governance/dimensions/27-templates/examples/sample-naming-modes.yaml --policy templates/conftest/
 
 # 使用 Python 工具驗證:
 # python tools/governance/python/validate_naming.py \
 #   --spec canonical/machine-spec.yaml \
-#   --resource examples/governance/naming/
+#   --resource src/governance/dimensions/27-templates/examples/
 
 # 使用 Gatekeeper (需要集群):
-# kubectl apply -f examples/governance/naming/sample-naming-modes.yaml --dry-run=server
+# kubectl apply -f src/governance/dimensions/27-templates/examples/sample-naming-modes.yaml --dry-run=server

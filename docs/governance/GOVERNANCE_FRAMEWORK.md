@@ -67,16 +67,12 @@ MachineNativeOps/
 │       └── node/
 │           └── naming-bot.js
 │
-├── examples/                       # 现有示例目录
-│   ├── ... (原有示例)
-│   └── governance/                 # 治理案例示例 (NEW)
-│       ├── naming/
-│       │   └── good-vs-bad-naming.yaml
-│       ├── change-management/
-│       │   └── CHG-2025-001.yaml
-│       ├── exception/
-│       ├── metrics/
-│       └── training/
+├── src/governance/dimensions/      # 治理案例示例 (按维度编号组织)
+│   ├── 27-templates/examples/
+│   │   └── good-vs-bad-naming.yaml
+│   ├── 03-change/examples/
+│   │   └── CHG-2025-001.yaml
+│   └── [其他维度]/examples/
 │
 ├── docs/                           # 现有文档目录
 │   ├── ... (原有文档)
@@ -338,7 +334,7 @@ python tools/governance/python/validate_naming.py --help
 
 ### 良好 vs 不良命名
 
-查看对比示例: [examples/governance/naming/good-vs-bad-naming.yaml](./examples/governance/naming/good-vs-bad-naming.yaml)
+查看对比示例: [src/governance/dimensions/27-templates/examples/good-vs-bad-naming.yaml](./src/governance/dimensions/27-templates/examples/good-vs-bad-naming.yaml)
 
 ✅ 好的示例:
 ```yaml
@@ -362,7 +358,7 @@ metadata:
 
 ### 变更请求示例
 
-完整示例: [examples/governance/change-management/CHG-2025-001.yaml](./examples/governance/change-management/CHG-2025-001.yaml)
+完整示例: [src/governance/dimensions/03-change/examples/CHG-2025-001.yaml](./src/governance/dimensions/03-change/examples/CHG-2025-001.yaml)
 
 ## 🔗 参考资料
 

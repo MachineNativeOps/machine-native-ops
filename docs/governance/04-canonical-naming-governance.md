@@ -96,6 +96,7 @@ canonical/
 ├── Conftest: templates/conftest/naming.rego
 ├── CI/CD: .github/workflows/naming-validation.yml
 ├── Migration Tool: tools/governance/python/naming-migration.py
+├── Examples: src/governance/dimensions/27-templates/examples/
 └── Monitoring: policies/observability/naming-metrics-policy.yaml
 ```
 
@@ -287,7 +288,7 @@ kubectl get constrainttemplates
 kubectl apply -f policies/gatekeeper/namespace-constraints.yaml
 
 # 測試約束 (Dry-run 模式)
-kubectl apply -f examples/governance/naming/sample-namespace.yaml --dry-run=server
+kubectl apply -f src/governance/dimensions/27-templates/examples/sample-namespace.yaml --dry-run=server
 ```
 
 #### 1.2 配置 Conftest (OPA Rego)
