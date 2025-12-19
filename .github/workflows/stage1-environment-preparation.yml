@@ -104,30 +104,40 @@ jobs:
         run: |
           set -euo pipefail
           echo "验证Shell脚本语法..."
-          while IFS= read -r script; do
-            echo "检查脚本: $script"
-            if bash -n "$script"; then
-              echo "✅ $script 语法正确"
-            else
-              echo "❌ $script 语法错误"
-              exit 1
-            fi
-          done < <(find . -name "*.sh" -type f)
+          mapfile -t shell_files < <(find . -name "*.sh" -type f)
+          if [ ${#shell_files[@]} -eq 0 ]; then
+            echo "ℹ️ 未找到 Shell 腳本"
+          else
+            for script in "${shell_files[@]}"; do
+              echo "检查脚本: $script"
+              if bash -n "$script"; then
+                echo "✅ $script 语法正确"
+              else
+                echo "❌ $script 语法错误"
+                exit 1
+              fi
+            done
+          fi
 
       - name: Python脚本语法检查
         run: |
           set -euo pipefail
           echo "验证Python脚本语法..."
-          while IFS= read -r script; do
-            echo "检查脚本: $script"
-            if python3 -m py_compile "$script"; then
-              echo "✅ $script 语法正确"
-              rm -f "${script}c"
-            else
-              echo "❌ $script 语法错误"
-              exit 1
-            fi
-          done < <(find . -name "*.py" -type f)
+          mapfile -t python_files < <(find . -name "*.py" -type f)
+          if [ ${#python_files[@]} -eq 0 ]; then
+            echo "ℹ️ 未找到 Python 腳本"
+          else
+            for script in "${python_files[@]}"; do
+              echo "检查脚本: $script"
+              if python3 -m py_compile "$script"; then
+                echo "✅ $script 语法正确"
+                rm -f "${script%.py}.pyc"
+              else
+                echo "❌ $script 语法错误"
+                exit 1
+              fi
+            done
+          fi
 
       - name: 部署脚本功能验证
         run: |
@@ -164,29 +174,39 @@ jobs:
           set -euo pipefail
           echo "验证YAML配置文件..."
           pip install yamllint
-          while IFS= read -r file; do
-            echo "检查文件: $file"
-            if yamllint "$file"; then
-              echo "✅ $file YAML语法正确"
-            else
-              echo "❌ $file YAML语法错误"
-              exit 1
-            fi
-          done < <(find . -name "*.yaml" -o -name "*.yml")
+          mapfile -t yaml_files < <(find . -name "*.yaml" -o -name "*.yml")
+          if [ ${#yaml_files[@]} -eq 0 ]; then
+            echo "ℹ️ 未找到 YAML 配置文件"
+          else
+            for file in "${yaml_files[@]}"; do
+              echo "检查文件: $file"
+              if yamllint "$file"; then
+                echo "✅ $file YAML语法正确"
+              else
+                echo "❌ $file YAML语法错误"
+                exit 1
+              fi
+            done
+          fi
 
       - name: JSON配置语法检查
         run: |
           set -euo pipefail
           echo "验证JSON配置文件..."
-          while IFS= read -r file; do
-            echo "检查文件: $file"
-            if jq empty "$file" 2>/dev/null; then
-              echo "✅ $file JSON语法正确"
-            else
-              echo "❌ $file JSON语法错误"
-              exit 1
-            fi
-          done < <(find . -name "*.json")
+          mapfile -t json_files < <(find . -name "*.json")
+          if [ ${#json_files[@]} -eq 0 ]; then
+            echo "ℹ️ 未找到 JSON 配置文件"
+          else
+            for file in "${json_files[@]}"; do
+              echo "检查文件: $file"
+              if jq empty "$file" 2>/dev/null; then
+                echo "✅ $file JSON语法正确"
+              else
+                echo "❌ $file JSON语法错误"
+                exit 1
+              fi
+            done
+          fi
 
       - name: 环境配置验证
         run: |
@@ -212,29 +232,30 @@ jobs:
     steps:
       - name: 生成环境报告
         run: |
-          echo "=========================================="
-          echo " 环境验证报告"
-          echo "=========================================="
-          echo ""
-          echo "📋 环境检测结果:"
-          echo " 操作系统: ${{ needs.environment-detection.outputs.os-type }}"
-          echo " 系统架构: ${{ needs.environment-detection.outputs.arch-type }}"
-          echo " 工具可用性: ${{ needs.environment-detection.outputs.tools-available }}"
-          echo ""
-          echo "📜 脚本验证结果:"
-          echo " 状态: ${{ needs.script-validation.result }}"
-          echo ""
-          echo "⚙️ 配置验证结果:"
-          echo " 状态: ${{ needs.config-validation.result }}"
-          echo ""
-          echo "=========================================="
+          REPORT_FILE="${GITHUB_WORKSPACE}/environment-report.txt"
+          echo "==========================================" | tee "$REPORT_FILE"
+          echo " 环境验证报告" | tee -a "$REPORT_FILE"
+          echo "==========================================" | tee -a "$REPORT_FILE"
+          echo "" | tee -a "$REPORT_FILE"
+          echo "📋 环境检测结果:" | tee -a "$REPORT_FILE"
+          echo " 操作系统: ${{ needs.environment-detection.outputs.os-type }}" | tee -a "$REPORT_FILE"
+          echo " 系统架构: ${{ needs.environment-detection.outputs.arch-type }}" | tee -a "$REPORT_FILE"
+          echo " 工具可用性: ${{ needs.environment-detection.outputs.tools-available }}" | tee -a "$REPORT_FILE"
+          echo "" | tee -a "$REPORT_FILE"
+          echo "📜 脚本验证结果:" | tee -a "$REPORT_FILE"
+          echo " 状态: ${{ needs.script-validation.result }}" | tee -a "$REPORT_FILE"
+          echo "" | tee -a "$REPORT_FILE"
+          echo "⚙️ 配置验证结果:" | tee -a "$REPORT_FILE"
+          echo " 状态: ${{ needs.config-validation.result }}" | tee -a "$REPORT_FILE"
+          echo "" | tee -a "$REPORT_FILE"
+          echo "==========================================" | tee -a "$REPORT_FILE"
           if [[ "${{ needs.environment-detection.result }}" == "success" && \
                 "${{ needs.script-validation.result }}" == "success" && \
                 "${{ needs.config-validation.result }}" == "success" ]]; then
-            echo "🎉 环境验证全部通过"
+            echo "🎉 环境验证全部通过" | tee -a "$REPORT_FILE"
             echo "report-status=success" > $GITHUB_OUTPUT
           else
-            echo "❌ 环境验证失败"
+            echo "❌ 环境验证失败" | tee -a "$REPORT_FILE"
             echo "report-status=failure" > $GITHUB_OUTPUT
           fi
 
@@ -243,7 +264,5 @@ jobs:
         if: always()
         with:
           name: environment-validation-report
-          path: |
-            ${{ github.workspace }}/**/*.log
-            ${{ github.workspace }}/**/*.txt
+          path: ${{ github.workspace }}/environment-report.txt
           retention-days: 7
