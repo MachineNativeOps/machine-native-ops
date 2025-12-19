@@ -106,6 +106,7 @@ _成為全球領先的企業級智能自動化平台，透過整合 AI 決策引
 ```
 
 > ⚠️ **Reality Check / 完成標準**：以上「✅」僅代表架構宣告。真正的 Production Ready 必須：
+>
 > - 在 `machinenativeops.yaml` 標記 `status: PRODUCTION_READY`
 > - 在 `config/governance/system-manifest.yaml` 標記 `status: PRODUCTION_READY`
 > - 在 `config/governance/system-module-map.yaml` 處於非 `planning/keep` 狀態
