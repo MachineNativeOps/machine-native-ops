@@ -52,7 +52,6 @@ const assertPathValid = (filePath: string): void => {
     throw new PathValidationError('Invalid file path');
   }
 };
-};
 
 async function resolveSafePath(userInputPath: string): Promise<string> {
   assertPathValid(userInputPath);
