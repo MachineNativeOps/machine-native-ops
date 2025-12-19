@@ -191,7 +191,8 @@ jobs:
         run: |
           set -euo pipefail
           echo "验证YAML配置文件..."
-          pip install "yamllint==1.35.1"
+          pip install --user "yamllint==1.35.1"
+          export PATH="$HOME/.local/bin:$PATH"
           read -r -a VALIDATION_DIRS_ARRAY <<< "${VALIDATION_DIRS_RESOLVED:-}"
           if [ ${#VALIDATION_DIRS_ARRAY[@]} -eq 0 ]; then
             echo "ℹ️ 未找到 YAML 搜索目录"
