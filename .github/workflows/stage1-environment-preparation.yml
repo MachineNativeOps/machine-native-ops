@@ -19,6 +19,7 @@ env:
   PLATFORM_VERSION: "v1.0.0"
   DEPLOYER_SCRIPT: "scripts/deployment/comprehensive-deploy.sh"
   VALIDATION_TIMEOUT: 600 # seconds
+  VALIDATION_DIRS: "config src docs scripts tools"
 
 jobs:
   # =============================================================================
@@ -173,13 +174,7 @@ jobs:
           set -euo pipefail
           echo "验证YAML配置文件..."
           pip install "yamllint==1.35.1"
-          SEARCH_DIRS=(config src docs scripts tools)
-          EXISTING_DIRS=()
-          for dir in "${SEARCH_DIRS[@]}"; do
-            if [ -d "$dir" ]; then
-              EXISTING_DIRS+=("$dir")
-            fi
-          done
+          mapfile -t EXISTING_DIRS < <(for dir in $VALIDATION_DIRS; do [ -d "$dir" ] && echo "$dir"; done)
           if [ ${#EXISTING_DIRS[@]} -eq 0 ]; then
             echo "ℹ️ 未找到 YAML 搜索目录"
             yaml_files=()
@@ -204,13 +199,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "验证JSON配置文件..."
-          SEARCH_DIRS=(config src docs scripts tools)
-          EXISTING_DIRS=()
-          for dir in "${SEARCH_DIRS[@]}"; do
-            if [ -d "$dir" ]; then
-              EXISTING_DIRS+=("$dir")
-            fi
-          done
+          mapfile -t EXISTING_DIRS < <(for dir in $VALIDATION_DIRS; do [ -d "$dir" ] && echo "$dir"; done)
           if [ ${#EXISTING_DIRS[@]} -eq 0 ]; then
             echo "ℹ️ 未找到 JSON 搜索目录"
             json_files=()
@@ -272,9 +261,9 @@ jobs:
           echo " 状态: ${{ needs.config-validation.result }}" | tee -a "$REPORT_FILE"
           echo "" | tee -a "$REPORT_FILE"
           echo "==========================================" | tee -a "$REPORT_FILE"
-          if [[ "${{ needs.environment-detection.result }}" == "success" && \
-                "${{ needs.script-validation.result }}" == "success" && \
-                "${{ needs.config-validation.result }}" == "success" ]]; then
+          if [ "${{ needs.environment-detection.result }}" = "success" ] && \
+             [ "${{ needs.script-validation.result }}" = "success" ] && \
+             [ "${{ needs.config-validation.result }}" = "success" ]; then
             echo "🎉 环境验证全部通过" | tee -a "$REPORT_FILE"
             echo "report-status=success" >> $GITHUB_OUTPUT
           else
