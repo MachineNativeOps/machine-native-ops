@@ -1,10 +1,11 @@
-modules = ["python-3.10", "nodejs-18", "bash"]
+modules = ["nodejs-18", "bash", "python-3.11"]
 [agent]
 expertMode = true
+integrations = ["python_openai_ai_integrations:1.0.0"]
 
 [nix]
 channel = "stable-25_05"
-packages = ["glibcLocales", "libiconv", "openssl", "pkg-config"]
+packages = ["cargo", "glibcLocales", "libiconv", "libxcrypt", "libyaml", "openssl", "pkg-config", "rustc"]
 
 [workflows]
 runButton = "Project"
