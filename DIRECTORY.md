@@ -59,6 +59,7 @@
 - **相關連結**：`tools/docs/`、`docs/generated/`
 
 ### package.json
+
 - **一句話摘要**：多工作區的 Node/NPM 入口與通用腳本。
 - **我不確定/待釐清**：各 workspace 安裝順序及互斥版本。
 - **相關連結**：`src/mcp-servers/`、`src/core/contract_service/contracts-L1/contracts/`
