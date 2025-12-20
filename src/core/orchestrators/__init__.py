@@ -14,7 +14,38 @@ from pathlib import Path
 
 # ===== 工具函數：動態導入 kebab-case 模塊 =====
 def _import_kebab_module(module_alias: str, file_name: str, legacy_alias: str | None = None):
-    """動態導入 kebab-case 的 Python 模塊並註冊命名空間別名"""
+    """
+    動態導入 kebab-case 的 Python 模塊並註冊命名空間別名。
+
+    參數說明：
+    - module_alias:
+        以底線（underscore）為分隔的簡短模塊別名，例如
+        "synergy_mesh_orchestrator"。這不是完整的模塊路徑，
+        而是會作為末端名稱附加在目前套件名稱（__name__）後，
+        共同組成 qualified_name。
+    - file_name:
+        實際的檔案名稱（通常為 kebab-case，例如
+        "synergy-mesh-orchestrator.py"），用來定位要載入的檔案。
+    - legacy_alias:
+        可選的舊有匯入別名（通常為頂層名稱，例如
+        "synergy_mesh_orchestrator"），若提供則會額外在
+        sys.modules[legacy_alias] 中註冊同一個模塊，以維持向後相容。
+
+    名稱關係：
+    - qualified_name:
+        由當前模塊名稱 __name__ 與 module_alias 組成，
+        形如 f"{__name__}.{module_alias}"，並註冊於
+        sys.modules[qualified_name] 中，作為新的命名空間路徑。
+    - module_alias:
+        僅代表 qualified_name 的最後一段（underscore 形式），
+        不包含上層套件路徑。
+    - legacy_alias:
+        若指定，則為額外的頂層匯入路徑（不包含 __name__ 前綴），
+        與 qualified_name 指向同一個已載入的模塊物件。
+
+    返回值：
+        成功載入時返回動態載入的模塊物件；載入失敗時返回 None。
+    """
     module_path = Path(__file__).parent / file_name
     qualified_name = f"{__name__}.{module_alias}"
     spec = importlib.util.spec_from_file_location(qualified_name, module_path)
