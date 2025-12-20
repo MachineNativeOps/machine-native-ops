@@ -112,6 +112,7 @@ permissions:
 ### 自動執行
 
 工作流程會在以下情況自動執行：
+
 1. 創建新的 Pull Request
 2. 更新 Pull Request (push 新的 commit)
 3. 重新打開已關閉的 Pull Request
