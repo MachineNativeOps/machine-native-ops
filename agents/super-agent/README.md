@@ -114,11 +114,11 @@ python test_super_agent.py http://localhost:8080
 
 Each environment has different defaults:
 
-| Environment | Namespace | Image Tag | Replicas | Log Level |
+| Environment | Namespace | Image Tag | Replicas | HPA Range |
 |------------|-----------|-----------|----------|-----------|
-| **dev** | axiom-system-dev | dev-latest | 1 | DEBUG |
-| **staging** | axiom-system-staging | staging-v1.0.0 | 2 | INFO |
-| **prod** | axiom-system | v1.0.0 | 3 (HPA: 3-10) | INFO |
+| **dev** | axiom-system-dev | dev-latest | 1 | 2-5 (default) |
+| **staging** | axiom-system-staging | staging-v1.0.0 | 2 | 2-5 (default) |
+| **prod** | axiom-system | v1.0.0 | 3 | 3-10 |
 
 To override the image tag:
 ```bash

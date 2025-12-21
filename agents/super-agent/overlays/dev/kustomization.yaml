@@ -17,10 +17,3 @@ replicas:
 images:
 - name: axiom-system/super-agent
   newTag: dev-latest
-
-configMapGenerator:
-- name: super-agent-env
-  behavior: create
-  literals:
-  - LOG_LEVEL=DEBUG
-  - ENVIRONMENT=dev

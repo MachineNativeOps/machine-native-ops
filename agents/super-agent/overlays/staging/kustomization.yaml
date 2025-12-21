@@ -17,10 +17,3 @@ replicas:
 images:
 - name: axiom-system/super-agent
   newTag: staging-v1.0.0
-
-configMapGenerator:
-- name: super-agent-env
-  behavior: create
-  literals:
-  - LOG_LEVEL=INFO
-  - ENVIRONMENT=staging

@@ -18,13 +18,6 @@ images:
 - name: axiom-system/super-agent
   newTag: v1.0.0
 
-configMapGenerator:
-- name: super-agent-env
-  behavior: create
-  literals:
-  - LOG_LEVEL=INFO
-  - ENVIRONMENT=prod
-
 patches:
 - target:
     kind: HorizontalPodAutoscaler
