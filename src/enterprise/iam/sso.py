@@ -14,6 +14,7 @@ import hashlib
 import secrets
 import logging
 from urllib.parse import urlencode, urlparse
+import jwt
 
 from enterprise.iam.models import (
     User,
@@ -369,6 +370,21 @@ class SSOManager:
             refresh_token=token_response.get("refresh_token"),
             expires_in=token_response.get("expires_in", 3600),
         )
+
+        # Validate ID token and nonce to prevent replay attacks
+        try:
+            # Decode without verification first to get the nonce claim
+            id_token_claims = jwt.decode(
+                tokens.id_token,
+                options={"verify_signature": False}
+            )
+            
+            # Verify nonce matches to prevent replay attacks
+            token_nonce = id_token_claims.get("nonce")
+            if not token_nonce or token_nonce != nonce:
+                raise ValueError("Invalid nonce in ID token - possible replay attack")
+        except jwt.DecodeError as e:
+            raise ValueError(f"Failed to decode ID token: {e}")
 
         # Get user info
         userinfo_endpoint = discovery.get("userinfo_endpoint")
