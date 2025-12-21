@@ -337,7 +337,7 @@ class SecretsManager:
 
         # Check expiration
         if secret.is_expired:
-            logger.warning(f"Attempted access to expired secret: {secret_id}")
+            logger.warning("Attempted access to expired secret")
             return None
 
         # Decrypt
