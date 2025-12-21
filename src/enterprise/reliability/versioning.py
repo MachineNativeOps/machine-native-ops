@@ -68,9 +68,6 @@ class SemanticVersion:
     def __eq__(self, other: "SemanticVersion") -> bool:
         return (self.major, self.minor, self.patch) == (other.major, other.minor, other.patch)
 
-    def __ne__(self, other: "SemanticVersion") -> bool:
-        return (self.major, self.minor, self.patch) != (other.major, other.minor, other.patch)
-
     @classmethod
     def parse(cls, version_string: str) -> "SemanticVersion":
         """Parse a version string"""
