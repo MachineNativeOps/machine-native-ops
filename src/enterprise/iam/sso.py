@@ -372,17 +372,22 @@ class SSOManager:
         )
 
         # Validate ID token and nonce to prevent replay attacks
+        # NOTE: This implementation decodes the JWT without signature verification.
+        # In production, implement full JWT signature verification using the OIDC
+        # provider's JWKS endpoint to ensure token authenticity.
         try:
-            # Decode without verification first to get the nonce claim
+            # Decode ID token to extract claims
             id_token_claims = jwt.decode(
                 tokens.id_token,
                 options={"verify_signature": False}
             )
             
-            # Verify nonce matches to prevent replay attacks
+            # Verify nonce exists and matches to prevent replay attacks
             token_nonce = id_token_claims.get("nonce")
-            if not token_nonce or token_nonce != nonce:
-                raise ValueError("Invalid nonce in ID token - possible replay attack")
+            if not token_nonce:
+                raise ValueError("Missing nonce claim in ID token")
+            if token_nonce != nonce:
+                raise ValueError("Nonce mismatch in ID token - possible replay attack")
         except jwt.DecodeError as e:
             raise ValueError(f"Failed to decode ID token: {e}")
 
