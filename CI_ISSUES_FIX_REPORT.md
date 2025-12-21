@@ -93,6 +93,7 @@ gh issue create --title "webhook.py event_name usage clarification needed" --bod
 ## 🚀 後續改進建議
 
 ### 1. 自動化驗證
+
 - 在 CI 中加入 PR 模板驗證
 - 自動檢查狀態邏輯一致性
 - 驗證證據連結可訪問性
