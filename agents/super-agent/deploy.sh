@@ -1,20 +1,52 @@
 #!/bin/bash
-# SuperAgent Deployment Script
+# SuperAgent Deployment Script with Kustomize support
 
 set -euo pipefail
 
 # Configuration
+ENVIRONMENT="${1:-dev}"  # Default to dev if not specified
 NAMESPACE="axiom-system"
 IMAGE_NAME="axiom-system/super-agent"
 IMAGE_TAG="v1.0.0"
 DOCKERFILE="Dockerfile"
 
-echo "🚀 Deploying AAPS SuperAgent..."
+# Environment-specific settings
+case "$ENVIRONMENT" in
+    dev)
+        NAMESPACE="axiom-system-dev"
+        IMAGE_TAG="dev-latest"
+        ;;
+    staging)
+        NAMESPACE="axiom-system-staging"
+        IMAGE_TAG="v1.0.0-rc"
+        ;;
+    prod)
+        NAMESPACE="axiom-system"
+        IMAGE_TAG="v1.0.0"
+        ;;
+    *)
+        echo "❌ Invalid environment: $ENVIRONMENT. Use: dev, staging, or prod"
+        exit 1
+        ;;
+esac
+
+echo "🚀 Deploying AAPS SuperAgent to ${ENVIRONMENT} environment..."
+echo "📍 Namespace: ${NAMESPACE}"
+echo "🏷️  Image Tag: ${IMAGE_TAG}"
 
 # Check if kubectl is available
 if ! command -v kubectl &> /dev/null; then
     echo "❌ kubectl is not installed or not in PATH"
     exit 1
+fi
+
+# Check if kustomize is available (or use kubectl with -k)
+if ! command -v kustomize &> /dev/null; then
+    echo "⚠️  kustomize not found, will use kubectl with -k flag"
+    USE_KUBECTL_KUSTOMIZE=true
+else
+    echo "✅ Found kustomize"
+    USE_KUBECTL_KUSTOMIZE=false
 fi
 
 # Check if Docker is available
@@ -86,22 +118,40 @@ echo "✅ Docker image and tests passed"
 echo "🏗️ Creating namespace..."
 kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
 
-# Deploy to Kubernetes
-echo "🚀 Deploying to Kubernetes..."
-kubectl apply -f deployment.yaml
+# Deploy to Kubernetes using Kustomize
+echo "🚀 Deploying to Kubernetes using Kustomize..."
+if [ "$USE_KUBECTL_KUSTOMIZE" = true ]; then
+    kubectl apply -k k8s/overlays/${ENVIRONMENT}
+else
+    kustomize build k8s/overlays/${ENVIRONMENT} | kubectl apply -f -
+fi
 
 # Wait for deployment
 echo "⏳ Waiting for deployment to be ready..."
-kubectl wait --for=condition=available --timeout=300s deployment/super-agent -n ${NAMESPACE}
+DEPLOYMENT_NAME="super-agent"
+if [ "$ENVIRONMENT" = "dev" ]; then
+    DEPLOYMENT_NAME="dev-super-agent"
+elif [ "$ENVIRONMENT" = "staging" ]; then
+    DEPLOYMENT_NAME="staging-super-agent"
+fi
+
+kubectl wait --for=condition=available --timeout=300s deployment/${DEPLOYMENT_NAME} -n ${NAMESPACE}
 
 # Verify deployment
 echo "✅ Verifying deployment..."
-kubectl get pods -n ${NAMESPACE} -l app=super-agent
-kubectl get services -n ${NAMESPACE} -l app=super-agent
+kubectl get pods -n ${NAMESPACE} -l app.kubernetes.io/name=super-agent
+kubectl get services -n ${NAMESPACE} -l app.kubernetes.io/name=super-agent
 
 # Test the deployed service
 echo "🔍 Testing deployed service..."
-SUPER_AGENT_IP=$(kubectl get svc super-agent -n ${NAMESPACE} -o jsonpath='{.spec.clusterIP}')
+SERVICE_NAME="super-agent"
+if [ "$ENVIRONMENT" = "dev" ]; then
+    SERVICE_NAME="dev-super-agent"
+elif [ "$ENVIRONMENT" = "staging" ]; then
+    SERVICE_NAME="staging-super-agent"
+fi
+
+SUPER_AGENT_IP=$(kubectl get svc ${SERVICE_NAME} -n ${NAMESPACE} -o jsonpath='{.spec.clusterIP}' 2>/dev/null || echo "")
 
 if [ -n "$SUPER_AGENT_IP" ] && [ "$SUPER_AGENT_IP" != "<none>" ]; then
     echo "🌐 Testing service at http://$SUPER_AGENT_IP:8080"
@@ -124,7 +174,7 @@ if [ -n "$SUPER_AGENT_IP" ] && [ "$SUPER_AGENT_IP" != "<none>" ]; then
     else
         echo "❌ Service health check failed"
         echo "🔍 Checking pod logs..."
-        kubectl logs -n ${NAMESPACE} -l app=super-agent --tail=20
+        kubectl logs -n ${NAMESPACE} -l app.kubernetes.io/name=super-agent --tail=20
         exit 1
     fi
 else
@@ -135,14 +185,20 @@ echo ""
 echo "🎉 SuperAgent deployment completed successfully!"
 echo ""
 echo "📋 Service Information:"
+echo "  Environment: ${ENVIRONMENT}"
 echo "  Namespace: ${NAMESPACE}"
 echo "  Image: ${IMAGE_NAME}:${IMAGE_TAG}"
-echo "  Service: super-agent.${NAMESPACE}.svc.cluster.local:8080"
+echo "  Service: ${SERVICE_NAME}.${NAMESPACE}.svc.cluster.local:8080"
 echo ""
 echo "🔍 Useful Commands:"
-echo "  Check pods: kubectl get pods -n ${NAMESPACE} -l app=super-agent"
-echo "  View logs: kubectl logs -n ${NAMESPACE} -l app=super-agent -f"
-echo "  Port forward: kubectl port-forward -n ${NAMESPACE} svc/super-agent 8080:8080"
+echo "  Check pods: kubectl get pods -n ${NAMESPACE} -l app.kubernetes.io/name=super-agent"
+echo "  View logs: kubectl logs -n ${NAMESPACE} -l app.kubernetes.io/name=super-agent -f"
+echo "  Port forward: kubectl port-forward -n ${NAMESPACE} svc/${SERVICE_NAME} 8080:8080"
 echo "  Test locally: python3 test_super_agent.py http://localhost:8080"
 echo ""
 echo "📚 Documentation: ./README.md"
+echo ""
+echo "💡 Deploy to different environment:"
+echo "  ./deploy.sh dev      # Deploy to dev environment"
+echo "  ./deploy.sh staging  # Deploy to staging environment"
+echo "  ./deploy.sh prod     # Deploy to production environment"
