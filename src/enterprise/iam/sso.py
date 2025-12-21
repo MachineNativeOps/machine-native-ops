@@ -6,22 +6,21 @@ MVP can use email/password + magic link, but this module provides
 the backend interfaces for OIDC/SAML integration.
 """
 
+import hashlib
+import logging
+import secrets
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Optional, List, Dict, Any, Protocol
-from uuid import UUID, uuid4
-import hashlib
-import secrets
-import logging
+from typing import Any, Protocol
 from urllib.parse import urlencode, urlparse
+from uuid import UUID
 
 from enterprise.iam.models import (
-    User,
-    SSOConfig,
     Membership,
     Role,
+    SSOConfig,
+    User,
 )
-
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +31,7 @@ class SSORepository(Protocol):
     async def save_sso_config(self, config: SSOConfig) -> SSOConfig:
         ...
 
-    async def get_sso_config(self, org_id: UUID) -> Optional[SSOConfig]:
+    async def get_sso_config(self, org_id: UUID) -> SSOConfig | None:
         ...
 
     async def update_sso_config(self, config: SSOConfig) -> SSOConfig:
@@ -45,12 +44,12 @@ class SSORepository(Protocol):
 class UserRepository(Protocol):
     """Repository interface for user operations"""
 
-    async def get_user_by_email(self, email: str) -> Optional[User]:
+    async def get_user_by_email(self, email: str) -> User | None:
         ...
 
     async def get_user_by_sso(
         self, sso_provider: str, sso_subject: str
-    ) -> Optional[User]:
+    ) -> User | None:
         ...
 
     async def save_user(self, user: User) -> User:
@@ -65,7 +64,7 @@ class MembershipRepository(Protocol):
 
     async def get_membership(
         self, org_id: UUID, user_id: UUID
-    ) -> Optional[Membership]:
+    ) -> Membership | None:
         ...
 
     async def save_membership(self, membership: Membership) -> Membership:
@@ -75,15 +74,15 @@ class MembershipRepository(Protocol):
 class HTTPClient(Protocol):
     """HTTP client interface for OIDC operations"""
 
-    async def get(self, url: str, headers: Dict[str, str] = None) -> Dict[str, Any]:
+    async def get(self, url: str, headers: dict[str, str] = None) -> dict[str, Any]:
         ...
 
     async def post(
         self,
         url: str,
-        data: Dict[str, Any] = None,
-        headers: Dict[str, str] = None
-    ) -> Dict[str, Any]:
+        data: dict[str, Any] = None,
+        headers: dict[str, str] = None
+    ) -> dict[str, Any]:
         ...
 
 
@@ -101,7 +100,7 @@ class OIDCTokens:
     """OIDC Token response"""
     access_token: str
     id_token: str
-    refresh_token: Optional[str] = None
+    refresh_token: str | None = None
     expires_in: int = 3600
     token_type: str = "Bearer"
 
@@ -112,11 +111,11 @@ class OIDCUserInfo:
     subject: str  # 'sub' claim
     email: str
     email_verified: bool = False
-    name: Optional[str] = None
-    given_name: Optional[str] = None
-    family_name: Optional[str] = None
-    picture: Optional[str] = None
-    raw_claims: Dict[str, Any] = None
+    name: str | None = None
+    given_name: str | None = None
+    family_name: str | None = None
+    picture: str | None = None
+    raw_claims: dict[str, Any] = None
 
     def __post_init__(self):
         if self.raw_claims is None:
@@ -141,7 +140,7 @@ class SSOManager:
     http_client: HTTPClient
 
     # State management (in production, use Redis/DB)
-    _pending_auth: Dict[str, Dict[str, Any]] = None
+    _pending_auth: dict[str, dict[str, Any]] = None
 
     def __post_init__(self):
         if self._pending_auth is None:
@@ -158,7 +157,7 @@ class SSOManager:
         client_id: str,
         client_secret: str,
         configured_by: UUID,
-        attribute_mapping: Optional[Dict[str, str]] = None,
+        attribute_mapping: dict[str, str] | None = None,
         jit_enabled: bool = True,
         default_role: Role = Role.MEMBER,
     ) -> SSOConfig:
@@ -220,7 +219,7 @@ class SSOManager:
 
         return config
 
-    async def get_sso_config(self, org_id: UUID) -> Optional[SSOConfig]:
+    async def get_sso_config(self, org_id: UUID) -> SSOConfig | None:
         """Get SSO configuration for an organization"""
         return await self.sso_repository.get_sso_config(org_id)
 
@@ -335,7 +334,8 @@ class SSOManager:
         org_id = UUID(pending["org_id"])
         code_verifier = pending["code_verifier"]
         redirect_uri = pending["redirect_uri"]
-        nonce = pending["nonce"]
+        # TODO: Validate nonce against ID token for replay attack prevention
+        # nonce = pending["nonce"]
 
         # Clean up pending auth
         del self._pending_auth[state]
@@ -487,7 +487,7 @@ class SSOManager:
         self,
         user: User,
         user_info: OIDCUserInfo,
-        mapping: Dict[str, str],
+        mapping: dict[str, str],
     ) -> None:
         """Apply attribute mapping from OIDC claims to user fields"""
         claim_values = {
@@ -512,7 +512,7 @@ class SSOManager:
     async def send_magic_link(
         self,
         email: str,
-        org_id: Optional[UUID] = None,
+        org_id: UUID | None = None,
     ) -> str:
         """
         Send a magic link for passwordless authentication
@@ -545,7 +545,7 @@ class SSOManager:
     async def verify_magic_link(
         self,
         token: str,
-    ) -> Optional[User]:
+    ) -> User | None:
         """
         Verify a magic link token
 

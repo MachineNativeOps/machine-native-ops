@@ -9,13 +9,12 @@ Manages versioning for compatibility:
 Ensures backwards compatibility during upgrades.
 """
 
+import logging
+import re
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional, Dict, Any, List, Set, Tuple
 from enum import Enum
-import re
-import logging
-
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -56,8 +55,17 @@ class SemanticVersion:
     def __lt__(self, other: "SemanticVersion") -> bool:
         return (self.major, self.minor, self.patch) < (other.major, other.minor, other.patch)
 
+    def __le__(self, other: "SemanticVersion") -> bool:
+        return (self.major, self.minor, self.patch) <= (other.major, other.minor, other.patch)
+
     def __eq__(self, other: "SemanticVersion") -> bool:
         return (self.major, self.minor, self.patch) == (other.major, other.minor, other.patch)
+
+    def __ge__(self, other: "SemanticVersion") -> bool:
+        return (self.major, self.minor, self.patch) >= (other.major, other.minor, other.patch)
+
+    def __gt__(self, other: "SemanticVersion") -> bool:
+        return (self.major, self.minor, self.patch) > (other.major, other.minor, other.patch)
 
     @classmethod
     def parse(cls, version_string: str) -> "SemanticVersion":
@@ -92,8 +100,8 @@ class APIVersion:
 
     # Dates
     released_at: datetime = field(default_factory=datetime.utcnow)
-    deprecated_at: Optional[datetime] = None
-    sunset_at: Optional[datetime] = None  # When it will be retired
+    deprecated_at: datetime | None = None
+    sunset_at: datetime | None = None  # When it will be retired
 
     # Documentation
     changelog: str = ""
@@ -113,15 +121,15 @@ class SchemaVersion:
     status: VersionStatus = VersionStatus.CURRENT
 
     # Schema definition
-    schema: Dict[str, Any] = field(default_factory=dict)
-    json_schema: Optional[str] = None
+    schema: dict[str, Any] = field(default_factory=dict)
+    json_schema: str | None = None
 
     # Compatibility
-    backward_compatible_with: List[str] = field(default_factory=list)  # List of versions
+    backward_compatible_with: list[str] = field(default_factory=list)  # List of versions
 
     # Dates
     released_at: datetime = field(default_factory=datetime.utcnow)
-    deprecated_at: Optional[datetime] = None
+    deprecated_at: datetime | None = None
 
 
 @dataclass
@@ -135,10 +143,10 @@ class VersionCompatibility:
 
     # Migration
     migration_available: bool = False
-    migration_steps: List[str] = field(default_factory=list)
+    migration_steps: list[str] = field(default_factory=list)
 
     # Breaking changes
-    breaking_changes: List[str] = field(default_factory=list)
+    breaking_changes: list[str] = field(default_factory=list)
 
     # Notes
     notes: str = ""
@@ -156,15 +164,15 @@ class VersionManager:
     """
 
     # Registered versions
-    api_versions: Dict[str, APIVersion] = field(default_factory=dict)
-    schema_versions: Dict[str, Dict[str, SchemaVersion]] = field(default_factory=dict)
+    api_versions: dict[str, APIVersion] = field(default_factory=dict)
+    schema_versions: dict[str, dict[str, SchemaVersion]] = field(default_factory=dict)
 
     # Compatibility matrix
-    compatibility_matrix: Dict[str, VersionCompatibility] = field(default_factory=dict)
+    compatibility_matrix: dict[str, VersionCompatibility] = field(default_factory=dict)
 
     # Current defaults
     default_api_version: str = "v1"
-    default_schema_versions: Dict[str, str] = field(default_factory=dict)
+    default_schema_versions: dict[str, str] = field(default_factory=dict)
 
     # ------------------------------------------------------------------
     # API Version Management
@@ -175,7 +183,7 @@ class VersionManager:
         self.api_versions[version.version] = version
         logger.info(f"API version registered: {version.version}")
 
-    def get_api_version(self, version: str) -> Optional[APIVersion]:
+    def get_api_version(self, version: str) -> APIVersion | None:
         """Get an API version"""
         return self.api_versions.get(version)
 
@@ -183,7 +191,7 @@ class VersionManager:
         """Get the current (default) API version"""
         return self.api_versions[self.default_api_version]
 
-    def get_supported_api_versions(self) -> List[APIVersion]:
+    def get_supported_api_versions(self) -> list[APIVersion]:
         """Get all supported API versions"""
         return [
             v for v in self.api_versions.values()
@@ -251,8 +259,8 @@ class VersionManager:
     def get_schema_version(
         self,
         name: str,
-        version: Optional[str] = None,
-    ) -> Optional[SchemaVersion]:
+        version: str | None = None,
+    ) -> SchemaVersion | None:
         """Get a schema version"""
         if name not in self.schema_versions:
             return None
@@ -265,7 +273,7 @@ class VersionManager:
 
         return self.schema_versions[name].get(version)
 
-    def get_latest_schema_version(self, name: str) -> Optional[SchemaVersion]:
+    def get_latest_schema_version(self, name: str) -> SchemaVersion | None:
         """Get the latest version of a schema"""
         if name not in self.schema_versions:
             return None
@@ -332,7 +340,7 @@ class VersionManager:
         self,
         from_version: str,
         to_version: str,
-    ) -> List[str]:
+    ) -> list[str]:
         """
         Get migration path between versions
 
@@ -373,7 +381,7 @@ class VersionManager:
     def parse_version_header(
         self,
         header: str,
-    ) -> Tuple[str, Optional[str]]:
+    ) -> tuple[str, str | None]:
         """
         Parse Accept-Version or similar header
 
@@ -394,8 +402,8 @@ class VersionManager:
 
     def build_version_header(
         self,
-        api_version: Optional[str] = None,
-        schema_version: Optional[str] = None,
+        api_version: str | None = None,
+        schema_version: str | None = None,
     ) -> str:
         """Build version header for response"""
         header = api_version or self.default_api_version
@@ -409,7 +417,7 @@ class VersionManager:
     # Version Discovery
     # ------------------------------------------------------------------
 
-    def get_version_info(self) -> Dict[str, Any]:
+    def get_version_info(self) -> dict[str, Any]:
         """Get version information for API discovery"""
         return {
             "default_api_version": self.default_api_version,
