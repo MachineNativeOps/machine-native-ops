@@ -15,47 +15,54 @@ principles:
 # 允許的檔案模式
 rules:
   root_governance_files:
-    description: "root/ 底下治理配置檔必須採 root.<category>.yaml"
+    description: "根層治理配置檔必須採 root.<category> 命名格式"
     allow:
-      - "^root/README\\.md$"
-      - "^root/AGENT_DELIVERY_CONTRACT\\.md$"
-      - "^root/VALIDATION_CHECKLIST\\.md$"
-      - "^root/root\\.config\\.yaml$"
-      - "^root/root\\.governance\\.yaml$"
-      - "^root/root\\.modules\\.yaml$"
-      - "^root/root\\.super-execution\\.yaml$"
-      - "^root/root\\.trust\\.yaml$"
-      - "^root/root\\.provenance\\.yaml$"
-      - "^root/root\\.integrity\\.yaml$"
-      - "^root/root\\.bootstrap\\.yaml$"
-      - "^root/root\\.naming-policy\\.yaml$"
-      - "^root/root\\.devices\\.map$"
-      - "^root/root\\.fs\\.map$"
-      - "^root/root\\.kernel\\.map$"
-      - "^root/root\\.env\\.sh$"
-      - "^root/gates\\.map\\.yaml$"
+      - "^root\\.config\\.yaml$"
+      - "^root\\.governance\\.yaml$"
+      - "^root\\.modules\\.yaml$"
+      - "^root\\.super-execution\\.yaml$"
+      - "^root\\.trust\\.yaml$"
+      - "^root\\.provenance\\.yaml$"
+      - "^root\\.integrity\\.yaml$"
+      - "^root\\.bootstrap\\.yaml$"
+      - "^root\\.naming-policy\\.yaml$"
+      - "^root\\.devices\\.map$"
+      - "^root\\.fs\\.map$"
+      - "^root\\.kernel\\.map$"
+      - "^root\\.env\\.sh$"
+      - "^gates\\.map\\.yaml$"
     examples:
       valid:
-        - "root/root.config.yaml"
-        - "root/root.modules.yaml"
-        - "root/root.devices.map"
+        - "root.config.yaml"
+        - "root.modules.yaml"
+        - "root.devices.map"
       invalid:
-        - "root/Root.Config.yaml" # 大寫
-        - "root/config.yml" # 缺少 root. 前綴
-        - "root/root config.yaml" # 空白
+        - "Root.Config.yaml" # 大寫
+        - "config.yml" # 缺少 root. 前綴
+        - "root config.yaml" # 空白
   
   root_subdirectories:
-    description: "允許的子資料夾"
+    description: "允許的根層子目錄（FHS 標準 + 初始化）"
     allow:
-      - "^root/init\\.d/.*$"
-      - "^root/jobs/.*$"
+      - "^init\\.d/.*$"
+      - "^bin/.*$"
+      - "^sbin/.*$"
+      - "^etc/.*$"
+      - "^lib/.*$"
+      - "^var/.*$"
+      - "^usr/.*$"
+      - "^home/.*$"
+      - "^tmp/.*$"
+      - "^opt/.*$"
+      - "^srv/.*$"
     examples:
       valid:
-        - "root/init.d/00-init.sh"
-        - "root/jobs/attestation-provenance.bundle.v1.yaml"
+        - "init.d/00-init.sh"
+        - "bin/custom-command"
+        - "etc/app.conf"
       invalid:
-        - "root/Init.d/script.sh" # 大寫
-        - "root/scripts/run.sh" # 未授權的子目錄
+        - "Init.d/script.sh" # 大寫
+        - "custom/run.sh" # 未授權的目錄
 
   deny_patterns:
     description: "絕對禁止的模式"

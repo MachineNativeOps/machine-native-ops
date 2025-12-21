@@ -27,10 +27,10 @@
 - PR: https://github.com/MachineNativeOps/MachineNativeOps/pull/[本 PR 編號]
 ```
 
-### 🏛️ 第五證據：命名規範遵循 **[若變更 root/ 則必填]**
-- [ ] ✅ **本 PR 對 root/ 的新增與修改完全符合命名規範**
+### 🏛️ 第五證據：命名規範遵循 **[若變更根層檔案則必填]**
+- [ ] ✅ **本 PR 對根層（root.* 或 FHS 目錄）的新增與修改完全符合命名規範**
 - [ ] ✅ **已通過 `gate-root-naming` 自動檢查**
-- [ ] ✅ **若新增檔案類型，已更新 `root/root.naming-policy.yaml`**
+- [ ] ✅ **若新增檔案類型，已更新 `root.naming-policy.yaml`**
 
 ### 📁 檔案變更證據
 ```yaml
@@ -71,10 +71,10 @@ deleted_files:
 
 ## 🔄 治理合約檢查
 
-### 📋 根目錄治理遵循
-- [ ] ✅ 遵循 [`root/AGENT_DELIVERY_CONTRACT.md`](./root/AGENT_DELIVERY_CONTRACT.md)
-- [ ] ✅ 符合 [`root/README.md`](./root/README.md) 治理要求
-- [ ] ✅ 相容 [`root/root.governance.yaml`](./root/root.governance.yaml) 規則
+### 📋 根層治理遵循
+- [ ] ✅ 遵循 [`docs/governance/AGENT_DELIVERY_CONTRACT.md`](./docs/governance/AGENT_DELIVERY_CONTRACT.md)
+- [ ] ✅ 符合 [`ROOT_ARCHITECTURE.md`](./ROOT_ARCHITECTURE.md) 架構要求
+- [ ] ✅ 相容 [`root.governance.yaml`](./root.governance.yaml) 規則
 
 ### 🤖 AI 行為合約遵循
 - [ ] ✅ 遵循 [`.github/AI-BEHAVIOR-CONTRACT.md`](./.github/AI-BEHAVIOR-CONTRACT.md)
