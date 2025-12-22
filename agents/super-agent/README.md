@@ -339,11 +339,14 @@ agents/super-agent/
     │   ├── namespace.yaml        # Dev namespace
     │   └── kustomization.yaml    # Dev overrides
     ├── staging/
-    │   ├── namespace.yaml        # Staging namespace
-    │   └── kustomization.yaml    # Staging overrides
+    │   ├── namespace.yaml       # Dev namespace
+    │   └── kustomization.yaml   # Dev overrides
+    ├── staging/
+    │   ├── namespace.yaml       # Staging namespace
+    │   └── kustomization.yaml   # Staging overrides
     └── prod/
-        ├── namespace.yaml        # Production namespace
-        └── kustomization.yaml    # Production overrides
+        ├── namespace.yaml       # Production namespace
+        └── kustomization.yaml   # Production overrides
 ```
 
 **Key benefits:**
