@@ -402,8 +402,6 @@ class SSOManager:
                 
         except pyjwt.InvalidTokenError as e:
             raise ValueError(f"Invalid ID token: {e}")
-        except pyjwt.DecodeError as e:
-            raise ValueError(f"Failed to decode ID token: {e}")
 
         # Get user info
         userinfo_endpoint = discovery.get("userinfo_endpoint")
