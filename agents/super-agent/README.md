@@ -98,9 +98,21 @@ kubectl apply -k overlays/staging
 kubectl apply -k overlays/prod
 ```
 
-#### Traditional Deployment (without Kustomize)
+#### Traditional Deployment (without Kustomize - Advanced Use Only)
+
+> ⚠️ **Security Warning**: The base deployment manifest includes cluster-wide RBAC permissions (ClusterRole/ClusterRoleBinding) that grant read access to secrets across all namespaces. **This configuration is not suitable for production or shared clusters.**
+>
+> **Before deploying:**
+> - Review and harden the RBAC permissions in `base/deployment.yaml`
+> - Remove or tightly scope any `secrets` access
+> - Consider using namespace-scoped Role/RoleBinding instead of cluster-scoped resources
+> - This method is intended only for local/demo clusters
+>
+> **For production deployments, always use the Kustomize overlays** which provide environment isolation and proper configuration management.
+
 ```bash
-# Deploy base configuration
+# Deploy base configuration (local/demo clusters only)
+# WARNING: Review RBAC permissions before deploying
 kubectl apply -f base/deployment.yaml
 
 # Port forward for local testing
@@ -112,19 +124,35 @@ python test_super_agent.py http://localhost:8080
 
 #### Environment-Specific Configuration
 
-Each environment has different defaults:
+Each environment has different default settings. Dev and staging environments inherit the base HPA configuration (2-5 replicas), while production uses a custom HPA range (3-10 replicas):
 
 | Environment | Namespace | Image Tag | Replicas | HPA Range |
 |------------|-----------|-----------|----------|-----------|
-| **dev** | axiom-system-dev | dev-latest | 1 | 2-5 (default) |
-| **staging** | axiom-system-staging | staging-v1.0.0 | 2 | 2-5 (default) |
-| **prod** | axiom-system | v1.0.0 | 3 | 3-10 |
+| **dev** | axiom-system-dev | dev-latest | 1 | 2-5 (from base) |
+| **staging** | axiom-system-staging | staging-v1.0.0 | 2 | 2-5 (from base) |
+| **prod** | axiom-system | v1.0.0 | 3 | 3-10 (custom) |
 
-To override the image tag:
+**Overriding image tags:**
+
+The `deploy.sh` script supports dynamic image tag overrides via the `IMAGE_TAG` environment variable:
+
 ```bash
-# Set custom image tag
+# Build and deploy with custom image tag
 export IMAGE_TAG=v1.2.0
 ./deploy.sh prod
+```
+
+This will:
+1. Build Docker image as `axiom-system/super-agent:v1.2.0`
+2. Deploy that image to the production environment using Kustomize
+
+Alternatively, you can permanently change an environment's image tag by editing the overlay's `kustomization.yaml`:
+
+```yaml
+# In overlays/prod/kustomization.yaml
+images:
+- name: axiom-system/super-agent
+  newTag: v1.2.0  # Update version here
 ```
 
 ## 📡 API Endpoints
@@ -308,10 +336,13 @@ agents/super-agent/
 │   └── kustomization.yaml   # Base kustomization config
 └── overlays/
     ├── dev/
+    │   ├── namespace.yaml        # Dev namespace
     │   └── kustomization.yaml    # Dev overrides
     ├── staging/
+    │   ├── namespace.yaml        # Staging namespace
     │   └── kustomization.yaml    # Staging overrides
     └── prod/
+        ├── namespace.yaml        # Production namespace
         └── kustomization.yaml    # Production overrides
 ```
 
@@ -320,6 +351,17 @@ agents/super-agent/
 - ✅ **Environment Isolation**: Separate namespaces and configs
 - ✅ **Easy Updates**: Change image version in one place
 - ✅ **GitOps Ready**: Compatible with ArgoCD and Flux
+- ✅ **Multi-Environment Support**: Name prefixes prevent resource conflicts when deploying multiple environments to the same cluster
+
+**Environment-specific resource naming:**
+
+Each overlay uses a `namePrefix` to ensure cluster-scoped resources (ClusterRole, ClusterRoleBinding) don't conflict when multiple environments are deployed to the same cluster:
+
+- **dev**: Resources prefixed with `dev-` (e.g., `dev-super-agent`, `dev-super-agent-role`)
+- **staging**: Resources prefixed with `staging-` (e.g., `staging-super-agent`, `staging-super-agent-role`)
+- **prod**: Resources prefixed with `prod-` (e.g., `prod-super-agent`, `prod-super-agent-role`)
+
+This allows you to safely deploy dev, staging, and production environments side-by-side in the same Kubernetes cluster without RBAC conflicts.
 
 **Customizing image versions:**
 ```yaml
@@ -330,8 +372,8 @@ images:
 ```
 
 ### Kubernetes Resources
-- **ServiceAccount**: `super-agent` with minimal required permissions
-- **ClusterRole**: Read permissions + limited write permissions
+- **ServiceAccount**: `<env>-super-agent` with minimal required permissions
+- **ClusterRole**: `<env>-super-agent-role` - Read permissions + limited write permissions
 - **Deployment**: 2 replicas with anti-affinity (configurable per environment)
 - **Service**: ClusterIP service for internal communication
 - **HPA**: Horizontal pod autoscaling (2-5 replicas in base, 3-10 in prod)

@@ -7,6 +7,9 @@ resources:
 
 namespace: axiom-system
 
+# Production uses 'prod-' prefix to avoid conflicts with other environments
+namePrefix: prod-
+
 labels:
 - pairs:
     environment: prod

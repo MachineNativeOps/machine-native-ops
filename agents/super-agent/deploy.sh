@@ -13,14 +13,17 @@ case $ENVIRONMENT in
   dev)
     NAMESPACE="axiom-system-dev"
     IMAGE_TAG="${IMAGE_TAG:-dev-latest}"
+    RESOURCE_PREFIX="dev-"
     ;;
   staging)
     NAMESPACE="axiom-system-staging"
     IMAGE_TAG="${IMAGE_TAG:-staging-v1.0.0}"
+    RESOURCE_PREFIX="staging-"
     ;;
   prod)
     NAMESPACE="axiom-system"
     IMAGE_TAG="${IMAGE_TAG:-v1.0.0}"
+    RESOURCE_PREFIX="prod-"
     ;;
   *)
     echo "❌ Invalid environment: $ENVIRONMENT"
@@ -112,11 +115,29 @@ echo "✅ Docker image and tests passed"
 
 # Deploy to Kubernetes
 echo "🚀 Deploying to Kubernetes using Kustomize..."
-$KUSTOMIZE_CMD overlays/${ENVIRONMENT} | kubectl apply -f -
+# Create temporary directory for kustomize with dynamic image tag
+TMP_KUSTOMIZE_DIR="$(mktemp -d)"
+cp -R "overlays/${ENVIRONMENT}/" "${TMP_KUSTOMIZE_DIR}/"
+cp -R "base/" "${TMP_KUSTOMIZE_DIR}/base/"
+
+(
+  cd "${TMP_KUSTOMIZE_DIR}" || exit 1
+  # Update image tag to match IMAGE_TAG environment variable
+  if command -v kustomize &> /dev/null; then
+    kustomize edit set image "${IMAGE_NAME}=${IMAGE_NAME}:${IMAGE_TAG}"
+  else
+    # Fallback: manually update kustomization.yaml
+    sed -i "s|newTag:.*|newTag: ${IMAGE_TAG}|g" kustomization.yaml
+  fi
+  $KUSTOMIZE_CMD .
+) | kubectl apply -f -
+
+# Cleanup temporary directory
+rm -rf "${TMP_KUSTOMIZE_DIR}"
 
 # Wait for deployment
 echo "⏳ Waiting for deployment to be ready..."
-kubectl wait --for=condition=available --timeout=300s deployment/super-agent -n ${NAMESPACE}
+kubectl wait --for=condition=available --timeout=300s deployment/${RESOURCE_PREFIX}super-agent -n ${NAMESPACE}
 
 # Verify deployment
 echo "✅ Verifying deployment..."
@@ -125,7 +146,7 @@ kubectl get services -n ${NAMESPACE} -l app=super-agent
 
 # Test the deployed service
 echo "🔍 Testing deployed service..."
-SUPER_AGENT_IP=$(kubectl get svc super-agent -n ${NAMESPACE} -o jsonpath='{.spec.clusterIP}')
+SUPER_AGENT_IP=$(kubectl get svc ${RESOURCE_PREFIX}super-agent -n ${NAMESPACE} -o jsonpath='{.spec.clusterIP}')
 
 if [ -n "$SUPER_AGENT_IP" ] && [ "$SUPER_AGENT_IP" != "<none>" ]; then
     echo "🌐 Testing service at http://$SUPER_AGENT_IP:8080"
@@ -162,12 +183,12 @@ echo "📋 Service Information:"
 echo "  Environment: ${ENVIRONMENT}"
 echo "  Namespace: ${NAMESPACE}"
 echo "  Image: ${IMAGE_NAME}:${IMAGE_TAG}"
-echo "  Service: super-agent.${NAMESPACE}.svc.cluster.local:8080"
+echo "  Service: ${RESOURCE_PREFIX}super-agent.${NAMESPACE}.svc.cluster.local:8080"
 echo ""
 echo "🔍 Useful Commands:"
 echo "  Check pods: kubectl get pods -n ${NAMESPACE} -l app=super-agent"
 echo "  View logs: kubectl logs -n ${NAMESPACE} -l app=super-agent -f"
-echo "  Port forward: kubectl port-forward -n ${NAMESPACE} svc/super-agent 8080:8080"
+echo "  Port forward: kubectl port-forward -n ${NAMESPACE} svc/${RESOURCE_PREFIX}super-agent 8080:8080"
 echo "  Test locally: python3 test_super_agent.py http://localhost:8080"
 echo ""
 echo "🔧 Kustomize Commands:"

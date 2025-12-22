@@ -7,6 +7,9 @@ resources:
 
 namespace: axiom-system-dev
 
+# Add prefix to avoid ClusterRole/ClusterRoleBinding conflicts when deploying multiple environments
+namePrefix: dev-
+
 labels:
 - pairs:
     environment: dev

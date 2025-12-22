@@ -7,6 +7,9 @@ resources:
 
 namespace: axiom-system-staging
 
+# Add prefix to avoid ClusterRole/ClusterRoleBinding conflicts when deploying multiple environments
+namePrefix: staging-
+
 labels:
 - pairs:
     environment: staging
