@@ -55,6 +55,10 @@ jobs:
     - deploy-workers
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        with:
+          fetch-depth: 0
     - env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       name: Configure GitHub Webhook
@@ -67,6 +71,16 @@ jobs:
 
         echo "" >> $GITHUB_STEP_SUMMARY
 
+    steps:
+      - name: Checkout repository
+        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+
+      - name: Setup Node.js
+        uses: 1e60f620b9541d16bece96c5465dc8ee9832be0b
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: cloudflare/workers/package-lock.json
         echo "1. Go to **Repository Settings > Webhooks > Add webhook**" >> $GITHUB_STEP_SUMMARY
 
         echo "2. **Payload URL:** \`https://api.machinenativeops.com/webhooks/github\`"
@@ -79,16 +93,23 @@ jobs:
         echo "5. **Events:** Select individual events or ''Send me everything''" >>
         $GITHUB_STEP_SUMMARY
 
-<<<<<<< HEAD
         echo "" >> $GITHUB_STEP_SUMMARY
-=======
       - name: Lint
         working-directory: cloudflare/workers
         run: npm run lint
->>>>>>> main
 
         echo "Recommended events:" >> $GITHUB_STEP_SUMMARY
 
+    steps:
+      - name: Checkout repository
+        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+
+      - name: Setup Node.js
+        uses: 1e60f620b9541d16bece96c5465dc8ee9832be0b
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: cloudflare/workers/package-lock.json
         echo "- Push" >> $GITHUB_STEP_SUMMARY
 
         echo "- Pull requests" >> $GITHUB_STEP_SUMMARY
@@ -99,9 +120,7 @@ jobs:
 
         echo "- Releases" >> $GITHUB_STEP_SUMMARY
 
-<<<<<<< HEAD
         '
-=======
           if [[ "$DEPLOY_ENV" == "production" ]]; then
             wrangler deploy --env production
             echo "url=https://api.machinenativeops.com" >> $GITHUB_OUTPUT
@@ -146,7 +165,6 @@ jobs:
   # ============================================================================
   # Deploy Cloudflare Pages
   # ============================================================================
->>>>>>> main
   deploy-pages:
     environment:
       name: cloudflare-pages-${{ needs.pre-check.outputs.environment }}
@@ -154,6 +172,32 @@ jobs:
     if: '(needs.pre-check.outputs.should_deploy_pages == ''true'' || github.event_name
       == ''workflow_dispatch'') &&
 
+    steps:
+      - name: Checkout repository
+        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+
+      - name: Setup Node.js
+        uses: 1e60f620b9541d16bece96c5465dc8ee9832be0b
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_API_URL: ${{ needs.pre-check.outputs.environment == 'production' && 'https://api.machinenativeops.com' || 'https://staging-api.machinenativeops.com' }}
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=machinenativeops --branch=${{ github.ref_name }}
       (github.event_name != ''workflow_dispatch'' || inputs.deploy_pages)
 
       '
@@ -161,6 +205,12 @@ jobs:
     needs: pre-check
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+
+      - name: Install Wrangler
+        run: npm install -g wrangler@${{ env.WRANGLER_VERSION }}
+
     - name: Checkout repository
       uses: 0ad4b8f3a27c304e21892351cbf9860471245599
     - name: Setup Node.js
@@ -190,11 +240,9 @@ jobs:
 
         echo "- **Environment:** ${{ needs.pre-check.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
 
-<<<<<<< HEAD
         echo "- **URL:** ${{ steps.deploy.outputs.url }}" >> $GITHUB_STEP_SUMMARY
 
         echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-=======
       - name: Create/Verify KV Namespaces
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -219,8 +267,19 @@ jobs:
           else
             echo "SESSIONS namespace already exists"
           fi
->>>>>>> main
 
+  # ============================================================================
+  # Setup D1 Database
+  # ============================================================================
+  setup-d1:
+    name: Setup D1 Database
+    runs-on: ubuntu-latest
+    needs: [pre-check, deploy-workers]
+    if: needs.pre-check.outputs.environment == 'production' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout repository
+        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
         '
   deploy-workers:
     environment:
@@ -274,10 +333,8 @@ jobs:
         echo "${{ secrets.WORKER_GITHUB_TOKEN }}" | wrangler secret put GITHUB_TOKEN
         --env production || true
 
-<<<<<<< HEAD
 
         # Set GitHub webhook secret
-=======
       - name: Create/Verify D1 Database
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -294,7 +351,6 @@ jobs:
           else
             echo "Database already exists"
           fi
->>>>>>> main
 
         echo "${{ secrets.GITHUB_WEBHOOK_SECRET }}" | wrangler secret put GITHUB_WEBHOOK_SECRET
         --env production || true
@@ -317,7 +373,6 @@ jobs:
     needs: pre-check
     runs-on: ubuntu-latest
     steps:
-<<<<<<< HEAD
     - name: Checkout repository
       uses: 0ad4b8f3a27c304e21892351cbf9860471245599
     - name: Setup Node.js
@@ -335,7 +390,6 @@ jobs:
     - name: Lint
       run: npm run lint || true
       working-directory: cloudflare/workers
-=======
       - name: Checkout repository
         uses: 0ad4b8f3a27c304e21892351cbf9860471245599
 
@@ -446,7 +500,6 @@ jobs:
   # ============================================================================
   # Notify on Failure
   # ============================================================================
->>>>>>> main
   notify-failure:
     if: failure()
     name: Notify on Failure
@@ -612,6 +665,24 @@ jobs:
     - deploy-workers
     runs-on: ubuntu-latest
     steps:
+      - name: Create Issue on Failure
+        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Cloudflare Deployment Failed - ${context.sha.substring(0, 7)}`,
+              body: `## Deployment Failure
+
+              **Workflow:** ${context.workflow}
+              **Run:** [${context.runNumber}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+              **Commit:** ${context.sha}
+              **Branch:** ${context.ref}
+
+              Please investigate and fix the deployment issues.`,
+              labels: ['deployment', 'cloudflare', 'automated']
+            });
     - name: Health Check
       run: "ENV=\"${{ needs.pre-check.outputs.environment }}\"\n\nif [[ \"$ENV\" ==\
         \ \"production\" ]]; then\n  URL=\"https://api.machinenativeops.com/health\"\
