@@ -45,8 +45,8 @@ jobs:
             if ".git" in path.parts or "node_modules" in path.parts:
               continue
             try:
-              path.read_text()
-              yaml.safe_load(path.read_text())
+              content = path.read_text()
+              yaml.safe_load(content)
             except Exception as exc:
               errors.append(f"YAML error in {path}: {exc}")
 
@@ -54,7 +54,8 @@ jobs:
             if ".git" in path.parts or "node_modules" in path.parts:
               continue
             try:
-              json.loads(path.read_text())
+              content = path.read_text()
+              json.loads(content)
             except Exception as exc:
               errors.append(f"JSON error in {path}: {exc}")
 

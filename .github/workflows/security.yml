@@ -34,7 +34,12 @@ jobs:
         run: |
           set -e
           TARGETS="controlplane workspace"
-          bandit -q -r $TARGETS || true
+          python_files=$(find $TARGETS -name "*.py" -type f | wc -l)
+          if [ "$python_files" -eq 0 ]; then
+            echo "No Python files found; skipping Bandit."
+            exit 0
+          fi
+          bandit -q -r $TARGETS
 
   secrets-scan:
     name: 🔑 Secret scan (git history)
