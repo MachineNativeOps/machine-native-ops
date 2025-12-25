@@ -1,4 +1,5 @@
 # MachineNativeOps 驗證報告
+
 **Verification Report - PR copilot/sub-pr-675**
 
 ## 執行摘要
@@ -19,6 +20,7 @@
 ### 創建的檔案
 
 #### 1. mno-namespace.yaml
+
 完整的 MachineNativeOps 命名空間配置檔案，包含:
 
 **標準對齊 (5/5):**
@@ -102,15 +104,18 @@ scripts/verification/
 ### 修復的問題
 
 #### 1. src/enterprise/iam/sso.py
+
 - ✅ 添加缺失的 `UUID` 導入
 - ✅ 恢復 `nonce = pending["nonce"]` 變量
 - ✅ 修復 JWT decode (移除未定義的 `signing_key.key`)
 
 #### 2. src/enterprise/data/metrics.py
+
 - ✅ 移除重複的 `import time`
 - ✅ 移除重複的 `import logging`
 
 #### 3. src/enterprise/reliability/degradation.py
+
 - ✅ 添加缺失的 `import logging`
 - ✅ 移除重複的 `from datetime import datetime`
 
@@ -119,19 +124,24 @@ scripts/verification/
 ## 驗證執行命令
 
 ### 運行完整驗證
+
 ```bash
 python3 scripts/verification/run-all-verifications.py src/enterprise/
 ```
 
 ### 單獨運行各階段
+
 ```bash
 # 基礎驗證
+
 python3 scripts/verification/basic-verification.py src/enterprise/
 
 # 進階驗證
+
 python3 scripts/verification/advanced-verification.py src/enterprise/
 
 # 生產驗證
+
 python3 scripts/verification/production-verification.py src/enterprise/
 ```
 
@@ -140,11 +150,14 @@ python3 scripts/verification/production-verification.py src/enterprise/
 ## 命名空間驗證
 
 ### 使用現有工具
+
 ```bash
 # 驗證命名空間合規性
+
 python3 scripts/migration/namespace-validator.py src/enterprise/
 
 # 轉換遺留命名空間
+
 python3 scripts/migration/namespace-converter.py src/enterprise/
 ```
 

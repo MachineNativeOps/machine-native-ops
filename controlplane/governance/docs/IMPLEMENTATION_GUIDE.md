@@ -11,6 +11,7 @@
 ## 🎯 三階段實施策略
 
 ### 階段 1: 立即生效（10 分鐘）✅
+
 **目標**: 讓 PR 模板強制要求證據
 
 **步驟**:
@@ -26,22 +27,26 @@
 ---
 
 ### 階段 2: 自動化驗證（30 分鐘）🔄
+
 **目標**: 啟用 GitHub Actions 自動檢查
 
 **步驟**:
 1. 確認以下檔案已部署：
+
    - `.github/workflows/gate-pr-evidence.yml`
    - `.github/workflows/gate-root-naming.yml`
 
 2. 開一個測試 PR（故意留空證據欄位）
 
 3. 觀察 GitHub Actions 執行：
+
    - 應該看到 ❌ 紅叉（檢查失敗）
    - PR 中應該有自動評論說明缺失項目
 
 4. 修正 PR（填入正確證據）
 
 5. 觀察 GitHub Actions 再次執行：
+
    - 應該看到 ✅ 綠勾（檢查通過）
 
 **驗收標準**:
@@ -52,6 +57,7 @@
 ---
 
 ### 階段 3: 強制執行（1 小時）🔒
+
 **目標**: 讓不合規的 PR 無法合併
 
 **前提條件**: 
@@ -67,14 +73,17 @@
 2. 選擇或新增 `main` 分支的保護規則
 
 3. 啟用以下選項：
+
    - ✅ **Require a pull request before merging**
    - ✅ **Require status checks to pass before merging**
    
 4. 在「Status checks that are required」中搜尋並勾選：
+
    - ✅ `gate-pr-evidence / validate-pr-evidence`
    - ✅ `gate-root-naming / validate_root_naming`
 
 5. 啟用以下額外保護（建議）：
+
    - ✅ **Require review from Code Owners** (需先設定 CODEOWNERS)
    - ✅ **Require linear history**
    - ✅ **Include administrators** (連管理員也要遵守)
@@ -91,6 +100,7 @@
 ## 🧪 測試計畫
 
 ### 測試案例 1: 正常流程 ✅
+
 **目的**: 驗證正常的 PR 流程
 
 **步驟**:
@@ -110,6 +120,7 @@
 ---
 
 ### 測試案例 2: 缺失證據 ❌
+
 **目的**: 驗證證據驗證機制
 
 **步驟**:
@@ -126,6 +137,7 @@
 ---
 
 ### 測試案例 3: 命名違規 ❌
+
 **目的**: 驗證命名規範檢查
 
 **步驟**:
@@ -146,24 +158,29 @@
 ### 在手機上快速驗證 PR（3 分鐘）
 
 1. **打開 PR 頁面**
+
    - 在 GitHub App 或瀏覽器中打開 PR
 
 2. **檢查證據區塊**（30 秒）
+
    - 向下滑動到 PR 描述
    - 確認四大證據都有填寫
    - 長按 commit SHA，複製並驗證格式
 
 3. **檢查 Checks 狀態**（30 秒）
+
    - 在 PR 頂部查看狀態圖示
    - ✅ 綠勾 = 通過
    - ❌ 紅叉 = 失敗（退回）
 
 4. **快速瀏覽 Files Changed**（1 分鐘）
+
    - 點擊「Files changed」標籤
    - 確認變更檔案與描述一致
    - 確認沒有意外的檔案被修改
 
 5. **決策**（1 分鐘）
+
    - 通過 → 批准並合併
    - 失敗 → 在 PR 中留言要求修正
    - 疑問 → 標註需要討論
@@ -173,16 +190,19 @@
 ## 📊 成功指標
 
 ### 短期指標（1 週內）
+
 - ✅ 所有新 PR 都使用模板
 - ✅ 90% 的 PR 第一次就填寫完整證據
 - ✅ 命名違規能被自動偵測
 
 ### 中期指標（1 個月內）
+
 - ✅ 不合規 PR 數量降低 80%
 - ✅ PR 審核時間縮短 50%
 - ✅ 「找不到交付成果」的情況歸零
 
 ### 長期指標（3 個月內）
+
 - ✅ 治理系統成為團隊習慣
 - ✅ 新協作者能快速適應流程
 - ✅ 架構穩定性顯著提升
@@ -204,11 +224,13 @@
 4. **PR**: [PR URL]
 
 請在 PR 描述中填入這四項資訊，並確保：
+
 - 所有欄位都填寫真實值（不要留 placeholder）
 - commit SHA 是完整的 40 字元
 - 如果變更了 root/ 目錄，請勾選第五證據
 
 範例：
+
 - repo: https://github.com/MachineNativeOps/MachineNativeOps
 - branch: feature/add-new-module
 - commit: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
@@ -220,16 +242,19 @@
 ## 📞 支援資源
 
 ### 文檔連結
+
 - [Root 治理層 README](./root/README.md)
 - [代理人交付合約](./root/AGENT_DELIVERY_CONTRACT.md)
 - [驗證清單](./root/VALIDATION_CHECKLIST.md)
 - [命名規範政策](./root/root.naming-policy.yaml)
 
 ### 自動化工具
+
 - [PR 證據驗證](./.github/workflows/gate-pr-evidence.yml)
 - [命名規範驗證](./.github/workflows/gate-root-naming.yml)
 
 ### 聯絡方式
+
 - **GitHub Issues**: 標註 `治理` 標籤
 - **緊急問題**: 標註 `治理緊急` 標籤
 

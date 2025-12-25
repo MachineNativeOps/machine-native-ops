@@ -1,6 +1,7 @@
 # AAPS Multi-Agent MPC v1 Specification Package
 
 ## 📦 Package Overview
+
 立即可用的v1規格包，包含多代理系統實施的所有必要組件。
 
 ---
@@ -8,6 +9,7 @@
 ## 🔄 統一訊息 Schema (JSON Schema)
 
 ### Message Envelope
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -61,6 +63,7 @@
 ### Core Event Payloads
 
 #### IncidentSignal
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -89,6 +92,7 @@
 ```
 
 #### FixProposal
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -128,6 +132,7 @@
 ```
 
 #### VerificationReport
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -166,6 +171,7 @@
 ## 🏃‍♂️ 事件狀態機 (Workflow Definition)
 
 ### Incident Lifecycle State Machine
+
 ```yaml
 state_machine:
   name: "incident_lifecycle"
@@ -173,16 +179,19 @@ state_machine:
   states:
     OPEN:
       transitions:
+
         - to: "TRIAGE"
           trigger: "incident_received"
           actions: ["log_incident", "assign_trace_id"]
     
     TRIAGE:
       transitions:
+
         - to: "RCA"
           trigger: "severity_assessed"
           condition: "severity != 'low'"
           actions: ["prioritize_incident"]
+
         - to: "CLOSE"
           trigger: "severity_assessed" 
           condition: "severity == 'low'"
@@ -190,63 +199,75 @@ state_machine:
     
     RCA:
       transitions:
+
         - to: "PROPOSE"
           trigger: "root_cause_identified"
           actions: ["generate_fix_proposals"]
     
     PROPOSE:
       transitions:
+
         - to: "VERIFY"
           trigger: "proposals_generated"
           actions: ["submit_to_verification"]
     
     VERIFY:
       transitions:
+
         - to: "APPROVE"
           trigger: "verification_passed"
           actions: ["prepare_execution_plan"]
+
         - to: "PROPOSE"
           trigger: "verification_failed"
           actions: ["refine_proposals"]
     
     APPROVE:
       transitions:
+
         - to: "EXECUTE"
           trigger: "approval_granted"
           actions: ["create_execution_order"]
     
     EXECUTE:
       transitions:
+
         - to: "VALIDATE"
           trigger: "execution_completed"
           actions: ["capture_execution_result"]
+
         - to: "ROLLBACK"
           trigger: "execution_failed"
           actions: ["initiate_rollback"]
     
     VALIDATE:
       transitions:
+
         - to: "CLOSE"
           trigger: "validation_passed"
           actions: ["mark_resolved", "create_knowledge_artifact"]
+
         - to: "ROLLBACK"
           trigger: "validation_failed"
           actions: ["initiate_rollback"]
     
     ROLLBACK:
       transitions:
+
         - to: "PROPOSE"
           trigger: "rollback_completed"
           actions: ["reassess_incident"]
     
     CLOSE:
       transitions:
+
         - to: "LEARN"
           trigger: "closed"
           actions: ["archive_incident"]
     
     LEARN:
       transitions:
+
         - to: "OPEN"
           trigger: "learning_completed"
           actions: ["update_detection_rules", "enhance_knowledge_base"]
@@ -257,8 +278,10 @@ state_machine:
 ## 🛡️ RBAC 最小權限清單
 
 ### ServiceAccount 權限定義
+
 ```yaml
 # SuperAgent ServiceAccount
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -271,20 +294,25 @@ metadata:
   name: super-agent-role
 rules:
   # 讀取權限
+
   - apiGroups: [""]
     resources: ["pods", "services", "configmaps", "secrets", "events"]
     verbs: ["get", "list", "watch"]
+
   - apiGroups: ["apps"]
     resources: ["deployments", "replicasets"]
     verbs: ["get", "list", "watch"]
+
   - apiGroups: ["argoproj.io"]
     resources: ["applications"]
     verbs: ["get", "list", "watch"]
   # 寫入權限 - 僅限協調資源
+
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["create", "update", "patch"]
     resourceNames: ["incident-trace", "execution-plans"]
+
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["create"]
@@ -298,11 +326,13 @@ roleRef:
   kind: ClusterRole
   name: super-agent-role
 subjects:
+
 - kind: ServiceAccount
   name: super-agent
   namespace: machinenativeops
 
 # ProblemSolverAgent ServiceAccount  
+
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -316,13 +346,16 @@ metadata:
   name: problem-solver-agent-role
 rules:
   # 讀取權限 - 分析所需
+
   - apiGroups: [""]
     resources: ["pods", "logs", "events", "configmaps"]
     verbs: ["get", "list", "watch"]
+
   - apiGroups: ["apps"]
     resources: ["deployments", "replicasets"]
     verbs: ["get", "list", "watch"]
   # 寫入權限 - 僅限報告和提案
+
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["create", "update", "patch"]
@@ -337,11 +370,13 @@ roleRef:
   kind: ClusterRole
   name: problem-solver-agent-role
 subjects:
+
 - kind: ServiceAccount
   name: problem-solver-agent
   namespace: machinenativeops
 
 # MaintenanceAgent ServiceAccount (限制最嚴格)
+
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -355,23 +390,29 @@ metadata:
   name: maintenance-agent-role
 rules:
   # 讀取權限
+
   - apiGroups: [""]
     resources: ["pods", "configmaps", "secrets"]
     verbs: ["get", "list", "watch"]
+
   - apiGroups: ["apps"]
     resources: ["deployments"]
     verbs: ["get", "list", "watch"]
   # 寫入權限 - 僅限安全操作
+
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["delete", "create"]
+
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["update", "patch"]
     # 權限限制 - 排除高風險操作
+
   - apiGroups: ["extensions", "networking.k8s.io"]
     resources: ["networkpolicies", "ingresses"]
     verbs: []
+
   - apiGroups: ["rbac.authorization.k8s.io"]
     resources: ["roles", "rolebindings", "clusterroles", "clusterrolebindings"]
     verbs: []
@@ -385,6 +426,7 @@ roleRef:
   kind: ClusterRole
   name: maintenance-agent-role
 subjects:
+
 - kind: ServiceAccount
   name: maintenance-agent
   namespace: machinenativeops
@@ -395,6 +437,7 @@ subjects:
 ## 🔧 GitOps/ArgoCD 整合點
 
 ### ArgoCD Application 定義
+
 ```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -418,6 +461,7 @@ spec:
       prune: false
       selfHeal: true
     syncOptions:
+
     - CreateNamespace=true
     retry:
       limit: 3
@@ -426,12 +470,15 @@ spec:
         factor: 2
         maxDuration: 3m
   ignoreDifferences:
+
   - group: apps
     kind: Deployment
     jsonPointers:
+
     - /spec/replicas
 
 # Multi-Agent ArgoCD Hooks
+
 apiVersion: argoproj.io/v1alpha1
 kind: SyncHook
 metadata:
@@ -441,18 +488,23 @@ spec:
   type: PreSync
   syncPhase: Sync
   args:
+
   - /bin/sh
   - -c
   - |
     # 驗證代理配置
+
     kubectl apply --dry-run=client -f configs/agents/
     # 檢查權限
+
     kubectl auth can-i --list --as=system:serviceaccount:machinenativeops:super-agent
 ```
 
 ### Agent Deployment Templates
+
 ```yaml
 # SuperAgent Deployment
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -474,20 +526,26 @@ spec:
     spec:
       serviceAccountName: super-agent
       containers:
+
       - name: super-agent
         image: machinenativeops/super-agent:v1.0.0
         ports:
+
         - containerPort: 8080
           name: http
+
         - containerPort: 9090
           name: metrics
         env:
+
         - name: AGENT_ID
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+
         - name: TRACE_EXPORTER
           value: "jaeger"
+
         - name: MESSAGE_BUS_TYPE
           value: "http"
         resources:
@@ -521,9 +579,11 @@ spec:
   selector:
     app: super-agent
   ports:
+
   - name: http
     port: 8080
     targetPort: 8080
+
   - name: metrics
     port: 9090
     targetPort: 9090
@@ -534,6 +594,7 @@ spec:
 ## 🔍 七階段驗證 Gate (含策略閾值)
 
 ### Verification Pipeline Definition
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -543,6 +604,7 @@ metadata:
 data:
   verification_gates.yaml: |
     gates:
+
       - name: "schema_validation"
         type: "structural"
         required: true
@@ -555,6 +617,7 @@ data:
         required: true
         tools: ["opa", "kyverno"]
         policies:
+
           - "security-policy-v1"
           - "cost-policy-v1"
           - "compliance-policy-v1"
@@ -577,6 +640,7 @@ data:
         required: true
         tools: ["cosign"]
         verification:
+
           - "image_signature_valid"
           - "key_trust_chain_valid"
         timeout: 30s
@@ -587,6 +651,7 @@ data:
         required: true
         tools: ["slsa-verifier", "in-toto"]
         attestations:
+
           - "build.provenance"
           - "source.material"
         timeout: 60s
@@ -614,21 +679,26 @@ data:
     
     approval_matrix:
       auto_approve:
+
         - conditions: ["all_required_gates_passed", "risk_score < 0.3"]
         - approver: "system"
       
       manual_review:
+
         - conditions: ["any_gate_failed", "risk_score >= 0.3", "impact_critical"]
         - approver: "human_operator"
       
       reject:
+
         - conditions: ["critical_gate_failed", "security_violation", "policy_violation"]
         - approver: "system"
 ```
 
 ### Policy Engine Rules (OPA/Kyverno)
+
 ```yaml
 # Security Policy
+
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -640,9 +710,11 @@ spec:
   validationFailureAction: Enforce
   background: true
   rules:
+
   - name: require-image-signature
     match:
       any:
+
       - resources:
           kinds: ["Deployment", "StatefulSet", "DaemonSet"]
           namespaces: ["machinenativeops"]
@@ -653,25 +725,30 @@ spec:
           template:
             spec:
               containers:
+
               - =(image): "?*"
                 securityContext:
                   # This would be checked by cosign
+
                   allowPrivilegeEscalation: false
   
   - name: restrict-network-policy-changes
     match:
       any:
+
       - resources:
           kinds: ["NetworkPolicy"]
     validate:
       message: "NetworkPolicy changes require manual approval"
       deny:
         conditions:
+
         - key: "{{ request.object.metadata.annotations.agent-initiated }}"
           operator: Equals
           value: "true"
 
 # Risk Assessment Policy
+
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -680,19 +757,23 @@ spec:
   validationFailureAction: Enforce
   background: true
   rules:
+
   - name: limit-impact-scope
     match:
       any:
+
       - resources:
           kinds: ["Deployment"]
           namespaces: ["machinenativeops"]
     validate:
       message: "Agent changes must be limited in scope"
       anyPattern:
+
       - spec:
           template:
             spec:
               containers:
+
               - name: "*"
                 resources:
                   requests:
@@ -708,8 +789,10 @@ spec:
 ## 🚀 立即部署腳本
 
 ### Quick Start Script
+
 ```bash
 #!/bin/bash
+
 # deploy-multi-agent.sh - 一鍵部署多代理系統
 
 set -euo pipefail
@@ -721,17 +804,21 @@ BRANCH="main"
 echo "🚀 部署AAPS多代理MPC系統..."
 
 # 1. 創建命名空間
+
 kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
 
 # 2. 應用RBAC配置
+
 echo "🛡️ 設置權限控制..."
 kubectl apply -f - <<EOF
 $(cat <<'EOF'
 # RBAC配置已在上面定義
+
 EOF
 )
 
 # 3. 部署配置
+
 echo "📝 部署配置..."
 kubectl apply -f - <<EOF
 apiVersion: v1
@@ -770,6 +857,7 @@ data:
 EOF
 
 # 4. 部署SuperAgent (第一個代理)
+
 echo "🤖 部署SuperAgent..."
 kubectl apply -f - <<EOF
 apiVersion: apps/v1
@@ -793,10 +881,12 @@ spec:
     spec:
       serviceAccountName: super-agent
       containers:
+
       - name: super-agent
         image: python:3.11-slim
         command: ["python", "-c"]
         args:
+
         - |
           import asyncio
           import json
@@ -819,6 +909,7 @@ spec:
               print(f"[{datetime.now()}] 收到訊息: {trace_id}")
               
               # 這裡將實現完整的訊息路由邏輯
+
               return {"status": "received", "trace_id": trace_id}
           
           @app.get("/health")
@@ -832,11 +923,14 @@ spec:
           if __name__ == "__main__":
               uvicorn.run(app, host="0.0.0.0", port=8080)
         ports:
+
         - containerPort: 8080
           name: http
         env:
+
         - name: NAMESPACE
           value: $NAMESPACE
+
         - name: AGENT_TYPE
           value: "super-agent"
         resources:
@@ -868,6 +962,7 @@ spec:
   selector:
     app: super-agent
   ports:
+
   - name: http
     port: 8080
     targetPort: 8080
@@ -875,15 +970,18 @@ spec:
 EOF
 
 # 5. 等待部署完成
+
 echo "⏳ 等待部署完成..."
 kubectl wait --for=condition=available --timeout=300s deployment/super-agent -n $NAMESPACE
 
 # 6. 驗證部署
+
 echo "✅ 驗證部署狀態..."
 kubectl get pods -n $NAMESPACE -l app=super-agent
 kubectl get svc -n $NAMESPACE
 
 # 7. 測試連接
+
 echo "🔍 測試代理連接..."
 SUPER_AGENT_IP=$(kubectl get svc super-agent -n $NAMESPACE -o jsonpath='{.spec.clusterIP}')
 
@@ -906,6 +1004,7 @@ echo "📚 詳細文檔: https://github.com/MachineNativeOps/machine-native-ops/
 ## 📊 監控配置
 
 ### Prometheus Monitoring Rules
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -914,8 +1013,10 @@ metadata:
   namespace: machinenativeops
 spec:
   groups:
+
   - name: multi-agent-system
     rules:
+
     - alert: AgentDown
       expr: up{job=~".*-agent"} == 0
       for: 1m
@@ -958,9 +1059,11 @@ spec:
 ## 🎯 驗收檢查清單
 
 ### MVP 驗收標準
+
 ```yaml
 mvp_acceptance_criteria:
   functional:
+
     - [ ] SuperAgent 正常啟動並監聽8080端口
     - [ ] 訊息 envelope 格式驗證正常
     - [ ] 代理間HTTP通訊正常
@@ -968,24 +1071,28 @@ mvp_acceptance_criteria:
     - [ ] 基礎日誌記錄正常
   
   security:
+
     - [ ] RBAC權限最小化原則
     - [ ] ServiceAccount隔離
     - [ ] 訊息簽名驗證
     - [ ] 權限邊界控制生效
   
   reliability:
+
     - [ ] Pod重啟後自動恢復
     - [ ] 健康檢查機制正常
     - [ ] 服務發現正常
     - [ ] 基礎監控指標可用
   
   operability:
+
     - [ ] 日誌聚合正常
     - [ ] 指標收集正常
     - [ ] 告警規則生效
     - [ ] 滾動更新機制正常
   
   performance:
+
     - [ ] 訊息處理延遲 < 1秒
     - [ ] 併發處理能力 > 100 QPS
     - [ ] 記憶體使用 < 512Mi

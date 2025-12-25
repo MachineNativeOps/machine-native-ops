@@ -117,18 +117,22 @@ Types: module, service, config, policy, certificate, audit
 **Mapping Types Implemented:**
 
 1. **Module Mapping**
+
    - `module_name` → `file_path` → `config_file` → `log_file`
    - Example: `governance-engine` → `/opt/machinenativenops/modules/governance-engine/`
 
 2. **URN Mapping**
+
    - `urn` → `resource_type` → `target_registry`
    - Example: `urn:machinenativeops:module:governance-engine:v1` → module → `root.registry.modules.yaml`
 
 3. **Device Mapping**
+
    - `device_path` → `resource_type` → `resource_id`
    - Example: `/dev/sda1` → block → `primary_storage`
 
 4. **Filesystem Mapping**
+
    - `directory_path` → `purpose` → `description`
    - Example: `/opt/machinenativenops` → application → "MachineNativeOps application root"
 
@@ -145,33 +149,39 @@ Types: module, service, config, policy, certificate, audit
 **Logic Categories:**
 
 1. **Mutual Exclusion** (3 rules)
+
    - No conflicting states
    - Unique ports per service
    - Unique URNs globally
 
 2. **Dependencies** (4 rules)
+
    - Dependencies must exist
    - No circular dependencies (DFS algorithm)
    - Critical dependencies cannot be optional
    - Version constraints must be satisfiable
 
 3. **State Consistency** (4 rules)
+
    - Enabled modules must have entrypoints
    - Auto-start requires enabled state
    - Health checks require endpoints
    - Phase order must be sequential
 
 4. **Resource Constraints** (3 rules)
+
    - Requests ≤ Limits
    - Priority in valid range (0-100)
    - Retry counts must be positive
 
 5. **Temporal Logic** (3 rules)
+
    - Timeouts > Intervals
    - Certificate validity in future
    - Audit retention reasonable (1-3650 days)
 
 6. **Permission Logic** (3 rules)
+
    - Roles must have permissions
    - Admin has all permissions
    - Read-only cannot write/delete
@@ -199,24 +209,29 @@ Types: module, service, config, policy, certificate, audit
 **Consistency Rules:**
 
 1. **Module Context** (3 rules)
+
    - Same name across all files
    - Compatible versions
    - Similar descriptions (80% threshold)
 
 2. **Label Context** (3 rules)
+
    - Version labels match spec versions
    - Component labels relate to names
    - Tier labels match file categories
 
 3. **Namespace Context** (2 rules)
+
    - Same type uses same namespace
    - Namespace follows naming convention
 
 4. **API Version Context** (2 rules)
+
    - Consistent within files
    - Backward compatible across versions
 
 5. **Environment Context** (3 rules)
+
    - Single environment per deployment
    - Production uses stable versions
    - Development allows pre-release
@@ -345,13 +360,16 @@ integrity-validator, super-execution-engine, monitoring-service
 **Gate Categories:**
 
 1. **Governance Gates** (2)
+
    - `gate-pr-evidence` - PR evidence validation
    - `gate-root-naming` - Root layer naming validation
 
 2. **Specification Gates** (1)
+
    - `gate-root-specs` - Root specifications validation
 
 3. **CI/CD Gates** (2)
+
    - `gate-ci` - Continuous integration
    - `gate-security` - Security scanning
 
@@ -488,26 +506,31 @@ Implements machine-verifiable governance framework with 5 core specifications
 ## 💡 Key Benefits Achieved
 
 ### 1. Automated Enforcement
+
 - ✅ No manual review needed for naming violations
 - ✅ PR automatically blocked on violations
 - ✅ Immediate feedback to developers
 
 ### 2. Single Source of Truth
+
 - ✅ Registries serve as authoritative sources
 - ✅ No data duplication
 - ✅ Consistent references across files
 
 ### 3. Clear Error Messages
+
 - ✅ Specific violations identified
 - ✅ Fix suggestions provided
 - ✅ Examples of correct usage
 
 ### 4. Zero Ambiguity
+
 - ✅ Regex patterns define exact rules
 - ✅ Algorithms specify validation logic
 - ✅ No interpretation needed
 
 ### 5. Comprehensive Coverage
+
 - ✅ All root layer files validated
 - ✅ All naming conventions enforced
 - ✅ All references verified
@@ -537,26 +560,31 @@ Implements machine-verifiable governance framework with 5 core specifications
 ### Potential Improvements
 
 1. **Enhanced Drift Detection**
+
    - Machine learning for semantic similarity
    - Historical trend analysis
    - Predictive violation detection
 
 2. **Auto-Fix Capabilities**
+
    - Automatic correction of simple violations
    - PR creation with fixes
    - Interactive fix wizard
 
 3. **Extended Coverage**
+
    - Validation of non-root files
    - Cross-repository validation
    - Multi-environment consistency
 
 4. **Performance Optimization**
+
    - Caching of validation results
    - Incremental validation
    - Parallel validation execution
 
 5. **Integration Enhancements**
+
    - IDE plugins for real-time validation
    - Pre-commit hooks
    - CI/CD pipeline integration
