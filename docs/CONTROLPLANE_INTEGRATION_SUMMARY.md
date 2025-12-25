@@ -95,6 +95,7 @@ cp_export_env
 ### 2. 整合到開發流程
 
 #### Pre-commit Hook (`.githooks/pre-commit`)
+
 ```bash
 # 自動驗證文件命名
 git config core.hooksPath .githooks
