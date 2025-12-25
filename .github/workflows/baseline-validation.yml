@@ -26,8 +26,8 @@ jobs:
 
       - name: Verify docs surface
         run: |
-          if [ ! -f README.md ]; then
-            echo "ERROR: README.md file not found in repository root"; exit 1;
+          if [ ! -f docs/README.md ]; then
+            echo "ERROR: docs/README.md file not found"; exit 1;
           fi
 
       - name: Verify validator script
