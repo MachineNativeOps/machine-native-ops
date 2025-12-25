@@ -238,6 +238,7 @@ Controlplane 強制執行以下命名規範：
 - ❌ `my.file.backup.yaml` (雙重擴展名)
 
 ### 目錄名
+
 - ✅ `my-directory` (kebab-case)
 - ✅ `controlplane` (小寫)
 - ❌ `MyDirectory` (不是 kebab-case)
