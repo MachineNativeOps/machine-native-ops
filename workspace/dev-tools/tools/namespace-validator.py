@@ -692,7 +692,7 @@ Examples:
         
         # Check for incorrect registry patterns
         incorrect_patterns = [
-            r'docker\.io/machine-native-ops',
+            r'docker\.io/machine-native-ops-aaps',
             r'ghcr\.io/machine-native-ops-aaps',
         ]
         
