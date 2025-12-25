@@ -63,6 +63,7 @@ config.create_overlay_extension("my-ext", "baseline/config/root.config.yaml", {.
 - ✅ 緩存優化
 
 #### Shell 配置庫 (`lib/controlplane.sh`)
+
 ```bash
 source lib/controlplane.sh
 
