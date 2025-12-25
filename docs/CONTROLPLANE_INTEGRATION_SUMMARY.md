@@ -363,6 +363,7 @@ Controlplane 已經從「華麗的擺設」轉變為「實用的工具」：
 - 缺少實用示例
 
 ### 之後 ✅
+
 - 3 種工具訪問配置（CLI、Python、Shell）
 - Pre-commit + CI/CD 自動整合
 - 42 個測試驗證功能
