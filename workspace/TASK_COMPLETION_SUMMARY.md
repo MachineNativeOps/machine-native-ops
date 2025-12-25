@@ -172,6 +172,7 @@ gh pr list --repo MachineNativeOps/machine-native-ops-aaps
 ### 開發效率
 
 **修復前**:
+
 - ❌ 所有 PR 的 CI 檢查立即失敗
 - ❌ 無法合併任何 PR
 - ❌ 開發工作流程完全阻塞
