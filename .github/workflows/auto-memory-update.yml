@@ -14,24 +14,30 @@ permissions:
 jobs:
   update-memory:
     name: Sync memory + architecture
-    if: github.actor != 'github-actions[bot]' && (github.event_name == 'push' || github.event.pull_request.merged == true)
+    if: github.actor != 'github-actions[bot]' && (github.event_name == 'push' || github.event_name == 'pull_request')
     runs-on: ubuntu-latest
+    env:
+      RUN_UPDATE: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) }}
     steps:
       - name: Checkout repository
+        if: env.RUN_UPDATE == 'true'
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 0
 
       - name: Setup Python
+        if: env.RUN_UPDATE == 'true'
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.11"
 
       - name: Run auto memory + architecture sync
+        if: env.RUN_UPDATE == 'true'
         run: python workspace/src/scripts/automation/auto_memory_arch_sync.py
 
       - name: Commit changes
         id: commit
+        if: env.RUN_UPDATE == 'true'
         run: |
           if git diff --quiet; then
             echo "changes=false" >> "$GITHUB_OUTPUT"
@@ -43,5 +49,5 @@ jobs:
           echo "changes=true" >> "$GITHUB_OUTPUT"
 
       - name: Push changes
-        if: steps.commit.outputs.changes == 'true'
+        if: env.RUN_UPDATE == 'true' && steps.commit.outputs.changes == 'true'
         run: git push

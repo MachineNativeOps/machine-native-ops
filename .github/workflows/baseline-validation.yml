@@ -55,9 +55,13 @@ jobs:
           script: |
             const fs = require('fs');
             const reportPath = 'controlplane/overlay/evidence/validation/validation.report.md';
-            const summary = fs.existsSync(reportPath)
-              ? fs.readFileSync(reportPath, 'utf8').slice(0, 6000)
+            const SUMMARY_CHAR_LIMIT = 12000;
+            let summary = fs.existsSync(reportPath)
+              ? fs.readFileSync(reportPath, 'utf8')
               : 'Validation report not found.';
+            if (summary.length > SUMMARY_CHAR_LIMIT) {
+              summary = `${summary.slice(0, SUMMARY_CHAR_LIMIT)}\n...(truncated, see workflow artifact for full report)`;
+            }
             const status = '${{ job.status }}';
             const body = [
               `## Root Specification Validation - ${status.toUpperCase()}`,

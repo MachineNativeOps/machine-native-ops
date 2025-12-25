@@ -10,7 +10,11 @@ from typing import Dict, List
 
 
 def _run(cmd: List[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(cmd, capture_output=True, text=True, check=True)
+    try:
+        return subprocess.run(cmd, capture_output=True, text=True, check=True)
+    except subprocess.CalledProcessError as exc:
+        message = exc.stderr.strip() or exc.stdout.strip() or "no output"
+        raise RuntimeError(f"Command '{' '.join(cmd)}' failed ({exc.returncode}): {message}") from exc
 
 
 def _now() -> str:
@@ -36,10 +40,17 @@ def _update_section(path: Path, start: str, end: str, body: str) -> bool:
     return False
 
 
+def _find_repo_root(current: Path) -> Path:
+    for parent in current.parents:
+        if (parent / ".git").exists():
+            return parent
+    return current.parent
+
+
 def _changed_files() -> Dict[str, object]:
-    result = _run(["git", "log", "-1", "--name-status", "--pretty=format:%H|%an|%s"])
+    result = _run(["git", "log", "-1", "--name-status", "--pretty=format:%H%n%an%n%s"])
     lines = [line for line in result.stdout.splitlines() if line.strip()]
-    if not lines:
+    if len(lines) < 3:
         return {
             "sha": "",
             "author": "",
@@ -50,10 +61,10 @@ def _changed_files() -> Dict[str, object]:
             "deleted": 0,
         }
 
-    sha, author, subject = (lines[0].split("|", 2) + ["", "", ""])[:3]
+    sha, author, subject = lines[0], lines[1], lines[2]
     added = modified = deleted = 0
     files: List[str] = []
-    for line in lines[1:]:
+    for line in lines[3:]:
         parts = line.split("\t")
         status = parts[0]
         target = parts[-1] if len(parts) > 1 else parts[0]
@@ -114,7 +125,11 @@ def _collect_tree(root: Path, depth: int = 2) -> List[str]:
     def walk(current: Path, prefix: str, level: int) -> None:
         if level >= depth:
             return
-        entries = [p for p in sorted(current.iterdir()) if not p.name.startswith(".")]
+        try:
+            entries = [p for p in sorted(current.iterdir()) if not p.name.startswith(".")]
+        except OSError as exc:
+            lines.append(f"{prefix}⚠️ 無法讀取 {current}: {exc.__class__.__name__} ({exc})")
+            return
         for index, entry in enumerate(entries):
             connector = "└── " if index == len(entries) - 1 else "├── "
             lines.append(f"{prefix}{connector}{entry.name}/" if entry.is_dir() else f"{prefix}{connector}{entry.name}")
@@ -149,7 +164,7 @@ def _architecture_body(summary: Dict[str, object], timestamp: str, repo_root: Pa
 
 
 def main() -> None:
-    repo_root = Path(__file__).resolve().parents[4]
+    repo_root = _find_repo_root(Path(__file__).resolve())
     project_memory = repo_root / "controlplane/governance/docs/PROJECT_MEMORY.md"
     conversation_log = repo_root / "workspace/projects/CONVERSATION_LOG.md"
     architecture_doc = repo_root / "controlplane/governance/docs/ARCHITECTURE.md"

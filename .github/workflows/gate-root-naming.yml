@@ -30,41 +30,48 @@ jobs:
       - name: 🔍 檢查 root 命名
         run: |
           set -euo pipefail
+          root_dir="$(pwd)"
           violations=0
-          targets=(root.* init.d bin sbin etc lib var usr controlplane/baseline workspace/config)
-          for target in "${targets[@]}"; do
-            if compgen -G "$target" > /dev/null; then
-              if [ -d "$target" ]; then
-                while IFS= read -r file; do
-                  basename=$(basename "$file")
-                  case "$basename" in
-                    *[A-Z]*)
-                      echo "❌ 文件含有大寫字母: $file" >> "$GITHUB_STEP_SUMMARY"
-                      violations=$((violations+1))
-                      ;;
-                    *\ * )
-                      echo "❌ 文件含有空白: $file" >> "$GITHUB_STEP_SUMMARY"
-                      violations=$((violations+1))
-                      ;;
-                  esac
-                done < <(find "$target" -maxdepth 3 -type f)
-              else
-                for file in $target; do
-                  [ -e "$file" ] || continue
-                  basename=$(basename "$file")
-                  case "$basename" in
-                    *[A-Z]*)
-                      echo "❌ 文件含有大寫字母: $file" >> "$GITHUB_STEP_SUMMARY"
-                      violations=$((violations+1))
-                      ;;
-                    *\ * )
-                      echo "❌ 文件含有空白: $file" >> "$GITHUB_STEP_SUMMARY"
-                      violations=$((violations+1))
-                      ;;
-                  esac
-                done
-              fi
+          check_name() {
+            local path="$1"
+            local base="$2"
+            if [[ "$base" =~ [A-Z] ]]; then
+              echo "❌ 文件含有大寫字母: $path" >> "$GITHUB_STEP_SUMMARY"
+              violations=$((violations+1))
             fi
+            if [[ "$base" == *" "* ]]; then
+              echo "❌ 文件含有空白: $path" >> "$GITHUB_STEP_SUMMARY"
+              violations=$((violations+1))
+            fi
+          }
+          targets=(root.* init.d bin sbin etc lib var usr controlplane/baseline workspace/config)
+          for pattern in "${targets[@]}"; do
+            mapfile -t matched_paths < <(compgen -G "$pattern" || true)
+            if [ ${#matched_paths[@]} -eq 0 ]; then
+              continue
+            fi
+
+            for candidate in "${matched_paths[@]}"; do
+              abs_path="$(realpath "$candidate" 2>/dev/null || true)"
+              [ -n "$abs_path" ] || continue
+              case "$abs_path" in
+                "$root_dir"/*) ;;
+                *)
+                  echo "⚠️ 跳過超出工作區的路徑: $candidate" >> "$GITHUB_STEP_SUMMARY"
+                  continue
+                  ;;
+              esac
+
+              if [ -d "$abs_path" ]; then
+                while IFS= read -r -d '' file; do
+                  basename=$(basename "$file")
+                  check_name "$file" "$basename"
+                done < <(find -P "$abs_path" -maxdepth 3 -type f -print0)
+              else
+                basename=$(basename "$abs_path")
+                check_name "$abs_path" "$basename"
+              fi
+            done
           done
 
           if [ $violations -eq 0 ]; then

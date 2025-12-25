@@ -8,8 +8,8 @@
 ---
 
 <!-- AUTO-ARCHITECTURE-SYNC:START -->
-### 🗺️ 自動架構同步（2025-12-25T02:37:16Z）
-- Commit: e1519e5664cd01a6a4f20c312d249f5aaa644d58 (Initial plan)
+### 🗺️ 自動架構同步（2025-12-25T02:45:58Z）
+- Commit: c82116af489eb36593d93694b1a6e13b4a862ce6 (chore: implement acceptance automation)
 - 檔案結構快照：
 ```
 controlplane/
