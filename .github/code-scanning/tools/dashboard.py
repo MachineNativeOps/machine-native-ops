@@ -186,7 +186,21 @@ def main() -> None:
     
     # 從環境變數讀取配置，預設為安全的 localhost 綁定
     host = os.environ.get('DASHBOARD_HOST', '127.0.0.1')
-    port = int(os.environ.get('DASHBOARD_PORT', '5000'))
+    
+    # 驗證 host 格式
+    if host not in ('127.0.0.1', 'localhost', '0.0.0.0'):
+        print(f"⚠️  警告：無效的 DASHBOARD_HOST 值 '{host}'，使用預設值 127.0.0.1")
+        host = '127.0.0.1'
+    
+    # 驗證並解析端口
+    try:
+        port = int(os.environ.get('DASHBOARD_PORT', '5000'))
+        if not (1 <= port <= 65535):
+            print(f"⚠️  警告：端口 {port} 超出有效範圍 (1-65535)，使用預設值 5000")
+            port = 5000
+    except ValueError:
+        print(f"⚠️  警告：無效的 DASHBOARD_PORT 值，使用預設值 5000")
+        port = 5000
     
     # 啟動服務器
     print("🚀 啟動高階代碼掃描儀表板...")
