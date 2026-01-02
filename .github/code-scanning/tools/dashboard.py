@@ -15,13 +15,18 @@ from pathlib import Path
 import json
 import os
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict
 
 app = Flask(__name__)
 
 # 配置
 REPORTS_DIR = Path(".github/code-scanning/reports")
 TEMPLATE_DIR = Path(".github/code-scanning/templates")
+
+# 允許的主機地址
+ALLOWED_HOSTS = ('127.0.0.1', 'localhost', '0.0.0.0')
+DEFAULT_HOST = '127.0.0.1'
+DEFAULT_PORT = 5000
 
 class DashboardData:
     """儀表板數據管理"""
@@ -185,28 +190,30 @@ def main() -> None:
         create_default_template(template_file)
     
     # 從環境變數讀取配置，預設為安全的 localhost 綁定
-    host = os.environ.get('DASHBOARD_HOST', '127.0.0.1')
+    host = os.environ.get('DASHBOARD_HOST', DEFAULT_HOST)
     
     # 驗證 host 格式
-    if host not in ('127.0.0.1', 'localhost', '0.0.0.0'):
-        print(f"⚠️  警告：無效的 DASHBOARD_HOST 值 '{host}'，使用預設值 127.0.0.1")
-        host = '127.0.0.1'
+    if host not in ALLOWED_HOSTS:
+        print(f"⚠️  警告：無效的 DASHBOARD_HOST 值 '{host}'，使用預設值 {DEFAULT_HOST}")
+        host = DEFAULT_HOST
     
     # 驗證並解析端口
     try:
-        port = int(os.environ.get('DASHBOARD_PORT', '5000'))
+        port = int(os.environ.get('DASHBOARD_PORT', str(DEFAULT_PORT)))
         if not (1 <= port <= 65535):
-            print(f"⚠️  警告：端口 {port} 超出有效範圍 (1-65535)，使用預設值 5000")
-            port = 5000
+            print(f"⚠️  警告：端口 {port} 超出有效範圍 (1-65535)，使用預設值 {DEFAULT_PORT}")
+            port = DEFAULT_PORT
     except ValueError:
-        print(f"⚠️  警告：無效的 DASHBOARD_PORT 值，使用預設值 5000")
-        port = 5000
+        print(f"⚠️  警告：無效的 DASHBOARD_PORT 值，使用預設值 {DEFAULT_PORT}")
+        port = DEFAULT_PORT
+    
+    # 安全警告（在啟動服務器之前顯示）
+    if host == '0.0.0.0':
+        print("⚠️  警告：服務器將監聽所有網絡接口，請確保在安全環境中運行")
     
     # 啟動服務器
     print("🚀 啟動高階代碼掃描儀表板...")
     print(f"📊 訪問 http://{host}:{port} 查看儀表板")
-    if host == '0.0.0.0':
-        print("⚠️  警告：服務器監聽所有網絡接口，請確保在安全環境中運行")
     app.run(debug=True, host=host, port=port)
 
 def create_default_template(template_path: Path) -> None:
