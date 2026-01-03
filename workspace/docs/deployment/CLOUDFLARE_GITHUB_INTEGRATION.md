@@ -115,8 +115,8 @@ cloudflare/
 | Zone | Cloudflare Pages | Edit |
 | Zone | DNS | Edit |
 
-4. 點擊 **Continue to summary** > **Create Token**
-5. **立即複製 Token** (只顯示一次)
+1. 點擊 **Continue to summary** > **Create Token**
+2. **立即複製 Token** (只顯示一次)
 
 ### 2. GitHub Repository 設置
 
@@ -234,7 +234,7 @@ echo "your_secret" | wrangler secret put GITHUB_WEBHOOK_SECRET --env production
 | Secret | 您生成的 webhook secret |
 | SSL verification | Enable |
 
-4. 選擇事件：
+1. 選擇事件：
    - Push events
    - Pull requests
    - Issues
