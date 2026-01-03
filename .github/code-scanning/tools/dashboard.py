@@ -203,10 +203,11 @@ def download_report(filename):
         _ = resolved_path.relative_to(base_path)
         
         # Ensure it's not the base directory itself and is a file
-        if report_path == base_path or not report_path.is_file():
+        if not report_path.exists() or report_path == base_path or not report_path.is_file():
             return jsonify({'error': 'Report not found'}), 404
             
     except (OSError, ValueError):
+        # Invalid path or path outside base directory
         # Invalid path, path outside base directory, or file doesn't exist
         return jsonify({'error': 'Report not found'}), 404
     
