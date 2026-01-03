@@ -202,7 +202,7 @@ def download_report(filename):
         resolved_path = (REPORTS_DIR / safe_filename).resolve()
         
         # Prevent directory traversal by ensuring the resolved path is within REPORTS_DIR
-        report_path.relative_to(base_path)
+        resolved_path.relative_to(base_path)
         # Validate path is within base directory - raises ValueError if outside
         _ = resolved_path.relative_to(base_path)
         
@@ -216,7 +216,7 @@ def download_report(filename):
         return jsonify({'error': 'Report not found'}), 404
     
     # Return the safe file
-    return send_file(report_path, as_attachment=True)
+    return send_file(resolved_path, as_attachment=True)
 
 @app.route('/dashboard')
 def dashboard():
