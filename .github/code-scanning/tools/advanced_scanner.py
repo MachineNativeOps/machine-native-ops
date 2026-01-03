@@ -220,9 +220,10 @@ class AdvancedCodeScanner:
                         for keyword in keywords:
                             # Check for both assignment and dictionary patterns
                             has_assignment = f"{keyword} = " in code_part_lower
-                            has_dict_syntax = f'"{keyword}": ' in code_part_lower
+                            has_dict_double_quotes = f'"{keyword}": ' in code_part_lower
+                            has_dict_single_quotes = f"'{keyword}': " in code_part_lower
                             
-                            if has_assignment or has_dict_syntax:
+                            if has_assignment or has_dict_double_quotes or has_dict_single_quotes:
                                 # Must have quotes to be a potential hardcoded credential
                                 if not any(c in code_part for c in ['"', "'"]):
                                     continue
@@ -230,7 +231,7 @@ class AdvancedCodeScanner:
                                 # Extract the value part based on pattern type
                                 if has_assignment and '=' in code_part:
                                     value_part = code_part.split('=', 1)[1].strip()
-                                elif has_dict_syntax and ':' in code_part:
+                                elif (has_dict_double_quotes or has_dict_single_quotes) and ':' in code_part:
                                     value_part = code_part.split(':', 1)[1].strip()
                                 else:
                                     continue
