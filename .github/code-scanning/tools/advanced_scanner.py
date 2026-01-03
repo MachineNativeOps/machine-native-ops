@@ -486,6 +486,8 @@ def main() -> None:
     
     # 優先使用命名參數，如果沒有則使用位置參數
     repo_path = args.repo if args.repo_path is None else args.repo_path
+    # 優先使用位置參數，如果沒有則使用命名參數
+    repo_path = args.repo_path if args.repo_path is not None else args.repo
     output_dir = args.output_dir
     
     scanner = AdvancedCodeScanner(repo_path, output_dir)
