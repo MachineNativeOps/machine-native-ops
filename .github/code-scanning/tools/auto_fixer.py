@@ -82,18 +82,6 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
                 r'(?P<lhs>\b(?P<var>\w*password\w*)\s*=\s*)["\'][^"\']+["\']',
                 _replace_password,
                 original_line
-                lhs = match.group(1)
-                var_name = match.group('var')
-                # 將變量名轉換為環境變量名，例如 api_password -> API_PASSWORD
-                env_name = re.sub(r'\W+', '_', var_name).upper()
-                if not env_name or env_name == '_':
-                    env_name = 'PASSWORD'
-                return f"{lhs}os.environ.get('{env_name}')"
-            
-            fixed_line = re.sub(
-                r'(?P<lhs>\b(?P<var>\w*password\w*)\s*=\s*)["\'][^"\']+["\']',
-                _replace_password,
-                original_line
             )
             
             # 檢查是否需要添加 import
@@ -178,20 +166,6 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
                     
                     if needs_import:
                         lines.insert(insert_pos, 'import os\n')
-                    # 查找最後一個標準庫導入的位置（os 是標準庫）
-                    # 標準庫導入應該在第三方庫導入之前
-                    last_import_pos = insert_pos
-                    for i in range(insert_pos, len(lines)):
-                        if lines[i].startswith('import ') or lines[i].startswith('from '):
-                            # 如果是標準庫導入，記錄位置
-                            if not lines[i].startswith(('import os', 'from os ')):
-                                last_import_pos = i + 1
-                        elif lines[i].strip() and not lines[i].startswith('#'):
-                            # 遇到非空、非註釋行，導入區結束
-                            break
-                    
-                    # 在最後一個導入後插入，如果沒有其他導入則在 docstring 後插入
-                    lines.insert(last_import_pos, 'import os\n')
                 
                 # 寫入文件
                 with open(file_path, 'w') as f:
@@ -312,12 +286,6 @@ class LongLineFixer(VulnerabilityFixer):
             spaces = len(line) - len(stripped)
             if spaces > 0:
                 space_indents.append(spaces)
-            if spaces % 8 == 0 and spaces > 0:
-                indent_counts[8] += 1
-            elif spaces % 4 == 0 and spaces > 0:
-                indent_counts[4] += 1
-            elif spaces % 2 == 0 and spaces > 0:
-                indent_counts[2] += 1
         
         # 如果主要使用 tab，返回 tab
         if tab_count > len(space_indents):
@@ -416,71 +384,8 @@ class LongLineFixer(VulnerabilityFixer):
             print(f"  ⚠️ 修復過長代碼行時發生錯誤: {e}")
             return False, "", str(e)
     
-    def _detect_indentation(self, lines: List[str]) -> str:
-        """檢測文件的縮進風格（空格或 Tab）"""
-        # 統計文件中使用的縮進類型
-        space_indent = 0
-        tab_indent = 0
-        
-        for line in lines:
-            if line.startswith('    '):
-                space_indent += 1
-            elif line.startswith('\t'):
-                tab_indent += 1
-        
-        # 返回最常用的縮進風格，默認 4 個空格
-        if tab_indent > space_indent:
-            return '\t'
-        return '    '
-    
     def get_description(self) -> str:
         return "修復過長的代碼行"
-    
-    def _detect_indentation(self, lines: List[str]) -> str:
-        """檢測文件的縮進風格（空格或制表符）"""
-        # 檢查文件中的縮進模式
-        space_indents = {}  # 記錄不同空格縮進的出現次數
-        tab_count = 0
-        
-        for line in lines:
-            if not line.strip():  # 跳過空行
-                continue
-            
-            # 計算行首的空格和制表符
-            stripped = line.lstrip()
-            if stripped == line:  # 沒有縮進
-                continue
-            
-            indent = line[:len(line) - len(stripped)]
-            
-            if '\t' in indent:
-                tab_count += 1
-            elif ' ' in indent:
-                # 記錄空格縮進的長度
-                space_len = len(indent)
-                space_indents[space_len] = space_indents.get(space_len, 0) + 1
-        
-        # 如果制表符更常見，返回制表符
-        if tab_count > sum(space_indents.values()):
-            return '\t'
-        
-        # 否則找出最常見的空格縮進長度
-        if space_indents:
-            # 獲取最常見的縮進單位（2或4空格）
-            common_indent = max(space_indents, key=space_indents.get)
-            # 找出最大公約數作為縮進單位
-            from math import gcd
-            indent_unit = common_indent
-            for length in space_indents.keys():
-                if length > 0:
-                    indent_unit = gcd(indent_unit, length)
-            
-            # 確保縮進單位在合理範圍內（2或4空格）
-            if indent_unit in (2, 4):
-                return ' ' * indent_unit
-        
-        # 默認返回4個空格
-        return '    '
 
 class AutoFixer:
     """
@@ -723,7 +628,6 @@ def main() -> None:
     else:
         fixer.auto_fix_all(scan_results)
         print(json.dumps(fixer.fix_report, ensure_ascii=False, indent=2))
-        print(json.dumps(report, ensure_ascii=False, indent=2))
 
 if __name__ == "__main__":
     main()

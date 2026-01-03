@@ -155,3 +155,5 @@ __pycache__/
 # Controlplane active and overlay generated files
 controlplane/active/
 controlplane/overlay/evidence/
+# Code scanning reports (generated files)
+.github/code-scanning/reports/
