@@ -115,8 +115,8 @@ cloudflare/
 | Zone | Cloudflare Pages | Edit |
 | Zone | DNS | Edit |
 
-1. 點擊 **Continue to summary** > **Create Token**
-2. **立即複製 Token** (只顯示一次)
+4. 點擊 **Continue to summary** > **Create Token**
+5. **立即複製 Token** (只顯示一次)
 
 ### 2. GitHub Repository 設置
 
